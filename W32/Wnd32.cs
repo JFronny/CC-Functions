@@ -22,38 +22,105 @@ namespace CC_Functions.W32
         public static Wnd32 foreground() => fromHandle(GetForegroundWindow());
         #endregion
         #region InstanceActions
-        public string title { get {
+        public string title
+        {
+            get {
                 int length = GetWindowTextLength(hWnd);
                 StringBuilder sb = new StringBuilder(length + 1);
                 GetWindowText(hWnd, sb, sb.Capacity);
                 return sb.ToString();
-            } set {
+            }
+            set {
                 SetWindowText(hWnd, value);
-            } }
-        public Rectangle position { get {
+            }
+        }
+        public Rectangle position
+        {
+            get {
                 RECT Rect = new RECT();
                 GetWindowRect(hWnd, ref Rect);
                 return new Rectangle(new Point(Rect.left, Rect.top), new Size(Rect.right - Rect.left, Rect.bottom - Rect.top));
-            } set {
+            }
+            set {
                 RECT Rect = new RECT();
                 GetWindowRect(hWnd, ref Rect);
                 MoveWindow(hWnd, value.X, value.Y, value.Width, value.Height, true);
-            } }
-        public bool isForeground { get {
+            }
+        }
+        public bool isForeground
+        {
+            get {
                 return GetForegroundWindow() == hWnd;
-            } set {
+            }
+            set {
                 if (value)
                     SetForegroundWindow(hWnd);
                 else
                     throw new InvalidOperationException("You can't set a Window not to be in the foreground. Move another one over it!");
             }
         }
-        public bool enabled { get {
+        public bool enabled
+        {
+            get {
                 return IsWindowEnabled(hWnd);
-            } set {
+            }
+            set {
                 EnableWindow(hWnd, value);
             }
         }
+        public Icon icon
+        {
+            get {
+                var hicon = SendMessage(hWnd, 0x7F, 1, 0);
+                if (hicon == IntPtr.Zero)
+                    hicon = SendMessage(hWnd, 0x7F, 0, 0);
+                if (hicon == IntPtr.Zero)
+                    hicon = SendMessage(hWnd, 0x7F, 2, 0);
+                return Icon.FromHandle(hicon);
+            }
+        }
+        public bool shown
+        {
+            set {
+                if (value)
+                    ShowWindow(hWnd, 9);
+                else
+                    ShowWindow(hWnd, 0);
+            }
+        }
+        public FormWindowState state
+        {
+            get {
+                int style = (int)GetWindowLong(hWnd, -16);
+                if ((style & 0x01000000) == 0x01000000)
+                {
+                    return FormWindowState.Maximized;
+                }
+                else if ((style & 0x20000000) == 0x20000000)
+                {
+                    return FormWindowState.Minimized;
+                }
+                else
+                {
+                    return FormWindowState.Normal;
+                }
+            }
+            set {
+                switch (value)
+                {
+                    case FormWindowState.Minimized:
+                        ShowWindow(hWnd, 11);
+                        break;
+                    case FormWindowState.Normal:
+                        ShowWindow(hWnd, 1);
+                        break;
+                    case FormWindowState.Maximized:
+                        ShowWindow(hWnd, 3);
+                        break;
+                }
+            }
+        }
+
         public void MakeOverlay() => _ = SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, 0, 0, TOPMOST_FLAGS);
         public bool Destroy()
         {
@@ -131,6 +198,15 @@ namespace CC_Functions.W32
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         static extern bool IsWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+        static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+
+        [DllImport("user32.dll")]
+        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern int GetWindowLong(IntPtr hWnd, int nIndex);
         #endregion
     }
 }

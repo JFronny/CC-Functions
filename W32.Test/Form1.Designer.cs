@@ -66,6 +66,9 @@
             this.wnd_select_self = new System.Windows.Forms.Button();
             this.wnd = new System.Windows.Forms.GroupBox();
             this.wnd_select_class_box = new System.Windows.Forms.TextBox();
+            this.wnd_action_icon = new System.Windows.Forms.Panel();
+            this.wnd_action_visible = new System.Windows.Forms.CheckBox();
+            this.wnd_action_style = new System.Windows.Forms.ComboBox();
             this.keyboard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.wnd_action_pos_h_bar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.wnd_action_pos_w_bar)).BeginInit();
@@ -98,7 +101,7 @@
             this.keyboard_log.Multiline = true;
             this.keyboard_log.Name = "keyboard_log";
             this.keyboard_log.ReadOnly = true;
-            this.keyboard_log.Size = new System.Drawing.Size(286, 123);
+            this.keyboard_log.Size = new System.Drawing.Size(286, 150);
             this.keyboard_log.TabIndex = 2;
             this.keyboard_log.TextChanged += new System.EventHandler(this.Keyboard_log_TextChanged);
             // 
@@ -108,7 +111,7 @@
             this.keyboard.Controls.Add(this.keyboard_enabled);
             this.keyboard.Location = new System.Drawing.Point(264, 160);
             this.keyboard.Name = "keyboard";
-            this.keyboard.Size = new System.Drawing.Size(298, 171);
+            this.keyboard.Size = new System.Drawing.Size(298, 198);
             this.keyboard.TabIndex = 8;
             this.keyboard.TabStop = false;
             this.keyboard.Text = "CC-Functions.W32.KeyboardHook";
@@ -148,7 +151,7 @@
             // wnd_action_pos_h_label
             // 
             this.wnd_action_pos_h_label.AutoSize = true;
-            this.wnd_action_pos_h_label.Location = new System.Drawing.Point(116, 185);
+            this.wnd_action_pos_h_label.Location = new System.Drawing.Point(116, 210);
             this.wnd_action_pos_h_label.Name = "wnd_action_pos_h_label";
             this.wnd_action_pos_h_label.Size = new System.Drawing.Size(18, 13);
             this.wnd_action_pos_h_label.TabIndex = 19;
@@ -157,7 +160,7 @@
             // wnd_action_pos_w_label
             // 
             this.wnd_action_pos_w_label.AutoSize = true;
-            this.wnd_action_pos_w_label.Location = new System.Drawing.Point(116, 161);
+            this.wnd_action_pos_w_label.Location = new System.Drawing.Point(116, 186);
             this.wnd_action_pos_w_label.Name = "wnd_action_pos_w_label";
             this.wnd_action_pos_w_label.Size = new System.Drawing.Size(21, 13);
             this.wnd_action_pos_w_label.TabIndex = 18;
@@ -165,14 +168,14 @@
             // 
             // wnd_action_pos_h_bar
             // 
-            this.wnd_action_pos_h_bar.Location = new System.Drawing.Point(136, 185);
+            this.wnd_action_pos_h_bar.Location = new System.Drawing.Point(136, 210);
             this.wnd_action_pos_h_bar.Name = "wnd_action_pos_h_bar";
             this.wnd_action_pos_h_bar.Size = new System.Drawing.Size(104, 45);
             this.wnd_action_pos_h_bar.TabIndex = 21;
             // 
             // wnd_action_pos_w_bar
             // 
-            this.wnd_action_pos_w_bar.Location = new System.Drawing.Point(136, 161);
+            this.wnd_action_pos_w_bar.Location = new System.Drawing.Point(136, 186);
             this.wnd_action_pos_w_bar.Name = "wnd_action_pos_w_bar";
             this.wnd_action_pos_w_bar.Size = new System.Drawing.Size(104, 45);
             this.wnd_action_pos_w_bar.TabIndex = 20;
@@ -180,7 +183,7 @@
             // wnd_action_pos_y_label
             // 
             this.wnd_action_pos_y_label.AutoSize = true;
-            this.wnd_action_pos_y_label.Location = new System.Drawing.Point(6, 185);
+            this.wnd_action_pos_y_label.Location = new System.Drawing.Point(6, 210);
             this.wnd_action_pos_y_label.Name = "wnd_action_pos_y_label";
             this.wnd_action_pos_y_label.Size = new System.Drawing.Size(17, 13);
             this.wnd_action_pos_y_label.TabIndex = 15;
@@ -189,7 +192,7 @@
             // wnd_action_pos_x_label
             // 
             this.wnd_action_pos_x_label.AutoSize = true;
-            this.wnd_action_pos_x_label.Location = new System.Drawing.Point(6, 161);
+            this.wnd_action_pos_x_label.Location = new System.Drawing.Point(6, 186);
             this.wnd_action_pos_x_label.Name = "wnd_action_pos_x_label";
             this.wnd_action_pos_x_label.Size = new System.Drawing.Size(17, 13);
             this.wnd_action_pos_x_label.TabIndex = 13;
@@ -197,21 +200,21 @@
             // 
             // wnd_action_pos_y_bar
             // 
-            this.wnd_action_pos_y_bar.Location = new System.Drawing.Point(17, 185);
+            this.wnd_action_pos_y_bar.Location = new System.Drawing.Point(17, 210);
             this.wnd_action_pos_y_bar.Name = "wnd_action_pos_y_bar";
             this.wnd_action_pos_y_bar.Size = new System.Drawing.Size(104, 45);
             this.wnd_action_pos_y_bar.TabIndex = 17;
             // 
             // wnd_action_pos_x_bar
             // 
-            this.wnd_action_pos_x_bar.Location = new System.Drawing.Point(17, 161);
+            this.wnd_action_pos_x_bar.Location = new System.Drawing.Point(17, 186);
             this.wnd_action_pos_x_bar.Name = "wnd_action_pos_x_bar";
             this.wnd_action_pos_x_bar.Size = new System.Drawing.Size(104, 45);
             this.wnd_action_pos_x_bar.TabIndex = 16;
             // 
             // wnd_action_pos
             // 
-            this.wnd_action_pos.Location = new System.Drawing.Point(87, 135);
+            this.wnd_action_pos.Location = new System.Drawing.Point(87, 160);
             this.wnd_action_pos.Name = "wnd_action_pos";
             this.wnd_action_pos.Size = new System.Drawing.Size(75, 23);
             this.wnd_action_pos.TabIndex = 14;
@@ -322,7 +325,7 @@
             // 
             // wnd_action_destroy
             // 
-            this.wnd_action_destroy.Location = new System.Drawing.Point(6, 135);
+            this.wnd_action_destroy.Location = new System.Drawing.Point(6, 160);
             this.wnd_action_destroy.Name = "wnd_action_destroy";
             this.wnd_action_destroy.Size = new System.Drawing.Size(75, 23);
             this.wnd_action_destroy.TabIndex = 2;
@@ -332,9 +335,9 @@
             // 
             // wnd_action_overlay
             // 
-            this.wnd_action_overlay.Location = new System.Drawing.Point(158, 106);
+            this.wnd_action_overlay.Location = new System.Drawing.Point(147, 106);
             this.wnd_action_overlay.Name = "wnd_action_overlay";
-            this.wnd_action_overlay.Size = new System.Drawing.Size(79, 23);
+            this.wnd_action_overlay.Size = new System.Drawing.Size(64, 23);
             this.wnd_action_overlay.TabIndex = 11;
             this.wnd_action_overlay.Text = "Overlay";
             this.wnd_action_overlay.UseVisualStyleBackColor = true;
@@ -342,9 +345,9 @@
             // 
             // wnd_action_front
             // 
-            this.wnd_action_front.Location = new System.Drawing.Point(77, 106);
+            this.wnd_action_front.Location = new System.Drawing.Point(168, 160);
             this.wnd_action_front.Name = "wnd_action_front";
-            this.wnd_action_front.Size = new System.Drawing.Size(75, 23);
+            this.wnd_action_front.Size = new System.Drawing.Size(72, 23);
             this.wnd_action_front.TabIndex = 10;
             this.wnd_action_front.Text = "To Front";
             this.wnd_action_front.UseVisualStyleBackColor = true;
@@ -363,7 +366,7 @@
             // 
             // wnd_action_title_get
             // 
-            this.wnd_action_title_get.Location = new System.Drawing.Point(200, 77);
+            this.wnd_action_title_get.Location = new System.Drawing.Point(203, 77);
             this.wnd_action_title_get.Name = "wnd_action_title_get";
             this.wnd_action_title_get.Size = new System.Drawing.Size(37, 23);
             this.wnd_action_title_get.TabIndex = 8;
@@ -373,7 +376,7 @@
             // 
             // wnd_action_title_set
             // 
-            this.wnd_action_title_set.Location = new System.Drawing.Point(200, 48);
+            this.wnd_action_title_set.Location = new System.Drawing.Point(203, 48);
             this.wnd_action_title_set.Name = "wnd_action_title_set";
             this.wnd_action_title_set.Size = new System.Drawing.Size(37, 23);
             this.wnd_action_title_set.TabIndex = 7;
@@ -385,7 +388,7 @@
             // 
             this.wnd_select_title_box.Location = new System.Drawing.Point(93, 50);
             this.wnd_select_title_box.Name = "wnd_select_title_box";
-            this.wnd_select_title_box.Size = new System.Drawing.Size(101, 20);
+            this.wnd_select_title_box.Size = new System.Drawing.Size(104, 20);
             this.wnd_select_title_box.TabIndex = 6;
             // 
             // wnd_selet_class_button
@@ -429,6 +432,9 @@
             // 
             // wnd
             // 
+            this.wnd.Controls.Add(this.wnd_action_style);
+            this.wnd.Controls.Add(this.wnd_action_visible);
+            this.wnd.Controls.Add(this.wnd_action_icon);
             this.wnd.Controls.Add(this.wnd_action_pos_h_label);
             this.wnd.Controls.Add(this.wnd_action_pos_w_label);
             this.wnd.Controls.Add(this.wnd_action_pos_h_bar);
@@ -453,7 +459,7 @@
             this.wnd.Controls.Add(this.wnd_select_self);
             this.wnd.Location = new System.Drawing.Point(12, 117);
             this.wnd.Name = "wnd";
-            this.wnd.Size = new System.Drawing.Size(246, 214);
+            this.wnd.Size = new System.Drawing.Size(246, 241);
             this.wnd.TabIndex = 6;
             this.wnd.TabStop = false;
             this.wnd.Text = "CC-Functions.W32.Wnd32";
@@ -462,14 +468,44 @@
             // 
             this.wnd_select_class_box.Location = new System.Drawing.Point(93, 79);
             this.wnd_select_class_box.Name = "wnd_select_class_box";
-            this.wnd_select_class_box.Size = new System.Drawing.Size(101, 20);
+            this.wnd_select_class_box.Size = new System.Drawing.Size(104, 20);
             this.wnd_select_class_box.TabIndex = 5;
+            // 
+            // wnd_action_icon
+            // 
+            this.wnd_action_icon.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.wnd_action_icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.wnd_action_icon.Location = new System.Drawing.Point(217, 106);
+            this.wnd_action_icon.Name = "wnd_action_icon";
+            this.wnd_action_icon.Size = new System.Drawing.Size(23, 23);
+            this.wnd_action_icon.TabIndex = 22;
+            // 
+            // wnd_action_visible
+            // 
+            this.wnd_action_visible.AutoSize = true;
+            this.wnd_action_visible.Location = new System.Drawing.Point(77, 110);
+            this.wnd_action_visible.Name = "wnd_action_visible";
+            this.wnd_action_visible.Size = new System.Drawing.Size(56, 17);
+            this.wnd_action_visible.TabIndex = 23;
+            this.wnd_action_visible.Text = "Visible";
+            this.wnd_action_visible.UseVisualStyleBackColor = true;
+            this.wnd_action_visible.CheckedChanged += new System.EventHandler(this.Wnd_action_visible_CheckedChanged);
+            // 
+            // wnd_action_style
+            // 
+            this.wnd_action_style.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.wnd_action_style.FormattingEnabled = true;
+            this.wnd_action_style.Location = new System.Drawing.Point(6, 133);
+            this.wnd_action_style.Name = "wnd_action_style";
+            this.wnd_action_style.Size = new System.Drawing.Size(121, 21);
+            this.wnd_action_style.TabIndex = 24;
+            this.wnd_action_style.SelectedIndexChanged += new System.EventHandler(this.Wnd_action_style_SelectedIndexChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(574, 342);
+            this.ClientSize = new System.Drawing.Size(574, 370);
             this.Controls.Add(this.exit);
             this.Controls.Add(this.keyboard);
             this.Controls.Add(this.mouse);
@@ -535,5 +571,8 @@
         private System.Windows.Forms.Button wnd_select_self;
         private System.Windows.Forms.GroupBox wnd;
         private System.Windows.Forms.TextBox wnd_select_class_box;
+        private System.Windows.Forms.Panel wnd_action_icon;
+        private System.Windows.Forms.CheckBox wnd_action_visible;
+        private System.Windows.Forms.ComboBox wnd_action_style;
     }
 }

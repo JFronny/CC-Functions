@@ -15,7 +15,9 @@ namespace CC_Functions.Misc
                 string a = "";
                 for (int i = 0; i < Input.Length; i++)
                     a += Input[i].ToString() + Seperator;
-                return a.Remove(a.Length - 1 - Seperator.Length);
+                if (Seperator.Length > 0)
+                    a = a.Remove(a.Length - Seperator.Length);
+                return a;
             }
             catch { throw; }
         }

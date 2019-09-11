@@ -37,6 +37,8 @@ namespace CC_Functions.W32.Test
             wnd_action_pos_y_bar.Maximum = Screen.PrimaryScreen.Bounds.Height;
             wnd_action_pos_w_bar.Maximum = Screen.PrimaryScreen.Bounds.Width;
             wnd_action_pos_h_bar.Maximum = Screen.PrimaryScreen.Bounds.Height;
+            wnd_action_style.DataSource = Enum.GetValues(typeof(FormWindowState));
+            wnd_action_style.SelectedItem = tmpWnd.state;
         }
 
         public void set_up_box(ComboBox box, Type enumT)
@@ -66,16 +68,21 @@ namespace CC_Functions.W32.Test
 
         private void Wnd_action_title_get_Click(object sender, EventArgs e)
         {
+            if (!tmpWnd.stillExists)
+                tmpWnd = Wnd32.fromForm(this);
             wnd_select_title_box.Text = tmpWnd.title;
-            wnd_action_enabled.Enabled = tmpWnd.enabled;
+            wnd_action_enabled.Checked = tmpWnd.enabled;
             wnd_select_selected.Text = "Selected: " + tmpWnd.hWnd.ToString();
+            try { wnd_action_icon.BackgroundImage = tmpWnd.icon.ToBitmap(); } catch { wnd_action_icon.BackgroundImage = null; }
             try { wnd_action_pos_x_bar.Value = tmpWnd.position.X; } catch { }
             try { wnd_action_pos_y_bar.Value = tmpWnd.position.Y; } catch { }
             try { wnd_action_pos_w_bar.Value = tmpWnd.position.Width; } catch { }
             try { wnd_action_pos_h_bar.Value = tmpWnd.position.Height; } catch { }
         }
 
-        private void Wnd_action_enabled_CheckedChanged(object sender, EventArgs e) => tmpWnd.enabled = wnd_action_enabled.Enabled;
+        private void Wnd_action_enabled_CheckedChanged(object sender, EventArgs e) => tmpWnd.enabled = wnd_action_enabled.Checked;
+
+        private void Wnd_action_visible_CheckedChanged(object sender, EventArgs e) => tmpWnd.shown = wnd_action_visible.Checked;
 
         private void Wnd_action_front_Click(object sender, EventArgs e) => tmpWnd.isForeground = true;
 
@@ -205,6 +212,12 @@ namespace CC_Functions.W32.Test
         private void Exit_MouseUp(object sender, MouseEventArgs e)
         {
             moving = false;
+        }
+
+        private void Wnd_action_style_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Enum.TryParse(wnd_action_style.SelectedValue.ToString(), out FormWindowState status);
+            tmpWnd.state = status;
         }
     }
 }
