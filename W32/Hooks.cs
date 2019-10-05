@@ -10,7 +10,7 @@ using System.Drawing;
 
 namespace CC_Functions.W32
 {
-    public class KeyboardHookEventArgs : EventArgs
+    public sealed class KeyboardHookEventArgs : EventArgs
     {
         public KeyboardHookEventArgs(Keys key)
         {
@@ -21,7 +21,7 @@ namespace CC_Functions.W32
         public override string ToString() => Key.ToString();
     }
 
-    public class KeyboardHook : IDisposable
+    public sealed class KeyboardHook : IDisposable
     {
         public void Dispose()
         {

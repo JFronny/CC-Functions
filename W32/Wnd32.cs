@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace CC_Functions.W32
 {
-    public class Wnd32 : IEquatable<Wnd32>
+    public sealed class Wnd32 : IEquatable<Wnd32>
     {
         #region Exposed
         #region CreateInstance
