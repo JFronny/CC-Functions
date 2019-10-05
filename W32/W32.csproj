@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Hooks.cs" />
+    <Compile Include="KeyboardReader.cs" />
     <Compile Include="Power.cs" />
     <Compile Include="Privileges.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
