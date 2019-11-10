@@ -9,7 +9,6 @@ using System.Drawing;
 
 namespace CC_Functions.W32
 {
-
     public sealed class MouseHook : IDisposable
     {
         public void Dispose()

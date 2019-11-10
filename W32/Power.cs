@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using static CC_Functions.W32.Privileges;
 
 namespace CC_Functions.W32
 {
@@ -106,7 +107,7 @@ namespace CC_Functions.W32
             }
             else
             {
-                Privileges.EnablePrivilege(SecurityEntity.SE_SHUTDOWN_NAME);
+                EnablePrivilege(SecurityEntity.SeShutdownPrivilege);
                 ExitWindowsEx((ExitWindows)((uint)mode | (uint)mod), reason);
             }
         }
