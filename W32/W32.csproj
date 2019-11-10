@@ -45,8 +45,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Hooks.cs" />
+    <Compile Include="Hooks\MouseHook.cs" />
+    <Compile Include="Hooks\KeyboardHook.cs" />
+    <Compile Include="Hooks\KeyboardHookEventArgs.cs" />
     <Compile Include="KeyboardReader.cs" />
+    <Compile Include="Hooks\MouseHookEventArgs.cs" />
     <Compile Include="Power.cs" />
     <Compile Include="Privileges.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

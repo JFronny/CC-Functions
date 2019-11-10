@@ -22,7 +22,7 @@ namespace CC_Functions.W32
                     state |= 1;
                 if ((retVal & 1) == 1)
                     state |= 2;
-                return 1 == (state & 1);
+                return (state & 1) == 1;
             }
             catch
             {
