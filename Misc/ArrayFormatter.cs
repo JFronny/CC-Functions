@@ -2,7 +2,7 @@
 {
     public static class ArrayFormatter
     {
-        public static string ArrayToString(object[] Input, string Seperator = "\r\n")
+        public static string ElementsToString(this object[] Input, string Seperator = "\r\n")
         {
             try
             {
