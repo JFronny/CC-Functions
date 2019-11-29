@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CC_Functions.W32
 {
@@ -146,7 +142,9 @@ namespace CC_Functions.W32
             SE_UNDOCK_NAME_TEXT,
             SE_UNSOLICITED_INPUT_NAME_TEXT
         }
+
         public static SecurityEntity EntityToEntity(SecurityEntity2 entity) => (SecurityEntity)entity;
+
         internal static class NativeMethods
         {
             [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
@@ -174,6 +172,7 @@ namespace CC_Functions.W32
             internal const uint TOKEN_ADJUST_DEFAULT = 0x0080;
             internal const uint TOKEN_ADJUST_SESSIONID = 0x0100;
             internal const uint TOKEN_READ = (STANDARD_RIGHTS_READ | TOKEN_QUERY);
+
             internal const uint TOKEN_ALL_ACCESS = STANDARD_RIGHTS_REQUIRED | TOKEN_ASSIGN_PRIMARY | TOKEN_DUPLICATE | TOKEN_IMPERSONATE | TOKEN_QUERY
                 | TOKEN_QUERY_SOURCE | TOKEN_ADJUST_PRIVILEGES | TOKEN_ADJUST_GROUPS | TOKEN_ADJUST_DEFAULT | TOKEN_ADJUST_SESSIONID;
 

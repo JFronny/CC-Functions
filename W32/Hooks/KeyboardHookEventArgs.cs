@@ -11,6 +11,7 @@ namespace CC_Functions.W32
         }
 
         public Keys Key { get; }
+
         public override string ToString() => Key.ToString();
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace CC_Functions.W32
@@ -11,7 +6,8 @@ namespace CC_Functions.W32
     public static class KeyboardReader
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
-        static extern short GetKeyState(int keyCode);
+        private static extern short GetKeyState(int keyCode);
+
         public static bool IsKeyDown(Keys key)
         {
             try

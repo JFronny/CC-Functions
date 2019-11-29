@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Windows.Forms;
 using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace CC_Functions.W32
 {
@@ -20,7 +20,9 @@ namespace CC_Functions.W32
         private const int WM_KEYDOWN = 0x0100;
         private static LowLevelKeyboardProc _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
+
         public delegate void keyPress(KeyboardHookEventArgs _args);
+
         public event keyPress OnKeyPress;
 
         public KeyboardHook()

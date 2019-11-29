@@ -1,25 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using CC_Functions.W32;
 using static CC_Functions.W32.Power;
 
 namespace CC_Functions.W32.Test
 {
     public partial class Form1 : Form
     {
-        MouseHook mHook;
-        KeyboardHook kHook;
+        private MouseHook mHook;
+        private KeyboardHook kHook;
         public static Wnd32 tmpWnd;
         public static Form1 mainF;
         public static Form frm;
         public static Label lab;
+
         public Form1()
         {
             InitializeComponent();
@@ -73,6 +68,9 @@ namespace CC_Functions.W32.Test
             wnd_select_title_box.Text = tmpWnd.title;
             wnd_action_enabled.Checked = tmpWnd.enabled;
             wnd_select_selected.Text = "Selected: " + tmpWnd.hWnd.ToString();
+            wnd_action_style.SelectedIndex = (int)tmpWnd.state;
+            wnd_select_class_box.Text = tmpWnd.className;
+            wnd_action_visible.Checked = tmpWnd.shown;
             try { wnd_action_icon.BackgroundImage = tmpWnd.icon.ToBitmap(); } catch { wnd_action_icon.BackgroundImage = null; }
             try { wnd_action_pos_x_bar.Value = tmpWnd.position.X; } catch { }
             try { wnd_action_pos_y_bar.Value = tmpWnd.position.Y; } catch { }
@@ -193,9 +191,10 @@ namespace CC_Functions.W32.Test
                 Application.Exit();
         }
 
-        bool moving;
-        Point locDelB;
-        DateTime mST;
+        private bool moving;
+        private Point locDelB;
+        private DateTime mST;
+
         private void Exit_MouseMove(object sender, MouseEventArgs e)
         {
             if (moving && (DateTime.Now - mST).TotalSeconds >= 0.1f)
@@ -219,5 +218,7 @@ namespace CC_Functions.W32.Test
             Enum.TryParse(wnd_action_style.SelectedValue.ToString(), out FormWindowState status);
             tmpWnd.state = status;
         }
+
+        private void wnd_action_overlay_CheckedChanged(object sender, EventArgs e) => tmpWnd.overlay = wnd_action_overlay.Checked;
     }
 }

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Drawing;
+using System.Runtime.InteropServices;
 
 namespace CC_Functions.W32
 {
@@ -21,7 +18,9 @@ namespace CC_Functions.W32
         private static List<MouseHook> instances = new List<MouseHook>();
         private static LowLevelMouseProc _proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
+
         public delegate void mouseEvent(MouseHookEventArgs _args);
+
         public event mouseEvent OnMouse;
 
         public MouseHook()
@@ -41,6 +40,7 @@ namespace CC_Functions.W32
         }
 
         private delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
+
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
             if (nCode >= 0)
@@ -55,6 +55,7 @@ namespace CC_Functions.W32
         }
 
         private const int WH_MOUSE_LL = 14;
+
         public enum MouseMessages
         {
             WM_LBUTTONDOWN = 0x0201,

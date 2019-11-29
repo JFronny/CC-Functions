@@ -54,7 +54,6 @@
             this.power_mode_box = new System.Windows.Forms.ComboBox();
             this.wnd_select_mouse = new System.Windows.Forms.Button();
             this.wnd_action_destroy = new System.Windows.Forms.Button();
-            this.wnd_action_overlay = new System.Windows.Forms.Button();
             this.wnd_action_front = new System.Windows.Forms.Button();
             this.wnd_action_enabled = new System.Windows.Forms.CheckBox();
             this.wnd_action_title_get = new System.Windows.Forms.Button();
@@ -65,10 +64,11 @@
             this.wnd_select_selected = new System.Windows.Forms.Label();
             this.wnd_select_self = new System.Windows.Forms.Button();
             this.wnd = new System.Windows.Forms.GroupBox();
-            this.wnd_select_class_box = new System.Windows.Forms.TextBox();
-            this.wnd_action_icon = new System.Windows.Forms.Panel();
-            this.wnd_action_visible = new System.Windows.Forms.CheckBox();
             this.wnd_action_style = new System.Windows.Forms.ComboBox();
+            this.wnd_action_visible = new System.Windows.Forms.CheckBox();
+            this.wnd_action_icon = new System.Windows.Forms.Panel();
+            this.wnd_select_class_box = new System.Windows.Forms.TextBox();
+            this.wnd_action_overlay = new System.Windows.Forms.CheckBox();
             this.keyboard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.wnd_action_pos_h_bar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.wnd_action_pos_w_bar)).BeginInit();
@@ -333,16 +333,6 @@
             this.wnd_action_destroy.UseVisualStyleBackColor = true;
             this.wnd_action_destroy.Click += new System.EventHandler(this.Wnd_action_destroy_Click);
             // 
-            // wnd_action_overlay
-            // 
-            this.wnd_action_overlay.Location = new System.Drawing.Point(147, 106);
-            this.wnd_action_overlay.Name = "wnd_action_overlay";
-            this.wnd_action_overlay.Size = new System.Drawing.Size(64, 23);
-            this.wnd_action_overlay.TabIndex = 11;
-            this.wnd_action_overlay.Text = "Overlay";
-            this.wnd_action_overlay.UseVisualStyleBackColor = true;
-            this.wnd_action_overlay.Click += new System.EventHandler(this.Wnd_action_overlay_Click);
-            // 
             // wnd_action_front
             // 
             this.wnd_action_front.Location = new System.Drawing.Point(168, 160);
@@ -432,6 +422,7 @@
             // 
             // wnd
             // 
+            this.wnd.Controls.Add(this.wnd_action_overlay);
             this.wnd.Controls.Add(this.wnd_action_style);
             this.wnd.Controls.Add(this.wnd_action_visible);
             this.wnd.Controls.Add(this.wnd_action_icon);
@@ -446,7 +437,6 @@
             this.wnd.Controls.Add(this.wnd_action_pos);
             this.wnd.Controls.Add(this.wnd_select_mouse);
             this.wnd.Controls.Add(this.wnd_action_destroy);
-            this.wnd.Controls.Add(this.wnd_action_overlay);
             this.wnd.Controls.Add(this.wnd_action_front);
             this.wnd.Controls.Add(this.wnd_action_enabled);
             this.wnd.Controls.Add(this.wnd_action_title_get);
@@ -464,21 +454,15 @@
             this.wnd.TabStop = false;
             this.wnd.Text = "CC-Functions.W32.Wnd32";
             // 
-            // wnd_select_class_box
+            // wnd_action_style
             // 
-            this.wnd_select_class_box.Location = new System.Drawing.Point(93, 79);
-            this.wnd_select_class_box.Name = "wnd_select_class_box";
-            this.wnd_select_class_box.Size = new System.Drawing.Size(104, 20);
-            this.wnd_select_class_box.TabIndex = 5;
-            // 
-            // wnd_action_icon
-            // 
-            this.wnd_action_icon.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.wnd_action_icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.wnd_action_icon.Location = new System.Drawing.Point(217, 106);
-            this.wnd_action_icon.Name = "wnd_action_icon";
-            this.wnd_action_icon.Size = new System.Drawing.Size(23, 23);
-            this.wnd_action_icon.TabIndex = 22;
+            this.wnd_action_style.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.wnd_action_style.FormattingEnabled = true;
+            this.wnd_action_style.Location = new System.Drawing.Point(6, 133);
+            this.wnd_action_style.Name = "wnd_action_style";
+            this.wnd_action_style.Size = new System.Drawing.Size(121, 21);
+            this.wnd_action_style.TabIndex = 24;
+            this.wnd_action_style.SelectedIndexChanged += new System.EventHandler(this.Wnd_action_style_SelectedIndexChanged);
             // 
             // wnd_action_visible
             // 
@@ -491,15 +475,32 @@
             this.wnd_action_visible.UseVisualStyleBackColor = true;
             this.wnd_action_visible.CheckedChanged += new System.EventHandler(this.Wnd_action_visible_CheckedChanged);
             // 
-            // wnd_action_style
+            // wnd_action_icon
             // 
-            this.wnd_action_style.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.wnd_action_style.FormattingEnabled = true;
-            this.wnd_action_style.Location = new System.Drawing.Point(6, 133);
-            this.wnd_action_style.Name = "wnd_action_style";
-            this.wnd_action_style.Size = new System.Drawing.Size(121, 21);
-            this.wnd_action_style.TabIndex = 24;
-            this.wnd_action_style.SelectedIndexChanged += new System.EventHandler(this.Wnd_action_style_SelectedIndexChanged);
+            this.wnd_action_icon.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.wnd_action_icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.wnd_action_icon.Location = new System.Drawing.Point(217, 106);
+            this.wnd_action_icon.Name = "wnd_action_icon";
+            this.wnd_action_icon.Size = new System.Drawing.Size(23, 23);
+            this.wnd_action_icon.TabIndex = 22;
+            // 
+            // wnd_select_class_box
+            // 
+            this.wnd_select_class_box.Location = new System.Drawing.Point(93, 79);
+            this.wnd_select_class_box.Name = "wnd_select_class_box";
+            this.wnd_select_class_box.Size = new System.Drawing.Size(104, 20);
+            this.wnd_select_class_box.TabIndex = 5;
+            // 
+            // wnd_action_overlay
+            // 
+            this.wnd_action_overlay.AutoSize = true;
+            this.wnd_action_overlay.Location = new System.Drawing.Point(139, 110);
+            this.wnd_action_overlay.Name = "wnd_action_overlay";
+            this.wnd_action_overlay.Size = new System.Drawing.Size(62, 17);
+            this.wnd_action_overlay.TabIndex = 25;
+            this.wnd_action_overlay.Text = "Overlay";
+            this.wnd_action_overlay.UseVisualStyleBackColor = true;
+            this.wnd_action_overlay.CheckedChanged += new System.EventHandler(this.wnd_action_overlay_CheckedChanged);
             // 
             // Form1
             // 
@@ -559,7 +560,6 @@
         private System.Windows.Forms.ComboBox power_mode_box;
         private System.Windows.Forms.Button wnd_select_mouse;
         private System.Windows.Forms.Button wnd_action_destroy;
-        private System.Windows.Forms.Button wnd_action_overlay;
         private System.Windows.Forms.Button wnd_action_front;
         private System.Windows.Forms.CheckBox wnd_action_enabled;
         private System.Windows.Forms.Button wnd_action_title_get;
@@ -574,5 +574,6 @@
         private System.Windows.Forms.Panel wnd_action_icon;
         private System.Windows.Forms.CheckBox wnd_action_visible;
         private System.Windows.Forms.ComboBox wnd_action_style;
+        private System.Windows.Forms.CheckBox wnd_action_overlay;
     }
 }

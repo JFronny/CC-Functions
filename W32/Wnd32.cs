@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace CC_Functions.W32
@@ -13,15 +10,25 @@ namespace CC_Functions.W32
     public sealed class Wnd32 : IEquatable<Wnd32>
     {
         #region Exposed
+
         #region CreateInstance
-        Wnd32(IntPtr wndref) => hWnd = wndref;
+
+        private Wnd32(IntPtr wndref) => hWnd = wndref;
+
         public static Wnd32 fromHandle(IntPtr handle) => new Wnd32(handle);
+
         public static Wnd32 fromMetadata(string lpClassName = null, string lpWindowName = null) => fromHandle(FindWindow(lpClassName, lpWindowName));
+
         public static Wnd32 fromPoint(Point point) => fromHandle(WindowFromPoint(point.X, point.Y));
+
         public static Wnd32 fromForm(Form form) => fromHandle(form.Handle);
+
         public static Wnd32 foreground() => fromHandle(GetForegroundWindow());
-        #endregion
+
+        #endregion CreateInstance
+
         #region InstanceActions
+
         public string title
         {
             get {
@@ -34,6 +41,7 @@ namespace CC_Functions.W32
                 SetWindowText(hWnd, value);
             }
         }
+
         public Rectangle position
         {
             get {
@@ -47,6 +55,7 @@ namespace CC_Functions.W32
                 MoveWindow(hWnd, value.X, value.Y, value.Width, value.Height, true);
             }
         }
+
         public bool isForeground
         {
             get {
@@ -59,6 +68,7 @@ namespace CC_Functions.W32
                     throw new InvalidOperationException("You can't set a Window not to be in the foreground. Move another one over it!");
             }
         }
+
         public bool enabled
         {
             get {
@@ -68,6 +78,7 @@ namespace CC_Functions.W32
                 EnableWindow(hWnd, value);
             }
         }
+
         public Icon icon
         {
             get {
@@ -79,8 +90,12 @@ namespace CC_Functions.W32
                 return Icon.FromHandle(hicon);
             }
         }
+
         public bool shown
         {
+            get {
+                return IsWindowVisible(hWnd);
+            }
             set {
                 if (value)
                     ShowWindow(hWnd, 9);
@@ -88,6 +103,16 @@ namespace CC_Functions.W32
                     ShowWindow(hWnd, 0);
             }
         }
+
+        public string className
+        {
+            get {
+                StringBuilder ClassName = new StringBuilder(256);
+                _ = GetClassName(hWnd, ClassName, ClassName.Capacity);
+                return ClassName.ToString();
+            }
+        }
+
         public FormWindowState state
         {
             get {
@@ -111,9 +136,11 @@ namespace CC_Functions.W32
                     case FormWindowState.Minimized:
                         ShowWindow(hWnd, 11);
                         break;
+
                     case FormWindowState.Normal:
                         ShowWindow(hWnd, 1);
                         break;
+
                     case FormWindowState.Maximized:
                         ShowWindow(hWnd, 3);
                         break;
@@ -121,7 +148,16 @@ namespace CC_Functions.W32
             }
         }
 
-        public void MakeOverlay() => _ = SetWindowPos(hWnd, HWND_TOPMOST, 0, 0, 0, 0, TOPMOST_FLAGS);
+        public void MakeOverlay() => overlay = true;
+
+        public bool overlay
+        {
+            set {
+                Rectangle tmp = position;
+                _ = SetWindowPos(hWnd, value ? HWND_TOPMOST : HWND_NOTOPMOST, tmp.X, tmp.Y, tmp.Width, tmp.Height, value ? SWP_NOMOVE | SWP_NOSIZE : 0);
+            }
+        }
+
         public bool Destroy()
         {
             if (DestroyWindow(hWnd))
@@ -131,60 +167,80 @@ namespace CC_Functions.W32
         }
 
         public bool stillExists => IsWindow(hWnd);
+
         public override string ToString() => hWnd.ToString() + "; " + title + "; " + position.ToString();
+
         public override bool Equals(object obj) => Equals(obj as Wnd32);
+
         public bool Equals(Wnd32 other) => other != null && EqualityComparer<IntPtr>.Default.Equals(hWnd, other.hWnd);
+
         public override int GetHashCode() => -75345830 + EqualityComparer<IntPtr>.Default.GetHashCode(hWnd);
+
         public static bool operator ==(Wnd32 left, Wnd32 right) => EqualityComparer<Wnd32>.Default.Equals(left, right);
+
         public static bool operator !=(Wnd32 left, Wnd32 right) => !(left == right);
-        #endregion
-        #endregion
+
+        #endregion InstanceActions
+
+        #endregion Exposed
+
         #region W32
+
         public IntPtr hWnd;
-        [DllImport("user32.dll")]
-        static extern IntPtr GetForegroundWindow();
-
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
-
-        [DllImport("user32.dll")]
-        static extern IntPtr WindowFromPoint(int xPoint, int yPoint);
-
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        static extern bool SetWindowText(IntPtr hWnd, string lpString);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
-
-        [DllImport("user32.dll")]
-        static extern bool SetForegroundWindow(IntPtr hWnd);
-
-        [DllImport("user32.dll")]
-        static extern bool EnableWindow(IntPtr hWnd, bool bEnable);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool IsWindowEnabled(IntPtr hWnd);
+        private static extern bool IsWindowVisible(IntPtr hWnd);
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Ansi)]
+        private static extern long GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr GetForegroundWindow();
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        [DllImport("user32.dll")]
+        private static extern IntPtr WindowFromPoint(int xPoint, int yPoint);
+
+        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        private static extern bool SetWindowText(IntPtr hWnd, string lpString);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool MoveWindow(IntPtr hWnd, int X, int Y, int nWidth, int nHeight, bool bRepaint);
+
+        [DllImport("user32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        private static extern bool EnableWindow(IntPtr hWnd, bool bEnable);
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool IsWindowEnabled(IntPtr hWnd);
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool DestroyWindow(IntPtr hwnd);
+        private static extern bool DestroyWindow(IntPtr hwnd);
 
-        static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
-        const UInt32 SWP_NOSIZE = 0x0001;
-        const UInt32 SWP_NOMOVE = 0x0002;
-        const UInt32 TOPMOST_FLAGS = SWP_NOMOVE | SWP_NOSIZE;
+        private static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
+        private static readonly IntPtr HWND_TOP = new IntPtr(0);
+        private static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
+        private const UInt32 SWP_NOSIZE = 0x0001;
+        private const UInt32 SWP_NOMOVE = 0x0002;
+
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+        private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
+        [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+        private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall, ExactSpelling = true, SetLastError = true)]
-        static extern bool GetWindowRect(IntPtr hWnd, ref RECT rect);
+        private static extern bool GetWindowRect(IntPtr hWnd, ref RECT rect);
 
-        struct RECT
+        private struct RECT
         {
             public int left;
             public int top;
@@ -193,20 +249,21 @@ namespace CC_Functions.W32
         }
 
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        static extern int GetWindowTextLength(IntPtr hWnd);
+        private static extern int GetWindowTextLength(IntPtr hWnd);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool IsWindow(IntPtr hWnd);
+        private static extern bool IsWindow(IntPtr hWnd);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
-        static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
 
         [DllImport("user32.dll")]
-        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
         [DllImport("user32.dll", SetLastError = true)]
-        static extern int GetWindowLong(IntPtr hWnd, int nIndex);
-        #endregion
+        private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+
+        #endregion W32
     }
 }

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using static CC_Functions.W32.Privileges;
 
 namespace CC_Functions.W32
@@ -11,7 +7,8 @@ namespace CC_Functions.W32
     public static class Power
     {
         [DllImport("ntdll.dll", SetLastError = true)]
-        static extern IntPtr RtlAdjustPrivilege(int Privilege, bool bEnablePrivilege, bool IsThreadPrivilege, out bool PreviousValue);
+        private static extern IntPtr RtlAdjustPrivilege(int Privilege, bool bEnablePrivilege, bool IsThreadPrivilege, out bool PreviousValue);
+
         [DllImport("ntdll.dll")]
         private static extern uint NtRaiseHardError(
             uint ErrorStatus,
@@ -21,9 +18,11 @@ namespace CC_Functions.W32
             uint ValidResponseOption,
             out uint Response
         );
+
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool ExitWindowsEx(ExitWindows uFlags, ShutdownReason dwReason);
+        private static extern bool ExitWindowsEx(ExitWindows uFlags, ShutdownReason dwReason);
+
         [Flags]
         public enum ShutdownReason : uint
         {
@@ -66,19 +65,24 @@ namespace CC_Functions.W32
             FlagUserDefined = 0x40000000,
             FlagPlanned = 0x80000000
         }
+
         [Flags]
         public enum ExitWindows : uint
         {
             // ONE of the following five:
             LogOff = 0x00,
+
             ShutDown = 0x01,
             Reboot = 0x02,
             PowerOff = 0x08,
             RestartApps = 0x40,
+
             // plus AT MOST ONE of the following two:
             Force = 0x04,
+
             ForceIfHung = 0x10,
         }
+
         [Flags]
         public enum ShutdownMode : uint
         {
@@ -89,6 +93,7 @@ namespace CC_Functions.W32
             RestartApps = 0x40,
             BSoD = 0x29a
         }
+
         [Flags]
         public enum ShutdownMod : uint
         {
@@ -96,6 +101,7 @@ namespace CC_Functions.W32
             Force = 0x04,
             ForceIfHung = 0x10
         }
+
         public static unsafe void RaiseEvent(ShutdownMode mode, ShutdownReason reason = ShutdownReason.MinorOther, ShutdownMod mod = ShutdownMod.None)
         {
             if (mode == ShutdownMode.BSoD)
