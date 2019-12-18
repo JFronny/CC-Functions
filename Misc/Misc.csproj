@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
@@ -46,6 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArrayFormatter.cs" />
+    <Compile Include="DataGridViewNumericUpDownCell.cs" />
+    <Compile Include="DataGridViewNumericUpDownColumn.cs" />
+    <Compile Include="DataGridViewNumericUpDownEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Forms.cs" />
     <Compile Include="GenericExtensions.cs" />
     <Compile Include="HID.cs" />
