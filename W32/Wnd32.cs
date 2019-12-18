@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
@@ -25,6 +27,18 @@ namespace CC_Functions.W32
 
         public static Wnd32 foreground() => fromHandle(GetForegroundWindow());
 
+        public static Wnd32[] getVisible()
+        {
+            WindowHandles = new List<IntPtr>();
+            if (!EnumDesktopWindows(IntPtr.Zero, FilterCallback, IntPtr.Zero))
+            {
+                throw new Win32Exception("There was a native error. This should never happen!");
+            }
+            else
+            {
+                return WindowHandles.Select(s => fromHandle(s)).ToArray();
+            }
+        }
         #endregion CreateInstance
 
         #region InstanceActions
@@ -264,6 +278,22 @@ namespace CC_Functions.W32
         [DllImport("user32.dll", SetLastError = true)]
         private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
 
+        [DllImport("user32.dll", EntryPoint = "EnumDesktopWindows", ExactSpelling = false, CharSet = CharSet.Auto, SetLastError = true)]
+        private static extern bool EnumDesktopWindows(IntPtr hDesktop, EnumDelegate lpEnumCallbackFunction, IntPtr lParam);
+
+        // Define the callback delegate's type.
+        private delegate bool EnumDelegate(IntPtr hWnd, int lParam);
+        private static List<IntPtr> WindowHandles;
+        private static bool FilterCallback(IntPtr hWnd, int lParam)
+        {
+            StringBuilder sb_title = new StringBuilder(1024);
+            GetWindowText(hWnd, sb_title, sb_title.Capacity);
+            if (IsWindowVisible(hWnd) && string.IsNullOrEmpty(sb_title.ToString()) == false)
+            {
+                WindowHandles.Add(hWnd);
+            }
+            return true;
+        }
         #endregion W32
     }
 }

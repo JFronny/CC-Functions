@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CC_Functions.Misc;
+using System;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -54,6 +55,8 @@ namespace CC_Functions.W32.Test
         private void Power_execute_Click(object sender, EventArgs e) => RaiseEvent((ShutdownMode)get_box_value(power_mode_box), (ShutdownReason)get_box_value(power_reason_box), (ShutdownMod)get_box_value(power_mod_box));
 
         private void Wnd_select_self_Click(object sender, EventArgs e) => tmpWnd = Wnd32.fromForm(this);
+
+        private void wnd_select_list_Click(object sender, EventArgs e) => tmpWnd = SelectBox.Show(Wnd32.getVisible(), "Please select a window") ?? tmpWnd;
 
         private void Wnd_select_title_button_Click(object sender, EventArgs e) => tmpWnd = Wnd32.fromMetadata(null, wnd_select_title_box.Text);
 

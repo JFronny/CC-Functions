@@ -82,6 +82,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Misc\Misc.csproj">
+      <Project>{B80D5E09-B935-4602-A173-BAF7C1974999}</Project>
+      <Name>Misc</Name>
+    </ProjectReference>
     <ProjectReference Include="..\W32\W32.csproj">
       <Project>{23de4ae0-5075-4ccc-8440-4d131ca0fbba}</Project>
       <Name>W32</Name>
