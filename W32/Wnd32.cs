@@ -15,56 +15,72 @@ namespace CC_Functions.W32
 
         #region CreateInstance
 
-        private Wnd32(IntPtr wndref) => hWnd = wndref;
+        private Wnd32(IntPtr wndref)
+        {
+            hWnd = wndref;
+        }
 
-        public static Wnd32 fromHandle(IntPtr handle) => new Wnd32(handle);
+        public static Wnd32 fromHandle(IntPtr handle)
+        {
+            return new Wnd32(handle);
+        }
 
-        public static Wnd32 fromMetadata(string lpClassName = null, string lpWindowName = null) => fromHandle(FindWindow(lpClassName, lpWindowName));
+        public static Wnd32 fromMetadata(string lpClassName = null, string lpWindowName = null)
+        {
+            return fromHandle(FindWindow(lpClassName, lpWindowName));
+        }
 
-        public static Wnd32 fromPoint(Point point) => fromHandle(WindowFromPoint(point.X, point.Y));
+        public static Wnd32 fromPoint(Point point)
+        {
+            return fromHandle(WindowFromPoint(point.X, point.Y));
+        }
 
-        public static Wnd32 fromForm(Form form) => fromHandle(form.Handle);
+        public static Wnd32 fromForm(Form form)
+        {
+            return fromHandle(form.Handle);
+        }
 
-        public static Wnd32 foreground() => fromHandle(GetForegroundWindow());
+        public static Wnd32 foreground()
+        {
+            return fromHandle(GetForegroundWindow());
+        }
 
         public static Wnd32[] getVisible()
         {
             WindowHandles = new List<IntPtr>();
             if (!EnumDesktopWindows(IntPtr.Zero, FilterCallback, IntPtr.Zero))
-            {
                 throw new Win32Exception("There was a native error. This should never happen!");
-            }
-            else
-            {
-                return WindowHandles.Select(s => fromHandle(s)).ToArray();
-            }
+            return WindowHandles.Select(s => fromHandle(s)).ToArray();
         }
+
         #endregion CreateInstance
 
         #region InstanceActions
 
         public string title
         {
-            get {
-                int length = GetWindowTextLength(hWnd);
-                StringBuilder sb = new StringBuilder(length + 1);
+            get
+            {
+                var length = GetWindowTextLength(hWnd);
+                var sb = new StringBuilder(length + 1);
                 GetWindowText(hWnd, sb, sb.Capacity);
                 return sb.ToString();
             }
-            set {
-                SetWindowText(hWnd, value);
-            }
+            set => SetWindowText(hWnd, value);
         }
 
         public Rectangle position
         {
-            get {
-                RECT Rect = new RECT();
+            get
+            {
+                var Rect = new RECT();
                 GetWindowRect(hWnd, ref Rect);
-                return new Rectangle(new Point(Rect.left, Rect.top), new Size(Rect.right - Rect.left, Rect.bottom - Rect.top));
+                return new Rectangle(new Point(Rect.left, Rect.top),
+                    new Size(Rect.right - Rect.left, Rect.bottom - Rect.top));
             }
-            set {
-                RECT Rect = new RECT();
+            set
+            {
+                var Rect = new RECT();
                 GetWindowRect(hWnd, ref Rect);
                 MoveWindow(hWnd, value.X, value.Y, value.Width, value.Height, true);
             }
@@ -72,30 +88,27 @@ namespace CC_Functions.W32
 
         public bool isForeground
         {
-            get {
-                return GetForegroundWindow() == hWnd;
-            }
-            set {
+            get => GetForegroundWindow() == hWnd;
+            set
+            {
                 if (value)
                     SetForegroundWindow(hWnd);
                 else
-                    throw new InvalidOperationException("You can't set a Window not to be in the foreground. Move another one over it!");
+                    throw new InvalidOperationException(
+                        "You can't set a Window not to be in the foreground. Move another one over it!");
             }
         }
 
         public bool enabled
         {
-            get {
-                return IsWindowEnabled(hWnd);
-            }
-            set {
-                EnableWindow(hWnd, value);
-            }
+            get => IsWindowEnabled(hWnd);
+            set => EnableWindow(hWnd, value);
         }
 
         public Icon icon
         {
-            get {
+            get
+            {
                 var hicon = SendMessage(hWnd, 0x7F, 1, 0);
                 if (hicon == IntPtr.Zero)
                     hicon = SendMessage(hWnd, 0x7F, 0, 0);
@@ -107,10 +120,9 @@ namespace CC_Functions.W32
 
         public bool shown
         {
-            get {
-                return IsWindowVisible(hWnd);
-            }
-            set {
+            get => IsWindowVisible(hWnd);
+            set
+            {
                 if (value)
                     ShowWindow(hWnd, 9);
                 else
@@ -120,8 +132,9 @@ namespace CC_Functions.W32
 
         public string className
         {
-            get {
-                StringBuilder ClassName = new StringBuilder(256);
+            get
+            {
+                var ClassName = new StringBuilder(256);
                 _ = GetClassName(hWnd, ClassName, ClassName.Capacity);
                 return ClassName.ToString();
             }
@@ -129,22 +142,17 @@ namespace CC_Functions.W32
 
         public FormWindowState state
         {
-            get {
-                int style = (int)GetWindowLong(hWnd, -16);
+            get
+            {
+                var style = GetWindowLong(hWnd, -16);
                 if ((style & 0x01000000) == 0x01000000)
-                {
                     return FormWindowState.Maximized;
-                }
-                else if ((style & 0x20000000) == 0x20000000)
-                {
+                if ((style & 0x20000000) == 0x20000000)
                     return FormWindowState.Minimized;
-                }
-                else
-                {
-                    return FormWindowState.Normal;
-                }
+                return FormWindowState.Normal;
             }
-            set {
+            set
+            {
                 switch (value)
                 {
                     case FormWindowState.Minimized:
@@ -162,13 +170,18 @@ namespace CC_Functions.W32
             }
         }
 
-        public void MakeOverlay() => overlay = true;
+        public void MakeOverlay()
+        {
+            overlay = true;
+        }
 
         public bool overlay
         {
-            set {
-                Rectangle tmp = position;
-                _ = SetWindowPos(hWnd, value ? HWND_TOPMOST : HWND_NOTOPMOST, tmp.X, tmp.Y, tmp.Width, tmp.Height, value ? SWP_NOMOVE | SWP_NOSIZE : 0);
+            set
+            {
+                var tmp = position;
+                _ = SetWindowPos(hWnd, value ? HWND_TOPMOST : HWND_NOTOPMOST, tmp.X, tmp.Y, tmp.Width, tmp.Height,
+                    value ? SWP_NOMOVE | SWP_NOSIZE : 0);
             }
         }
 
@@ -176,23 +189,40 @@ namespace CC_Functions.W32
         {
             if (DestroyWindow(hWnd))
                 return true;
-            else
-                throw new Exception("Failed.");
+            throw new Exception("Failed.");
         }
 
         public bool stillExists => IsWindow(hWnd);
 
-        public override string ToString() => hWnd.ToString() + "; " + title + "; " + position.ToString();
+        public override string ToString()
+        {
+            return hWnd + "; " + title + "; " + position;
+        }
 
-        public override bool Equals(object obj) => Equals(obj as Wnd32);
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Wnd32);
+        }
 
-        public bool Equals(Wnd32 other) => other != null && EqualityComparer<IntPtr>.Default.Equals(hWnd, other.hWnd);
+        public bool Equals(Wnd32 other)
+        {
+            return other != null && EqualityComparer<IntPtr>.Default.Equals(hWnd, other.hWnd);
+        }
 
-        public override int GetHashCode() => -75345830 + EqualityComparer<IntPtr>.Default.GetHashCode(hWnd);
+        public override int GetHashCode()
+        {
+            return -75345830 + EqualityComparer<IntPtr>.Default.GetHashCode(hWnd);
+        }
 
-        public static bool operator ==(Wnd32 left, Wnd32 right) => EqualityComparer<Wnd32>.Default.Equals(left, right);
+        public static bool operator ==(Wnd32 left, Wnd32 right)
+        {
+            return EqualityComparer<Wnd32>.Default.Equals(left, right);
+        }
 
-        public static bool operator !=(Wnd32 left, Wnd32 right) => !(left == right);
+        public static bool operator !=(Wnd32 left, Wnd32 right)
+        {
+            return !(left == right);
+        }
 
         #endregion InstanceActions
 
@@ -241,17 +271,19 @@ namespace CC_Functions.W32
         private static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
         private static readonly IntPtr HWND_TOP = new IntPtr(0);
         private static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
-        private const UInt32 SWP_NOSIZE = 0x0001;
-        private const UInt32 SWP_NOMOVE = 0x0002;
+        private const uint SWP_NOSIZE = 0x0001;
+        private const uint SWP_NOMOVE = 0x0002;
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+        private static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy,
+            uint uFlags);
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
 
-        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall, ExactSpelling = true, SetLastError = true)]
+        [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall,
+            ExactSpelling = true, SetLastError = true)]
         private static extern bool GetWindowRect(IntPtr hWnd, ref RECT rect);
 
         private struct RECT
@@ -278,22 +310,24 @@ namespace CC_Functions.W32
         [DllImport("user32.dll", SetLastError = true)]
         private static extern int GetWindowLong(IntPtr hWnd, int nIndex);
 
-        [DllImport("user32.dll", EntryPoint = "EnumDesktopWindows", ExactSpelling = false, CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern bool EnumDesktopWindows(IntPtr hDesktop, EnumDelegate lpEnumCallbackFunction, IntPtr lParam);
+        [DllImport("user32.dll", EntryPoint = "EnumDesktopWindows", ExactSpelling = false, CharSet = CharSet.Auto,
+            SetLastError = true)]
+        private static extern bool EnumDesktopWindows(IntPtr hDesktop, EnumDelegate lpEnumCallbackFunction,
+            IntPtr lParam);
 
         // Define the callback delegate's type.
         private delegate bool EnumDelegate(IntPtr hWnd, int lParam);
+
         private static List<IntPtr> WindowHandles;
+
         private static bool FilterCallback(IntPtr hWnd, int lParam)
         {
-            StringBuilder sb_title = new StringBuilder(1024);
+            var sb_title = new StringBuilder(1024);
             GetWindowText(hWnd, sb_title, sb_title.Capacity);
-            if (IsWindowVisible(hWnd) && string.IsNullOrEmpty(sb_title.ToString()) == false)
-            {
-                WindowHandles.Add(hWnd);
-            }
+            if (IsWindowVisible(hWnd) && string.IsNullOrEmpty(sb_title.ToString()) == false) WindowHandles.Add(hWnd);
             return true;
         }
+
         #endregion W32
     }
 }

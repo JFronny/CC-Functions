@@ -6,22 +6,41 @@ namespace CC_Functions.W32
 {
     public static class Power
     {
-        [DllImport("ntdll.dll", SetLastError = true)]
-        private static extern IntPtr RtlAdjustPrivilege(int Privilege, bool bEnablePrivilege, bool IsThreadPrivilege, out bool PreviousValue);
+        [Flags]
+        public enum ExitWindows : uint
+        {
+            // ONE of the following five:
+            LogOff = 0x00,
 
-        [DllImport("ntdll.dll")]
-        private static extern uint NtRaiseHardError(
-            uint ErrorStatus,
-            uint NumberOfParameters,
-            uint UnicodeStringParameterMask,
-            IntPtr Parameters,
-            uint ValidResponseOption,
-            out uint Response
-        );
+            ShutDown = 0x01,
+            Reboot = 0x02,
+            PowerOff = 0x08,
+            RestartApps = 0x40,
 
-        [DllImport("user32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool ExitWindowsEx(ExitWindows uFlags, ShutdownReason dwReason);
+            // plus AT MOST ONE of the following two:
+            Force = 0x04,
+
+            ForceIfHung = 0x10
+        }
+
+        [Flags]
+        public enum ShutdownMod : uint
+        {
+            None = 0x00,
+            Force = 0x04,
+            ForceIfHung = 0x10
+        }
+
+        [Flags]
+        public enum ShutdownMode : uint
+        {
+            LogOff = 0x00,
+            ShutDown = 0x01,
+            Reboot = 0x02,
+            PowerOff = 0x08,
+            RestartApps = 0x40,
+            BSoD = 0x29a
+        }
 
         [Flags]
         public enum ShutdownReason : uint
@@ -66,43 +85,26 @@ namespace CC_Functions.W32
             FlagPlanned = 0x80000000
         }
 
-        [Flags]
-        public enum ExitWindows : uint
-        {
-            // ONE of the following five:
-            LogOff = 0x00,
+        [DllImport("ntdll.dll", SetLastError = true)]
+        private static extern IntPtr RtlAdjustPrivilege(int Privilege, bool bEnablePrivilege, bool IsThreadPrivilege,
+            out bool PreviousValue);
 
-            ShutDown = 0x01,
-            Reboot = 0x02,
-            PowerOff = 0x08,
-            RestartApps = 0x40,
+        [DllImport("ntdll.dll")]
+        private static extern uint NtRaiseHardError(
+            uint ErrorStatus,
+            uint NumberOfParameters,
+            uint UnicodeStringParameterMask,
+            IntPtr Parameters,
+            uint ValidResponseOption,
+            out uint Response
+        );
 
-            // plus AT MOST ONE of the following two:
-            Force = 0x04,
+        [DllImport("user32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool ExitWindowsEx(ExitWindows uFlags, ShutdownReason dwReason);
 
-            ForceIfHung = 0x10,
-        }
-
-        [Flags]
-        public enum ShutdownMode : uint
-        {
-            LogOff = 0x00,
-            ShutDown = 0x01,
-            Reboot = 0x02,
-            PowerOff = 0x08,
-            RestartApps = 0x40,
-            BSoD = 0x29a
-        }
-
-        [Flags]
-        public enum ShutdownMod : uint
-        {
-            None = 0x00,
-            Force = 0x04,
-            ForceIfHung = 0x10
-        }
-
-        public static unsafe void RaiseEvent(ShutdownMode mode, ShutdownReason reason = ShutdownReason.MinorOther, ShutdownMod mod = ShutdownMod.None)
+        public static void RaiseEvent(ShutdownMode mode, ShutdownReason reason = ShutdownReason.MinorOther,
+            ShutdownMod mod = ShutdownMod.None)
         {
             if (mode == ShutdownMode.BSoD)
             {
@@ -114,7 +116,7 @@ namespace CC_Functions.W32
             else
             {
                 EnablePrivilege(SecurityEntity.SeShutdownPrivilege);
-                ExitWindowsEx((ExitWindows)((uint)mode | (uint)mod), reason);
+                ExitWindowsEx((ExitWindows) ((uint) mode | (uint) mod), reason);
             }
         }
     }

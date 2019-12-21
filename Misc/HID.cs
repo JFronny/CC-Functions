@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Management;
 using System.Security.Cryptography;
 using System.Text;
@@ -27,47 +29,80 @@ Win32_NetworkAdapterConfiguration:MACAddress:IPEnabled";
 
         public static byte[] Value
         {
-            get {
+            get
+            {
                 if (_fingerPrint == null)
                 {
-                    string fingerprint_tmp = "";
-                    HIDClasses.Split('\r').Select(s =>
+                    var fingerprint_tmp = "";
+                    if (Type.GetType("Mono.Runtime") == null)
                     {
-                        if (s.StartsWith("\n"))
-                            s = s.Remove(0, 1);
-                        return s.Split(':');
-                    }).ToList().ForEach(s =>
-                    {
-                        using (ManagementClass mc = new ManagementClass(s[0]))
-                        using (ManagementObjectCollection moc = mc.GetInstances())
+                        HIDClasses.Split('\r').Select(s =>
                         {
-                            ManagementBaseObject[] array = moc.OfType<ManagementBaseObject>().ToArray();
-                            for (int j = 0; j < array.Length; j++)
+                            if (s.StartsWith("\n"))
+                                s = s.Remove(0, 1);
+                            return s.Split(':');
+                        }).ToList().ForEach(s =>
+                        {
+                            using (var mc = new ManagementClass(s[0]))
+                            using (var moc = mc.GetInstances())
                             {
-                                if ((s.Length > 2) && array[j][s[2]].ToString() != "True") continue;
-                                try
+                                var array = moc.OfType<ManagementBaseObject>().ToArray();
+                                for (var j = 0; j < array.Length; j++)
                                 {
-                                    fingerprint_tmp += array[j][s[1]].ToString();
-                                    break;
-                                }
-                                catch
-                                {
+                                    if (s.Length > 2 && array[j][s[2]].ToString() != "True") continue;
+                                    try
+                                    {
+                                        fingerprint_tmp += array[j][s[1]].ToString();
+                                        break;
+                                    }
+                                    catch
+                                    {
+                                    }
                                 }
                             }
-                        }
-                    });
+                        });
+                    }
+                    else //Linux implementation. This will not work if you are using Mono on windows or do not have uname and lscpu available
+                    {
+                        var p = new Process
+                        {
+                            StartInfo =
+                            {
+                                UseShellExecute = false,
+                                RedirectStandardOutput = true,
+                                FileName = "uname",
+                                Arguments = "-nmpio"
+                            }
+                        };
+                        p.Start();
+                        fingerprint_tmp = p.StandardOutput.ReadToEnd();
+                        p.WaitForExit();
+                        p.StartInfo.FileName = "lscpu";
+                        p.StartInfo.Arguments = "";
+                        p.Start();
+                        fingerprint_tmp += p.StandardOutput.ReadToEnd();
+                        p.WaitForExit();
+                    }
+
                     using (MD5 sec = new MD5CryptoServiceProvider())
                     {
-                        byte[] bt = Encoding.ASCII.GetBytes(fingerprint_tmp);
+                        var bt = Encoding.ASCII.GetBytes(fingerprint_tmp);
                         _fingerPrint = sec.ComputeHash(bt);
                     }
                 }
+
                 return _fingerPrint;
             }
         }
 
-        public static byte[] EncryptLocal(byte[] unencrypted) => ProtectedData.Protect(unencrypted, Value, DataProtectionScope.CurrentUser);
+        public static byte[] EncryptLocal(byte[] unencrypted)
+        {
+            return ProtectedData.Protect(unencrypted, Value, DataProtectionScope.CurrentUser);
+        }
 
-        public static byte[] DecryptLocal(byte[] encrypted) => ProtectedData.Unprotect(encrypted, Value, DataProtectionScope.CurrentUser);
+        public static byte[] DecryptLocal(byte[] encrypted)
+        {
+            return ProtectedData.Unprotect(encrypted, Value, DataProtectionScope.CurrentUser);
+        }
     }
 }

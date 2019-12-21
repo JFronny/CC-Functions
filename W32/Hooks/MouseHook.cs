@@ -8,53 +8,7 @@ namespace CC_Functions.W32
 {
     public sealed class MouseHook : IDisposable
     {
-        public void Dispose()
-        {
-            instances.Remove(this);
-            if (instances.Count == 0)
-                UnhookWindowsHookEx(_hookID);
-        }
-
-        private static List<MouseHook> instances = new List<MouseHook>();
-        private static LowLevelMouseProc _proc = HookCallback;
-        private static IntPtr _hookID = IntPtr.Zero;
-
         public delegate void mouseEvent(MouseHookEventArgs _args);
-
-        public event mouseEvent OnMouse;
-
-        public MouseHook()
-        {
-            if (instances.Count == 0)
-                _hookID = SetHook(_proc);
-            instances.Add(this);
-        }
-
-        private static IntPtr SetHook(LowLevelMouseProc proc)
-        {
-            using (Process curProcess = Process.GetCurrentProcess())
-            using (ProcessModule curModule = curProcess.MainModule)
-            {
-                return SetWindowsHookEx(WH_MOUSE_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
-            }
-        }
-
-        private delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
-
-        private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
-        {
-            if (nCode >= 0)
-            {
-                MSLLHOOKSTRUCT hookStruct = (MSLLHOOKSTRUCT)Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
-                for (int i = 0; i < instances.Count; i++)
-                {
-                    instances[i].OnMouse?.Invoke(new MouseHookEventArgs(new Point(hookStruct.pt.x, hookStruct.pt.y), (MouseMessages)wParam));
-                }
-            }
-            return CallNextHookEx(_hookID, nCode, wParam, lParam);
-        }
-
-        private const int WH_MOUSE_LL = 14;
 
         public enum MouseMessages
         {
@@ -66,21 +20,48 @@ namespace CC_Functions.W32
             WM_RBUTTONUP = 0x0205
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        private struct POINT
+        private const int WH_MOUSE_LL = 14;
+
+        private static readonly List<MouseHook> instances = new List<MouseHook>();
+        private static readonly LowLevelMouseProc _proc = HookCallback;
+        private static IntPtr _hookID = IntPtr.Zero;
+
+        public MouseHook()
         {
-            public int x;
-            public int y;
+            if (instances.Count == 0)
+                _hookID = SetHook(_proc);
+            instances.Add(this);
         }
 
-        [StructLayout(LayoutKind.Sequential)]
-        private struct MSLLHOOKSTRUCT
+        public void Dispose()
         {
-            public POINT pt;
-            public uint mouseData;
-            public uint flags;
-            public uint time;
-            public IntPtr dwExtraInfo;
+            instances.Remove(this);
+            if (instances.Count == 0)
+                UnhookWindowsHookEx(_hookID);
+        }
+
+        public event mouseEvent OnMouse;
+
+        private static IntPtr SetHook(LowLevelMouseProc proc)
+        {
+            using (var curProcess = Process.GetCurrentProcess())
+            using (var curModule = curProcess.MainModule)
+            {
+                return SetWindowsHookEx(WH_MOUSE_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
+            }
+        }
+
+        private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
+        {
+            if (nCode >= 0)
+            {
+                var hookStruct = (MSLLHOOKSTRUCT) Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
+                for (var i = 0; i < instances.Count; i++)
+                    instances[i].OnMouse?.Invoke(new MouseHookEventArgs(new Point(hookStruct.pt.x, hookStruct.pt.y),
+                        (MouseMessages) wParam));
+            }
+
+            return CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
@@ -95,5 +76,24 @@ namespace CC_Functions.W32
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
         private static extern IntPtr GetModuleHandle(string lpModuleName);
+
+        private delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct POINT
+        {
+            public readonly int x;
+            public readonly int y;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct MSLLHOOKSTRUCT
+        {
+            public readonly POINT pt;
+            public readonly uint mouseData;
+            public readonly uint flags;
+            public readonly uint time;
+            public readonly IntPtr dwExtraInfo;
+        }
     }
 }

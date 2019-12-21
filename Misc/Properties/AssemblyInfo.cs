@@ -5,7 +5,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("CC-Functions.W32")]
-[assembly: AssemblyDescription("Random pieces of code used across my projects. I do NOT recommend using this in your own project!")]
+[assembly:
+    AssemblyDescription(
+        "Random pieces of code used across my projects. I do NOT recommend using this in your own project!")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("CC24")]
 [assembly: AssemblyProduct("CC-Functions")]

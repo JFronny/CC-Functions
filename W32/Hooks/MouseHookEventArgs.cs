@@ -16,7 +16,7 @@ namespace CC_Functions.W32
 
         public override string ToString()
         {
-            return Message.ToString() + "; " + Point.ToString();
+            return Message + "; " + Point;
         }
     }
 }
