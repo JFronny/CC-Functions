@@ -10,8 +10,8 @@ namespace CC_Functions.W32
 
         public static bool IsKeyDown(Keys key)
         {
-            var state = 0;
-            var retVal = GetKeyState((int) key);
+            int state = 0;
+            short retVal = GetKeyState((int) key);
             if ((retVal & 0x8000) == 0x8000)
                 state |= 1;
             if ((retVal & 1) == 1)

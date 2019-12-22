@@ -4,39 +4,39 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace CC_Functions.W32
+namespace CC_Functions.W32.Hooks
 {
     public sealed class KeyboardHook : IDisposable
     {
-        public delegate void keyPress(KeyboardHookEventArgs _args);
+        public delegate void KeyPress(KeyboardHookEventArgs args);
 
         private const int WH_KEYBOARD_LL = 13;
         private const int WM_KEYDOWN = 0x0100;
 
-        private static readonly List<KeyboardHook> instances = new List<KeyboardHook>();
-        private static readonly LowLevelKeyboardProc _proc = HookCallback;
+        private static readonly List<KeyboardHook> Instances = new List<KeyboardHook>();
+        private static readonly LowLevelKeyboardProc Proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
 
         public KeyboardHook()
         {
-            if (instances.Count == 0)
-                _hookID = SetHook(_proc);
-            instances.Add(this);
+            if (Instances.Count == 0)
+                _hookID = SetHook(Proc);
+            Instances.Add(this);
         }
 
         public void Dispose()
         {
-            instances.Remove(this);
-            if (instances.Count == 0)
+            Instances.Remove(this);
+            if (Instances.Count == 0)
                 UnhookWindowsHookEx(_hookID);
         }
 
-        public event keyPress OnKeyPress;
+        public event KeyPress OnKeyPress;
 
         private IntPtr SetHook(LowLevelKeyboardProc proc)
         {
-            using (var curProcess = Process.GetCurrentProcess())
-            using (var curModule = curProcess.MainModule)
+            using (Process curProcess = Process.GetCurrentProcess())
+            using (ProcessModule curModule = curProcess.MainModule)
             {
                 return SetWindowsHookEx(WH_KEYBOARD_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
             }
@@ -46,9 +46,9 @@ namespace CC_Functions.W32
         {
             if (nCode >= 0 && wParam == (IntPtr) WM_KEYDOWN)
             {
-                var vkCode = Marshal.ReadInt32(lParam);
-                for (var i = 0; i < instances.Count; i++)
-                    instances[i].OnKeyPress?.Invoke(new KeyboardHookEventArgs((Keys) vkCode));
+                int vkCode = Marshal.ReadInt32(lParam);
+                for (int i = 0; i < Instances.Count; i++)
+                    Instances[i].OnKeyPress?.Invoke(new KeyboardHookEventArgs((Keys) vkCode));
             }
 
             return CallNextHookEx(_hookID, nCode, wParam, lParam);

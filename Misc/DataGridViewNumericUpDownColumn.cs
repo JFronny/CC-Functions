@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Text;
 using System.Windows.Forms;
 
-namespace GradeCalc
+namespace CC_Functions.Misc
 {
     /// <summary>
     ///     Custom column type dedicated to the DataGridViewNumericUpDownCell cell type.
@@ -28,7 +28,7 @@ namespace GradeCalc
             get => base.CellTemplate;
             set
             {
-                var dataGridViewNumericUpDownCell = value as DataGridViewNumericUpDownCell;
+                DataGridViewNumericUpDownCell dataGridViewNumericUpDownCell = value as DataGridViewNumericUpDownCell;
                 if (value != null && dataGridViewNumericUpDownCell == null)
                     throw new InvalidCastException(
                         "Value provided for CellTemplate must be of type DataGridViewNumericUpDownElements.DataGridViewNumericUpDownCell or derive from it.");
@@ -61,14 +61,15 @@ namespace GradeCalc
                 if (DataGridView != null)
                 {
                     // Update all the existing DataGridViewNumericUpDownCell cells in the column accordingly.
-                    var dataGridViewRows = DataGridView.Rows;
-                    var rowCount = dataGridViewRows.Count;
-                    for (var rowIndex = 0; rowIndex < rowCount; rowIndex++)
+                    DataGridViewRowCollection dataGridViewRows = DataGridView.Rows;
+                    int rowCount = dataGridViewRows.Count;
+                    for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
                     {
                         // Be careful not to unshare rows unnecessarily.
                         // This could have severe performance repercussions.
-                        var dataGridViewRow = dataGridViewRows.SharedRow(rowIndex);
-                        var dataGridViewCell = dataGridViewRow.Cells[Index] as DataGridViewNumericUpDownCell;
+                        DataGridViewRow dataGridViewRow = dataGridViewRows.SharedRow(rowIndex);
+                        DataGridViewNumericUpDownCell dataGridViewCell =
+                            dataGridViewRow.Cells[Index] as DataGridViewNumericUpDownCell;
                         if (dataGridViewCell != null)
                             // Call the internal SetDecimalPlaces method instead of the property to avoid invalidation
                             // of each cell. The whole column is invalidated later in a single operation for better performance.
@@ -103,12 +104,13 @@ namespace GradeCalc
                 NumericUpDownCellTemplate.Increment = value;
                 if (DataGridView != null)
                 {
-                    var dataGridViewRows = DataGridView.Rows;
-                    var rowCount = dataGridViewRows.Count;
-                    for (var rowIndex = 0; rowIndex < rowCount; rowIndex++)
+                    DataGridViewRowCollection dataGridViewRows = DataGridView.Rows;
+                    int rowCount = dataGridViewRows.Count;
+                    for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
                     {
-                        var dataGridViewRow = dataGridViewRows.SharedRow(rowIndex);
-                        var dataGridViewCell = dataGridViewRow.Cells[Index] as DataGridViewNumericUpDownCell;
+                        DataGridViewRow dataGridViewRow = dataGridViewRows.SharedRow(rowIndex);
+                        DataGridViewNumericUpDownCell dataGridViewCell =
+                            dataGridViewRow.Cells[Index] as DataGridViewNumericUpDownCell;
                         if (dataGridViewCell != null) dataGridViewCell.SetIncrement(rowIndex, value);
                     }
                 }
@@ -138,12 +140,13 @@ namespace GradeCalc
                 NumericUpDownCellTemplate.Maximum = value;
                 if (DataGridView != null)
                 {
-                    var dataGridViewRows = DataGridView.Rows;
-                    var rowCount = dataGridViewRows.Count;
-                    for (var rowIndex = 0; rowIndex < rowCount; rowIndex++)
+                    DataGridViewRowCollection dataGridViewRows = DataGridView.Rows;
+                    int rowCount = dataGridViewRows.Count;
+                    for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
                     {
-                        var dataGridViewRow = dataGridViewRows.SharedRow(rowIndex);
-                        var dataGridViewCell = dataGridViewRow.Cells[Index] as DataGridViewNumericUpDownCell;
+                        DataGridViewRow dataGridViewRow = dataGridViewRows.SharedRow(rowIndex);
+                        DataGridViewNumericUpDownCell dataGridViewCell =
+                            dataGridViewRow.Cells[Index] as DataGridViewNumericUpDownCell;
                         if (dataGridViewCell != null) dataGridViewCell.SetMaximum(rowIndex, value);
                     }
 
@@ -178,12 +181,13 @@ namespace GradeCalc
                 NumericUpDownCellTemplate.Minimum = value;
                 if (DataGridView != null)
                 {
-                    var dataGridViewRows = DataGridView.Rows;
-                    var rowCount = dataGridViewRows.Count;
-                    for (var rowIndex = 0; rowIndex < rowCount; rowIndex++)
+                    DataGridViewRowCollection dataGridViewRows = DataGridView.Rows;
+                    int rowCount = dataGridViewRows.Count;
+                    for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
                     {
-                        var dataGridViewRow = dataGridViewRows.SharedRow(rowIndex);
-                        var dataGridViewCell = dataGridViewRow.Cells[Index] as DataGridViewNumericUpDownCell;
+                        DataGridViewRow dataGridViewRow = dataGridViewRows.SharedRow(rowIndex);
+                        DataGridViewNumericUpDownCell dataGridViewCell =
+                            dataGridViewRow.Cells[Index] as DataGridViewNumericUpDownCell;
                         if (dataGridViewCell != null) dataGridViewCell.SetMinimum(rowIndex, value);
                     }
 
@@ -218,12 +222,13 @@ namespace GradeCalc
                 NumericUpDownCellTemplate.ThousandsSeparator = value;
                 if (DataGridView != null)
                 {
-                    var dataGridViewRows = DataGridView.Rows;
-                    var rowCount = dataGridViewRows.Count;
-                    for (var rowIndex = 0; rowIndex < rowCount; rowIndex++)
+                    DataGridViewRowCollection dataGridViewRows = DataGridView.Rows;
+                    int rowCount = dataGridViewRows.Count;
+                    for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
                     {
-                        var dataGridViewRow = dataGridViewRows.SharedRow(rowIndex);
-                        var dataGridViewCell = dataGridViewRow.Cells[Index] as DataGridViewNumericUpDownCell;
+                        DataGridViewRow dataGridViewRow = dataGridViewRows.SharedRow(rowIndex);
+                        DataGridViewNumericUpDownCell dataGridViewCell =
+                            dataGridViewRow.Cells[Index] as DataGridViewNumericUpDownCell;
                         if (dataGridViewCell != null) dataGridViewCell.SetThousandsSeparator(rowIndex, value);
                     }
 
@@ -241,29 +246,23 @@ namespace GradeCalc
         private DataGridViewNumericUpDownCell NumericUpDownCellTemplate => (DataGridViewNumericUpDownCell) CellTemplate;
 
         /// Indicates whether the Increment property should be persisted.
-        private bool ShouldSerializeIncrement()
-        {
-            return !Increment.Equals(DataGridViewNumericUpDownCell.DATAGRIDVIEWNUMERICUPDOWNCELL_defaultIncrement);
-        }
+        private bool ShouldSerializeIncrement() =>
+            !Increment.Equals(DataGridViewNumericUpDownCell.DATAGRIDVIEWNUMERICUPDOWNCELL_defaultIncrement);
 
         /// Indicates whether the Maximum property should be persisted.
-        private bool ShouldSerializeMaximum()
-        {
-            return !Maximum.Equals(DataGridViewNumericUpDownCell.DATAGRIDVIEWNUMERICUPDOWNCELL_defaultMaximum);
-        }
+        private bool ShouldSerializeMaximum() =>
+            !Maximum.Equals(DataGridViewNumericUpDownCell.DATAGRIDVIEWNUMERICUPDOWNCELL_defaultMaximum);
 
         /// Indicates whether the Maximum property should be persisted.
-        private bool ShouldSerializeMinimum()
-        {
-            return !Minimum.Equals(DataGridViewNumericUpDownCell.DATAGRIDVIEWNUMERICUPDOWNCELL_defaultMinimum);
-        }
+        private bool ShouldSerializeMinimum() =>
+            !Minimum.Equals(DataGridViewNumericUpDownCell.DATAGRIDVIEWNUMERICUPDOWNCELL_defaultMinimum);
 
         /// <summary>
         ///     Returns a standard compact string representation of the column.
         /// </summary>
         public override string ToString()
         {
-            var sb = new StringBuilder(100);
+            StringBuilder sb = new StringBuilder(100);
             sb.Append("DataGridViewNumericUpDownColumn { Name=");
             sb.Append(Name);
             sb.Append(", Index=");

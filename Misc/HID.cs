@@ -5,7 +5,7 @@ using System.Management;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Misc
+namespace CC_Functions.Misc
 {
     public static class HID
     {
@@ -33,7 +33,7 @@ Win32_NetworkAdapterConfiguration:MACAddress:IPEnabled";
             {
                 if (_fingerPrint == null)
                 {
-                    var fingerprint_tmp = "";
+                    string fingerprintTmp = "";
                     if (Type.GetType("Mono.Runtime") == null)
                     {
                         HIDClasses.Split('\r').Select(s =>
@@ -43,20 +43,21 @@ Win32_NetworkAdapterConfiguration:MACAddress:IPEnabled";
                             return s.Split(':');
                         }).ToList().ForEach(s =>
                         {
-                            using (var mc = new ManagementClass(s[0]))
-                            using (var moc = mc.GetInstances())
+                            using (ManagementClass mc = new ManagementClass(s[0]))
+                            using (ManagementObjectCollection moc = mc.GetInstances())
                             {
-                                var array = moc.OfType<ManagementBaseObject>().ToArray();
-                                for (var j = 0; j < array.Length; j++)
+                                ManagementBaseObject[] array = moc.OfType<ManagementBaseObject>().ToArray();
+                                for (int j = 0; j < array.Length; j++)
                                 {
                                     if (s.Length > 2 && array[j][s[2]].ToString() != "True") continue;
                                     try
                                     {
-                                        fingerprint_tmp += array[j][s[1]].ToString();
+                                        fingerprintTmp += array[j][s[1]].ToString();
                                         break;
                                     }
                                     catch
                                     {
+                                        Console.WriteLine("Failed to read property");
                                     }
                                 }
                             }
@@ -64,7 +65,7 @@ Win32_NetworkAdapterConfiguration:MACAddress:IPEnabled";
                     }
                     else //Linux implementation. This will not work if you are using Mono on windows or do not have uname and lscpu available
                     {
-                        var p = new Process
+                        Process p = new Process
                         {
                             StartInfo =
                             {
@@ -75,18 +76,18 @@ Win32_NetworkAdapterConfiguration:MACAddress:IPEnabled";
                             }
                         };
                         p.Start();
-                        fingerprint_tmp = p.StandardOutput.ReadToEnd();
+                        fingerprintTmp = p.StandardOutput.ReadToEnd();
                         p.WaitForExit();
                         p.StartInfo.FileName = "lscpu";
-                        p.StartInfo.Arguments = "";
+                        p.StartInfo.Arguments = "-ap";
                         p.Start();
-                        fingerprint_tmp += p.StandardOutput.ReadToEnd();
+                        fingerprintTmp += p.StandardOutput.ReadToEnd();
                         p.WaitForExit();
                     }
 
                     using (MD5 sec = new MD5CryptoServiceProvider())
                     {
-                        var bt = Encoding.ASCII.GetBytes(fingerprint_tmp);
+                        byte[] bt = Encoding.ASCII.GetBytes(fingerprintTmp);
                         _fingerPrint = sec.ComputeHash(bt);
                     }
                 }
@@ -95,14 +96,10 @@ Win32_NetworkAdapterConfiguration:MACAddress:IPEnabled";
             }
         }
 
-        public static byte[] EncryptLocal(byte[] unencrypted)
-        {
-            return ProtectedData.Protect(unencrypted, Value, DataProtectionScope.CurrentUser);
-        }
+        public static byte[] EncryptLocal(byte[] unencrypted) =>
+            ProtectedData.Protect(unencrypted, Value, DataProtectionScope.CurrentUser);
 
-        public static byte[] DecryptLocal(byte[] encrypted)
-        {
-            return ProtectedData.Unprotect(encrypted, Value, DataProtectionScope.CurrentUser);
-        }
+        public static byte[] DecryptLocal(byte[] encrypted) =>
+            ProtectedData.Unprotect(encrypted, Value, DataProtectionScope.CurrentUser);
     }
 }

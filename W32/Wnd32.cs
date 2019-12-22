@@ -15,35 +15,18 @@ namespace CC_Functions.W32
 
         #region CreateInstance
 
-        private Wnd32(IntPtr wndref)
-        {
-            hWnd = wndref;
-        }
+        private Wnd32(IntPtr wndref) => hWnd = wndref;
 
-        public static Wnd32 fromHandle(IntPtr handle)
-        {
-            return new Wnd32(handle);
-        }
+        public static Wnd32 fromHandle(IntPtr handle) => new Wnd32(handle);
 
-        public static Wnd32 fromMetadata(string lpClassName = null, string lpWindowName = null)
-        {
-            return fromHandle(FindWindow(lpClassName, lpWindowName));
-        }
+        public static Wnd32 fromMetadata(string lpClassName = null, string lpWindowName = null) =>
+            fromHandle(FindWindow(lpClassName, lpWindowName));
 
-        public static Wnd32 fromPoint(Point point)
-        {
-            return fromHandle(WindowFromPoint(point.X, point.Y));
-        }
+        public static Wnd32 fromPoint(Point point) => fromHandle(WindowFromPoint(point.X, point.Y));
 
-        public static Wnd32 fromForm(Form form)
-        {
-            return fromHandle(form.Handle);
-        }
+        public static Wnd32 fromForm(Form form) => fromHandle(form.Handle);
 
-        public static Wnd32 foreground()
-        {
-            return fromHandle(GetForegroundWindow());
-        }
+        public static Wnd32 foreground() => fromHandle(GetForegroundWindow());
 
         public static Wnd32[] getVisible()
         {
@@ -61,8 +44,8 @@ namespace CC_Functions.W32
         {
             get
             {
-                var length = GetWindowTextLength(hWnd);
-                var sb = new StringBuilder(length + 1);
+                int length = GetWindowTextLength(hWnd);
+                StringBuilder sb = new StringBuilder(length + 1);
                 GetWindowText(hWnd, sb, sb.Capacity);
                 return sb.ToString();
             }
@@ -73,14 +56,14 @@ namespace CC_Functions.W32
         {
             get
             {
-                var Rect = new RECT();
+                RECT Rect = new RECT();
                 GetWindowRect(hWnd, ref Rect);
                 return new Rectangle(new Point(Rect.left, Rect.top),
                     new Size(Rect.right - Rect.left, Rect.bottom - Rect.top));
             }
             set
             {
-                var Rect = new RECT();
+                RECT Rect = new RECT();
                 GetWindowRect(hWnd, ref Rect);
                 MoveWindow(hWnd, value.X, value.Y, value.Width, value.Height, true);
             }
@@ -109,7 +92,7 @@ namespace CC_Functions.W32
         {
             get
             {
-                var hicon = SendMessage(hWnd, 0x7F, 1, 0);
+                IntPtr hicon = SendMessage(hWnd, 0x7F, 1, 0);
                 if (hicon == IntPtr.Zero)
                     hicon = SendMessage(hWnd, 0x7F, 0, 0);
                 if (hicon == IntPtr.Zero)
@@ -134,7 +117,7 @@ namespace CC_Functions.W32
         {
             get
             {
-                var ClassName = new StringBuilder(256);
+                StringBuilder ClassName = new StringBuilder(256);
                 _ = GetClassName(hWnd, ClassName, ClassName.Capacity);
                 return ClassName.ToString();
             }
@@ -144,7 +127,7 @@ namespace CC_Functions.W32
         {
             get
             {
-                var style = GetWindowLong(hWnd, -16);
+                int style = GetWindowLong(hWnd, -16);
                 if ((style & 0x01000000) == 0x01000000)
                     return FormWindowState.Maximized;
                 if ((style & 0x20000000) == 0x20000000)
@@ -179,7 +162,7 @@ namespace CC_Functions.W32
         {
             set
             {
-                var tmp = position;
+                Rectangle tmp = position;
                 _ = SetWindowPos(hWnd, value ? HWND_TOPMOST : HWND_NOTOPMOST, tmp.X, tmp.Y, tmp.Width, tmp.Height,
                     value ? SWP_NOMOVE | SWP_NOSIZE : 0);
             }
@@ -194,35 +177,17 @@ namespace CC_Functions.W32
 
         public bool stillExists => IsWindow(hWnd);
 
-        public override string ToString()
-        {
-            return hWnd + "; " + title + "; " + position;
-        }
+        public override string ToString() => hWnd + "; " + title + "; " + position;
 
-        public override bool Equals(object obj)
-        {
-            return Equals(obj as Wnd32);
-        }
+        public override bool Equals(object obj) => Equals(obj as Wnd32);
 
-        public bool Equals(Wnd32 other)
-        {
-            return other != null && EqualityComparer<IntPtr>.Default.Equals(hWnd, other.hWnd);
-        }
+        public bool Equals(Wnd32 other) => other != null && EqualityComparer<IntPtr>.Default.Equals(hWnd, other.hWnd);
 
-        public override int GetHashCode()
-        {
-            return -75345830 + EqualityComparer<IntPtr>.Default.GetHashCode(hWnd);
-        }
+        public override int GetHashCode() => -75345830 + EqualityComparer<IntPtr>.Default.GetHashCode(hWnd);
 
-        public static bool operator ==(Wnd32 left, Wnd32 right)
-        {
-            return EqualityComparer<Wnd32>.Default.Equals(left, right);
-        }
+        public static bool operator ==(Wnd32 left, Wnd32 right) => EqualityComparer<Wnd32>.Default.Equals(left, right);
 
-        public static bool operator !=(Wnd32 left, Wnd32 right)
-        {
-            return !(left == right);
-        }
+        public static bool operator !=(Wnd32 left, Wnd32 right) => !(left == right);
 
         #endregion InstanceActions
 
@@ -322,7 +287,7 @@ namespace CC_Functions.W32
 
         private static bool FilterCallback(IntPtr hWnd, int lParam)
         {
-            var sb_title = new StringBuilder(1024);
+            StringBuilder sb_title = new StringBuilder(1024);
             GetWindowText(hWnd, sb_title, sb_title.Capacity);
             if (IsWindowVisible(hWnd) && string.IsNullOrEmpty(sb_title.ToString()) == false) WindowHandles.Add(hWnd);
             return true;

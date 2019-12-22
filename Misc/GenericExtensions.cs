@@ -23,12 +23,12 @@ namespace CC_Functions.Misc
         {
             try
             {
-                parsed = (T)o;
+                parsed = (T) o;
                 return true;
             }
             catch
             {
-                parsed = default(T);
+                parsed = default;
                 return false;
             }
         }
@@ -41,15 +41,21 @@ namespace CC_Functions.Misc
                 func();
         }
 
-        public static T ParseToEnum<T>(string value) => (T)Enum.Parse(typeof(T), Enum.GetNames(typeof(T)).First(s => s.ToLower() == value.ToLower()));
+        public static T ParseToEnum<T>(string value)
+        {
+            return (T) Enum.Parse(typeof(T), Enum.GetNames(typeof(T)).First(s => s.ToLower() == value.ToLower()));
+        }
 
-        public static bool? ParseBool(string value) => (string.IsNullOrWhiteSpace(value) || value.ToLower() == "Indeterminate") ? (bool?)null : bool.Parse(value);
+        public static bool? ParseBool(string value) =>
+            string.IsNullOrWhiteSpace(value) || value.ToLower() == "Indeterminate"
+                ? (bool?) null
+                : bool.Parse(value);
 
         public static bool AND(this bool? left, bool? right) => left.TRUE() && right.TRUE();
 
         public static bool OR(this bool? left, bool? right) => left.TRUE() || right.TRUE();
 
-        public static bool XOR(this bool? left, bool? right) => left.OR(right) && (!left.AND(right));
+        public static bool XOR(this bool? left, bool? right) => left.OR(right) && !left.AND(right);
 
         public static bool TRUE(this bool? self) => self == true;
 

@@ -108,10 +108,8 @@ namespace CC_Functions.W32
         {
             if (mode == ShutdownMode.BSoD)
             {
-                bool t1;
-                uint t2;
-                RtlAdjustPrivilege(19, true, false, out t1);
-                NtRaiseHardError(0xc0000022, 0, 0, IntPtr.Zero, 6, out t2);
+                RtlAdjustPrivilege(19, true, false, out bool _);
+                NtRaiseHardError(0xc0000022, 0, 0, IntPtr.Zero, 6, out uint _);
             }
             else
             {

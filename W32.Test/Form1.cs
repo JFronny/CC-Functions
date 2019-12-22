@@ -1,21 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using CC_Functions.Misc;
+using CC_Functions.W32.Hooks;
 using static CC_Functions.W32.Power;
 
 namespace CC_Functions.W32.Test
 {
     public partial class Form1 : Form
     {
-        public static Wnd32 tmpWnd;
-        public static Form1 mainF;
-        public static Form frm;
-        public static Label lab;
+        private static Wnd32 tmpWnd;
+        private static Form1 mainF;
+        private static Form frm;
+        private static Label lab;
         private readonly KeyboardHook kHook;
-        private Point locDelB;
         private readonly MouseHook mHook;
+        private Point locDelB;
 
         private bool moving;
         private DateTime mST;
@@ -44,20 +46,17 @@ namespace CC_Functions.W32.Test
         public void set_up_box(ComboBox box, Type enumT)
         {
             box.DataSource = Enum.GetNames(enumT);
-            var tmp = Enum.GetValues(enumT);
+            Array tmp = Enum.GetValues(enumT);
             box.Tag = new object[tmp.Length];
-            var i = 0;
-            foreach (var o in tmp)
+            int i = 0;
+            foreach (object o in tmp)
             {
                 ((object[]) box.Tag)[i] = o;
                 i++;
             }
         }
 
-        public object get_box_value(ComboBox box)
-        {
-            return ((object[]) box.Tag)[box.SelectedIndex];
-        }
+        public object get_box_value(ComboBox box) => ((object[]) box.Tag)[box.SelectedIndex];
 
         private void Power_execute_Click(object sender, EventArgs e)
         {
@@ -142,30 +141,15 @@ namespace CC_Functions.W32.Test
             }
         }
 
-        private void Wnd_action_enabled_CheckedChanged(object sender, EventArgs e)
-        {
+        private void Wnd_action_enabled_CheckedChanged(object sender, EventArgs e) =>
             tmpWnd.enabled = wnd_action_enabled.Checked;
-        }
 
-        private void Wnd_action_visible_CheckedChanged(object sender, EventArgs e)
-        {
+        private void Wnd_action_visible_CheckedChanged(object sender, EventArgs e) =>
             tmpWnd.shown = wnd_action_visible.Checked;
-        }
 
-        private void Wnd_action_front_Click(object sender, EventArgs e)
-        {
-            tmpWnd.isForeground = true;
-        }
+        private void Wnd_action_front_Click(object sender, EventArgs e) => tmpWnd.isForeground = true;
 
-        private void Wnd_action_overlay_Click(object sender, EventArgs e)
-        {
-            tmpWnd.MakeOverlay();
-        }
-
-        private void Wnd_action_destroy_Click(object sender, EventArgs e)
-        {
-            tmpWnd.Destroy();
-        }
+        private void Wnd_action_destroy_Click(object sender, EventArgs e) => tmpWnd.Destroy();
 
         private void Wnd_select_mouse_Click(object sender, EventArgs e)
         {
@@ -189,7 +173,7 @@ namespace CC_Functions.W32.Test
         {
             frm.Hide();
             frm.WindowState = FormWindowState.Minimized;
-            var tmp = Wnd32.fromPoint(MousePosition);
+            Wnd32 tmp = Wnd32.fromPoint(MousePosition);
             tmpWnd.enabled = true;
             tmpWnd.isForeground = true;
             tmpWnd = tmp;
@@ -211,16 +195,14 @@ namespace CC_Functions.W32.Test
                 mHook.OnMouse -= MHook_OnMouse;
         }
 
-        private void MHook_OnMouse(MouseHookEventArgs _args)
-        {
-            mouse_log.Text = _args.Message + " -|- " + _args.Point + "\r\n" + mouse_log.Text;
-        }
+        private void MHook_OnMouse(MouseHookEventArgs args) =>
+            mouse_log.Text = args.Message + " -|- " + args.Point + "\r\n" + mouse_log.Text;
 
         private void Mouse_log_TextChanged(object sender, EventArgs e)
         {
             if (mouse_log.Lines.Length > 10)
             {
-                var tmp = mouse_log.Lines.ToList();
+                List<string> tmp = mouse_log.Lines.ToList();
                 tmp.RemoveRange(9, mouse_log.Lines.Length - 9);
                 mouse_log.Lines = tmp.ToArray();
                 tmp = null;
@@ -235,27 +217,23 @@ namespace CC_Functions.W32.Test
                 kHook.OnKeyPress -= KHook_OnKeyPress;
         }
 
-        private void KHook_OnKeyPress(KeyboardHookEventArgs _args)
-        {
-            keyboard_log.Text = _args.Key + "\r\n" + keyboard_log.Text;
-        }
+        private void KHook_OnKeyPress(KeyboardHookEventArgs args) =>
+            keyboard_log.Text = args.Key + "\r\n" + keyboard_log.Text;
 
         private void Keyboard_log_TextChanged(object sender, EventArgs e)
         {
             if (keyboard_log.Lines.Length > 10)
             {
-                var tmp = keyboard_log.Lines.ToList();
+                List<string> tmp = keyboard_log.Lines.ToList();
                 tmp.RemoveRange(9, keyboard_log.Lines.Length - 9);
                 keyboard_log.Lines = tmp.ToArray();
                 tmp = null;
             }
         }
 
-        private void Wnd_action_pos_Click(object sender, EventArgs e)
-        {
+        private void Wnd_action_pos_Click(object sender, EventArgs e) =>
             tmpWnd.position = new Rectangle(wnd_action_pos_x_bar.Value, wnd_action_pos_y_bar.Value,
                 wnd_action_pos_w_bar.Value, wnd_action_pos_h_bar.Value);
-        }
 
         private void Exit_Click(object sender, EventArgs e)
         {
@@ -276,10 +254,7 @@ namespace CC_Functions.W32.Test
             moving = true;
         }
 
-        private void Exit_MouseUp(object sender, MouseEventArgs e)
-        {
-            moving = false;
-        }
+        private void Exit_MouseUp(object sender, MouseEventArgs e) => moving = false;
 
         private void Wnd_action_style_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -287,9 +262,7 @@ namespace CC_Functions.W32.Test
             tmpWnd.state = status;
         }
 
-        private void wnd_action_overlay_CheckedChanged(object sender, EventArgs e)
-        {
+        private void wnd_action_overlay_CheckedChanged(object sender, EventArgs e) =>
             tmpWnd.overlay = wnd_action_overlay.Checked;
-        }
     }
 }

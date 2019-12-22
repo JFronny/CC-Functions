@@ -4,11 +4,11 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace CC_Functions.W32
+namespace CC_Functions.W32.Hooks
 {
     public sealed class MouseHook : IDisposable
     {
-        public delegate void mouseEvent(MouseHookEventArgs _args);
+        public delegate void MouseEvent(MouseHookEventArgs args);
 
         public enum MouseMessages
         {
@@ -22,30 +22,30 @@ namespace CC_Functions.W32
 
         private const int WH_MOUSE_LL = 14;
 
-        private static readonly List<MouseHook> instances = new List<MouseHook>();
-        private static readonly LowLevelMouseProc _proc = HookCallback;
+        private static readonly List<MouseHook> Instances = new List<MouseHook>();
+        private static readonly LowLevelMouseProc Proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
 
         public MouseHook()
         {
-            if (instances.Count == 0)
-                _hookID = SetHook(_proc);
-            instances.Add(this);
+            if (Instances.Count == 0)
+                _hookID = SetHook(Proc);
+            Instances.Add(this);
         }
 
         public void Dispose()
         {
-            instances.Remove(this);
-            if (instances.Count == 0)
+            Instances.Remove(this);
+            if (Instances.Count == 0)
                 UnhookWindowsHookEx(_hookID);
         }
 
-        public event mouseEvent OnMouse;
+        public event MouseEvent OnMouse;
 
         private static IntPtr SetHook(LowLevelMouseProc proc)
         {
-            using (var curProcess = Process.GetCurrentProcess())
-            using (var curModule = curProcess.MainModule)
+            using (Process curProcess = Process.GetCurrentProcess())
+            using (ProcessModule curModule = curProcess.MainModule)
             {
                 return SetWindowsHookEx(WH_MOUSE_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
             }
@@ -55,9 +55,9 @@ namespace CC_Functions.W32
         {
             if (nCode >= 0)
             {
-                var hookStruct = (MSLLHOOKSTRUCT) Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
-                for (var i = 0; i < instances.Count; i++)
-                    instances[i].OnMouse?.Invoke(new MouseHookEventArgs(new Point(hookStruct.pt.x, hookStruct.pt.y),
+                MSLLHOOKSTRUCT hookStruct = (MSLLHOOKSTRUCT) Marshal.PtrToStructure(lParam, typeof(MSLLHOOKSTRUCT));
+                for (int i = 0; i < Instances.Count; i++)
+                    Instances[i].OnMouse?.Invoke(new MouseHookEventArgs(new Point(hookStruct.pt.x, hookStruct.pt.y),
                         (MouseMessages) wParam));
             }
 

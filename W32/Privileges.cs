@@ -91,22 +91,22 @@ namespace CC_Functions.W32
         {
             if (!Enum.IsDefined(typeof(SecurityEntity), securityEntity))
                 throw new InvalidEnumArgumentException("securityEntity", (int) securityEntity, typeof(SecurityEntity));
-            var securityEntityValue = securityEntity.ToString();
+            string securityEntityValue = securityEntity.ToString();
             try
             {
-                var locallyUniqueIdentifier = new NativeMethods.LUID();
+                NativeMethods.LUID locallyUniqueIdentifier = new NativeMethods.LUID();
                 if (NativeMethods.LookupPrivilegeValue(null, securityEntityValue, ref locallyUniqueIdentifier))
                 {
-                    var TOKEN_PRIVILEGES = new NativeMethods.TOKEN_PRIVILEGES
+                    NativeMethods.TOKEN_PRIVILEGES TOKEN_PRIVILEGES = new NativeMethods.TOKEN_PRIVILEGES
                     {
                         PrivilegeCount = 1,
                         Attributes = NativeMethods.SE_PRIVILEGE_ENABLED,
                         Luid = locallyUniqueIdentifier
                     };
-                    var tokenHandle = IntPtr.Zero;
+                    IntPtr tokenHandle = IntPtr.Zero;
                     try
                     {
-                        var currentProcess = NativeMethods.GetCurrentProcess();
+                        IntPtr currentProcess = NativeMethods.GetCurrentProcess();
                         if (NativeMethods.OpenProcessToken(currentProcess,
                             NativeMethods.TOKEN_ADJUST_PRIVILEGES | NativeMethods.TOKEN_QUERY, out tokenHandle))
                         {
@@ -153,10 +153,7 @@ namespace CC_Functions.W32
             }
         }
 
-        public static SecurityEntity EntityToEntity(SecurityEntity2 entity)
-        {
-            return (SecurityEntity) entity;
-        }
+        public static SecurityEntity EntityToEntity(SecurityEntity2 entity) => (SecurityEntity) entity;
 
         internal static class NativeMethods
         {

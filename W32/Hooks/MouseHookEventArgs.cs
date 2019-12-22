@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Drawing;
 
-namespace CC_Functions.W32
+namespace CC_Functions.W32.Hooks
 {
     public class MouseHookEventArgs : EventArgs
     {
@@ -14,9 +14,6 @@ namespace CC_Functions.W32
         public Point Point { get; }
         public MouseHook.MouseMessages Message { get; }
 
-        public override string ToString()
-        {
-            return Message + "; " + Point;
-        }
+        public override string ToString() => Message + "; " + Point;
     }
 }
