@@ -41,10 +41,8 @@ namespace CC_Functions.Misc
                 func();
         }
 
-        public static T ParseToEnum<T>(string value)
-        {
-            return (T) Enum.Parse(typeof(T), Enum.GetNames(typeof(T)).First(s => s.ToLower() == value.ToLower()));
-        }
+        public static T ParseToEnum<T>(string value) => (T) Enum.Parse(typeof(T),
+            Enum.GetNames(typeof(T)).First(s => s.ToLower() == value.ToLower()));
 
         public static bool? ParseBool(string value) =>
             string.IsNullOrWhiteSpace(value) || value.ToLower() == "Indeterminate"
@@ -62,5 +60,8 @@ namespace CC_Functions.Misc
         public static bool FALSE(this bool? self) => self == false;
 
         public static bool NULL(this bool? self) => self == null;
+
+        public static void RemoveAt<T, G>(this Dictionary<T, G> dict, int index) =>
+            dict.Remove(dict.Keys.OfType<T>().ToArray()[index]);
     }
 }

@@ -9,8 +9,8 @@ namespace CC_Functions.Misc
 {
     public static class HID
     {
+        public static bool forceWindows = false;
         private static byte[] _fingerPrint;
-
         private static readonly string HIDClasses = @"Win32_Processor:UniqueId
 Win32_Processor:ProcessorId
 Win32_Processor:Name
@@ -25,7 +25,7 @@ Win32_BaseBoard:Model
 Win32_BaseBoard:Manufacturer
 Win32_BaseBoard:Name
 Win32_BaseBoard:SerialNumber
-Win32_NetworkAdapterConfiguration:MACAddress:IPEnabled";
+Win32_NetworkAdapterConfiguration:MACAddress";
 
         public static byte[] Value
         {
@@ -34,9 +34,9 @@ Win32_NetworkAdapterConfiguration:MACAddress:IPEnabled";
                 if (_fingerPrint == null)
                 {
                     string fingerprintTmp = "";
-                    if (Type.GetType("Mono.Runtime") == null)
+                    if (forceWindows || Type.GetType("Mono.Runtime") == null)
                     {
-                        HIDClasses.Split('\r').Select(s =>
+                        HIDClasses.Split(new[] {"\r\n"}, StringSplitOptions.None).Select(s =>
                         {
                             if (s.StartsWith("\n"))
                                 s = s.Remove(0, 1);
@@ -48,8 +48,6 @@ Win32_NetworkAdapterConfiguration:MACAddress:IPEnabled";
                             {
                                 ManagementBaseObject[] array = moc.OfType<ManagementBaseObject>().ToArray();
                                 for (int j = 0; j < array.Length; j++)
-                                {
-                                    if (s.Length > 2 && array[j][s[2]].ToString() != "True") continue;
                                     try
                                     {
                                         fingerprintTmp += array[j][s[1]].ToString();
@@ -59,11 +57,10 @@ Win32_NetworkAdapterConfiguration:MACAddress:IPEnabled";
                                     {
                                         Console.WriteLine("Failed to read property");
                                     }
-                                }
                             }
                         });
                     }
-                    else //Linux implementation. This will not work if you are using Mono on windows or do not have uname and lscpu available
+                    else //Linux implementation. This will not work if you are using Mono on windows or do not have "uname", "lscpu" and "id" available
                     {
                         Process p = new Process
                         {
@@ -83,8 +80,12 @@ Win32_NetworkAdapterConfiguration:MACAddress:IPEnabled";
                         p.Start();
                         fingerprintTmp += p.StandardOutput.ReadToEnd();
                         p.WaitForExit();
+                        p.StartInfo.FileName = "ip";
+                        p.StartInfo.Arguments = "link";
+                        p.Start();
+                        fingerprintTmp += p.StandardOutput.ReadToEnd();
+                        p.WaitForExit();
                     }
-
                     using (MD5 sec = new MD5CryptoServiceProvider())
                     {
                         byte[] bt = Encoding.ASCII.GetBytes(fingerprintTmp);
