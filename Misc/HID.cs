@@ -11,6 +11,7 @@ namespace CC_Functions.Misc
     {
         public static bool forceWindows = false;
         private static byte[] _fingerPrint;
+
         private static readonly string HIDClasses = @"Win32_Processor:UniqueId
 Win32_Processor:ProcessorId
 Win32_Processor:Name

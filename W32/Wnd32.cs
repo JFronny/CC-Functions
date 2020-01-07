@@ -28,7 +28,10 @@ namespace CC_Functions.W32
 
         public static Wnd32 foreground() => fromHandle(GetForegroundWindow());
 
-        public static Wnd32[] getVisible()
+        public static Wnd32[] getVisible() =>
+            getAll().Where(s => IsWindowVisible(s.hWnd) && !string.IsNullOrEmpty(s.title)).ToArray();
+
+        public static Wnd32[] getAll()
         {
             WindowHandles = new List<IntPtr>();
             if (!EnumDesktopWindows(IntPtr.Zero, FilterCallback, IntPtr.Zero))
@@ -288,8 +291,8 @@ namespace CC_Functions.W32
         private static bool FilterCallback(IntPtr hWnd, int lParam)
         {
             StringBuilder sb_title = new StringBuilder(1024);
-            GetWindowText(hWnd, sb_title, sb_title.Capacity);
-            if (IsWindowVisible(hWnd) && string.IsNullOrEmpty(sb_title.ToString()) == false) WindowHandles.Add(hWnd);
+            GetWindowText(hWnd, sb_title, 1024);
+            WindowHandles.Add(hWnd);
             return true;
         }
 
