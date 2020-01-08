@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -18,6 +19,8 @@ namespace CC_Functions.W32
         private Wnd32(IntPtr wndref) => hWnd = wndref;
 
         public static Wnd32 fromHandle(IntPtr handle) => new Wnd32(handle);
+
+        public static Wnd32 getProcessMain(Process process) => fromHandle(process.MainWindowHandle);
 
         public static Wnd32 fromMetadata(string lpClassName = null, string lpWindowName = null) =>
             fromHandle(FindWindow(lpClassName, lpWindowName));
