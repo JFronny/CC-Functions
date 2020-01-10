@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GenericExtensions.cs" />
     <Compile Include="Hooks\MouseHook.cs" />
     <Compile Include="Hooks\KeyboardHook.cs" />
     <Compile Include="Hooks\KeyboardHookEventArgs.cs" />

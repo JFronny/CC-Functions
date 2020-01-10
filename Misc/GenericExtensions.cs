@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace CC_Functions.Misc
@@ -63,5 +64,7 @@ namespace CC_Functions.Misc
 
         public static void RemoveAt<T, G>(this Dictionary<T, G> dict, int index) =>
             dict.Remove(dict.Keys.OfType<T>().ToArray()[index]);
+
+        public static long GetSize(this DirectoryInfo directory) => IO.GetDirectorySize(directory.FullName);
     }
 }
