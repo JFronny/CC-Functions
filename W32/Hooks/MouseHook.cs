@@ -40,7 +40,7 @@ namespace CC_Functions.W32.Hooks
                 UnhookWindowsHookEx(_hookID);
         }
 
-        public event MouseEvent OnMouse;
+        public event MouseEvent? OnMouse;
 
         private static IntPtr SetHook(LowLevelMouseProc proc)
         {

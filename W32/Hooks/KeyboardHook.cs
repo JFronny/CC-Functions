@@ -31,7 +31,7 @@ namespace CC_Functions.W32.Hooks
                 UnhookWindowsHookEx(_hookID);
         }
 
-        public event KeyPress OnKeyPress;
+        public event KeyPress? OnKeyPress;
 
         private IntPtr SetHook(LowLevelKeyboardProc proc)
         {

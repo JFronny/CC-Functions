@@ -22,7 +22,7 @@ namespace CC_Functions.W32
 
         public static Wnd32 getProcessMain(Process process) => fromHandle(process.MainWindowHandle);
 
-        public static Wnd32 fromMetadata(string lpClassName = null, string lpWindowName = null) =>
+        public static Wnd32 fromMetadata(string? lpClassName = null, string? lpWindowName = null) =>
             fromHandle(FindWindow(lpClassName, lpWindowName));
 
         public static Wnd32 fromPoint(Point point) => fromHandle(WindowFromPoint(point.X, point.Y));
