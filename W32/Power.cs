@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using CC_Functions.W32.Native;
 using static CC_Functions.W32.Privileges;
 
 namespace CC_Functions.W32
@@ -85,36 +86,18 @@ namespace CC_Functions.W32
             FlagPlanned = 0x80000000
         }
 
-        [DllImport("ntdll.dll", SetLastError = true)]
-        private static extern IntPtr RtlAdjustPrivilege(int Privilege, bool bEnablePrivilege, bool IsThreadPrivilege,
-            out bool PreviousValue);
-
-        [DllImport("ntdll.dll")]
-        private static extern uint NtRaiseHardError(
-            uint ErrorStatus,
-            uint NumberOfParameters,
-            uint UnicodeStringParameterMask,
-            IntPtr Parameters,
-            uint ValidResponseOption,
-            out uint Response
-        );
-
-        [DllImport("user32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool ExitWindowsEx(ExitWindows uFlags, ShutdownReason dwReason);
-
         public static void RaiseEvent(ShutdownMode mode, ShutdownReason reason = ShutdownReason.MinorOther,
             ShutdownMod mod = ShutdownMod.None)
         {
             if (mode == ShutdownMode.BSoD)
             {
-                RtlAdjustPrivilege(19, true, false, out bool _);
-                NtRaiseHardError(0xc0000022, 0, 0, IntPtr.Zero, 6, out uint _);
+                ntdll.RtlAdjustPrivilege(19, true, false, out bool _);
+                ntdll.NtRaiseHardError(0xc0000022, 0, 0, IntPtr.Zero, 6, out uint _);
             }
             else
             {
                 EnablePrivilege(SecurityEntity.SeShutdownPrivilege);
-                ExitWindowsEx((ExitWindows) ((uint) mode | (uint) mod), reason);
+                user32.ExitWindowsEx((ExitWindows) ((uint) mode | (uint) mod), reason);
             }
         }
     }

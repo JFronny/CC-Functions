@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
+using CC_Functions.W32.Native;
 
 namespace CC_Functions.W32.Hooks
 {
@@ -23,7 +24,7 @@ namespace CC_Functions.W32.Hooks
         private const int WH_MOUSE_LL = 14;
 
         private static readonly List<MouseHook> Instances = new List<MouseHook>();
-        private static readonly LowLevelMouseProc Proc = HookCallback;
+        private static readonly user32.LowLevelProc Proc = HookCallback;
         private static IntPtr _hookID = IntPtr.Zero;
 
         public MouseHook()
@@ -37,17 +38,17 @@ namespace CC_Functions.W32.Hooks
         {
             Instances.Remove(this);
             if (Instances.Count == 0)
-                UnhookWindowsHookEx(_hookID);
+                user32.UnhookWindowsHookEx(_hookID);
         }
 
         public event MouseEvent? OnMouse;
 
-        private static IntPtr SetHook(LowLevelMouseProc proc)
+        private static IntPtr SetHook(user32.LowLevelProc proc)
         {
             using (Process curProcess = Process.GetCurrentProcess())
             using (ProcessModule curModule = curProcess.MainModule)
             {
-                return SetWindowsHookEx(WH_MOUSE_LL, proc, GetModuleHandle(curModule.ModuleName), 0);
+                return user32.SetWindowsHookEx(WH_MOUSE_LL, proc, kernel32.GetModuleHandle(curModule.ModuleName), 0);
             }
         }
 
@@ -61,23 +62,8 @@ namespace CC_Functions.W32.Hooks
                         (MouseMessages) wParam));
             }
 
-            return CallNextHookEx(_hookID, nCode, wParam, lParam);
+            return user32.CallNextHookEx(_hookID, nCode, wParam, lParam);
         }
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr SetWindowsHookEx(int idHook, LowLevelMouseProc lpfn, IntPtr hMod, uint dwThreadId);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool UnhookWindowsHookEx(IntPtr hhk);
-
-        [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        private static extern IntPtr GetModuleHandle(string lpModuleName);
-
-        private delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
 
         [StructLayout(LayoutKind.Sequential)]
         private struct POINT

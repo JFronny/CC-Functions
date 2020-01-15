@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using CC_Functions.W32.Native;
 
 namespace CC_Functions.W32
 {
@@ -94,26 +95,26 @@ namespace CC_Functions.W32
             string securityEntityValue = securityEntity.ToString();
             try
             {
-                NativeMethods.LUID locallyUniqueIdentifier = new NativeMethods.LUID();
-                if (NativeMethods.LookupPrivilegeValue(null, securityEntityValue, ref locallyUniqueIdentifier))
+                LUID locallyUniqueIdentifier = new LUID();
+                if (advapi32.LookupPrivilegeValue(null, securityEntityValue, ref locallyUniqueIdentifier))
                 {
-                    NativeMethods.TOKEN_PRIVILEGES TOKEN_PRIVILEGES = new NativeMethods.TOKEN_PRIVILEGES
+                    TOKEN_PRIVILEGES TOKEN_PRIVILEGES = new TOKEN_PRIVILEGES
                     {
                         PrivilegeCount = 1,
-                        Attributes = NativeMethods.SE_PRIVILEGE_ENABLED,
+                        Attributes = SE_PRIVILEGE_ENABLED,
                         Luid = locallyUniqueIdentifier
                     };
                     IntPtr tokenHandle = IntPtr.Zero;
                     try
                     {
-                        IntPtr currentProcess = NativeMethods.GetCurrentProcess();
-                        if (NativeMethods.OpenProcessToken(currentProcess,
-                            NativeMethods.TOKEN_ADJUST_PRIVILEGES | NativeMethods.TOKEN_QUERY, out tokenHandle))
+                        IntPtr currentProcess = kernel32.GetCurrentProcess();
+                        if (advapi32.OpenProcessToken(currentProcess,
+                            TOKEN_ADJUST_PRIVILEGES | TOKEN_QUERY, out tokenHandle))
                         {
-                            if (NativeMethods.AdjustTokenPrivileges(tokenHandle, false, ref TOKEN_PRIVILEGES, 1024,
+                            if (advapi32.AdjustTokenPrivileges(tokenHandle, false, ref TOKEN_PRIVILEGES, 1024,
                                 IntPtr.Zero, IntPtr.Zero))
                             {
-                                if (Marshal.GetLastWin32Error() == NativeMethods.ERROR_NOT_ALL_ASSIGNED)
+                                if (Marshal.GetLastWin32Error() == ERROR_NOT_ALL_ASSIGNED)
                                     throw new InvalidOperationException("AdjustTokenPrivileges failed.",
                                         new Win32Exception());
                             }
@@ -134,7 +135,7 @@ namespace CC_Functions.W32
                     finally
                     {
                         if (tokenHandle != IntPtr.Zero)
-                            NativeMethods.CloseHandle(tokenHandle);
+                            kernel32.CloseHandle(tokenHandle);
                     }
                 }
                 else
@@ -154,52 +155,25 @@ namespace CC_Functions.W32
         }
 
         public static SecurityEntity EntityToEntity(SecurityEntity2 entity) => (SecurityEntity) entity;
+        
+        internal const int SE_PRIVILEGE_ENABLED = 0x00000002;
+        internal const int ERROR_NOT_ALL_ASSIGNED = 1300;
+        internal const uint TOKEN_QUERY = 0x0008;
+        internal const uint TOKEN_ADJUST_PRIVILEGES = 0x0020;
 
-        internal static class NativeMethods
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct LUID
         {
-            internal const int SE_PRIVILEGE_ENABLED = 0x00000002;
-            internal const int ERROR_NOT_ALL_ASSIGNED = 1300;
-            internal const uint TOKEN_QUERY = 0x0008;
-            internal const uint TOKEN_ADJUST_PRIVILEGES = 0x0020;
+            internal int LowPart;
+            internal uint HighPart;
+        }
 
-            [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-            [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool LookupPrivilegeValue(string lpsystemname, string lpname,
-                [MarshalAs(UnmanagedType.Struct)] ref LUID lpLuid);
-
-            [DllImport("advapi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-            [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool AdjustTokenPrivileges(IntPtr tokenhandle,
-                [MarshalAs(UnmanagedType.Bool)] bool disableAllPrivileges,
-                [MarshalAs(UnmanagedType.Struct)] ref TOKEN_PRIVILEGES newstate, uint bufferlength,
-                IntPtr previousState, IntPtr returnlength);
-
-            [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-            internal static extern IntPtr GetCurrentProcess();
-
-            [DllImport("Advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-            [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool OpenProcessToken(IntPtr processHandle, uint desiredAccesss,
-                out IntPtr tokenHandle);
-
-            [DllImport("kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-            [return: MarshalAs(UnmanagedType.Bool)]
-            internal static extern bool CloseHandle(IntPtr hObject);
-
-            [StructLayout(LayoutKind.Sequential)]
-            internal struct LUID
-            {
-                internal int LowPart;
-                internal uint HighPart;
-            }
-
-            [StructLayout(LayoutKind.Sequential)]
-            internal struct TOKEN_PRIVILEGES
-            {
-                internal int PrivilegeCount;
-                internal LUID Luid;
-                internal int Attributes;
-            }
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct TOKEN_PRIVILEGES
+        {
+            internal int PrivilegeCount;
+            internal LUID Luid;
+            internal int Attributes;
         }
     }
 }

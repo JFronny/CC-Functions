@@ -50,15 +50,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DCDrawer\DCBuffered.cs" />
+    <Compile Include="DCDrawer\DCUnbuffered.cs" />
+    <Compile Include="DCDrawer\IDCDrawer.cs" />
+    <Compile Include="DeskMan.cs" />
     <Compile Include="GenericExtensions.cs" />
     <Compile Include="Hooks\MouseHook.cs" />
     <Compile Include="Hooks\KeyboardHook.cs" />
     <Compile Include="Hooks\KeyboardHookEventArgs.cs" />
     <Compile Include="KeyboardReader.cs" />
     <Compile Include="Hooks\MouseHookEventArgs.cs" />
+    <Compile Include="Native\advapi32.cs" />
+    <Compile Include="Native\gdi32.cs" />
+    <Compile Include="Native\kernel32.cs" />
+    <Compile Include="Native\ntdll.cs" />
+    <Compile Include="Native\RECT.cs" />
+    <Compile Include="Native\shell32.cs" />
+    <Compile Include="Native\user32.cs" />
     <Compile Include="Power.cs" />
     <Compile Include="Privileges.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ScreenMan.cs" />
     <Compile Include="Wnd32.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

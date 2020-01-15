@@ -71,7 +71,7 @@ namespace CC_Functions.W32.Test
 
         private void wnd_select_list_Click(object sender, EventArgs e)
         {
-            tmpWnd = SelectBox.Show(Wnd32.getVisible(), "Please select a window") ?? tmpWnd;
+            tmpWnd = SelectBox.Show(Wnd32.Visible, "Please select a window") ?? tmpWnd;
         }
 
         private void Wnd_select_title_button_Click(object sender, EventArgs e)
