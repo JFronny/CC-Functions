@@ -1,6 +1,6 @@
 ﻿namespace CC_Functions.W32.Test
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.exit = new System.Windows.Forms.Button();
+            this.components = new System.ComponentModel.Container();
             this.keyboard_log = new System.Windows.Forms.TextBox();
             this.keyboard = new System.Windows.Forms.GroupBox();
             this.keyboard_enabled = new System.Windows.Forms.CheckBox();
@@ -70,6 +70,18 @@
             this.wnd_action_visible = new System.Windows.Forms.CheckBox();
             this.wnd_action_icon = new System.Windows.Forms.Panel();
             this.wnd_select_class_box = new System.Windows.Forms.TextBox();
+            this.screen = new System.Windows.Forms.GroupBox();
+            this.screen_draw = new System.Windows.Forms.Button();
+            this.screen_get = new System.Windows.Forms.Button();
+            this.screen_img = new System.Windows.Forms.Panel();
+            this.reader = new System.Windows.Forms.GroupBox();
+            this.readerFlow = new System.Windows.Forms.FlowLayoutPanel();
+            this.desk = new System.Windows.Forms.GroupBox();
+            this.desk_draw = new System.Windows.Forms.Button();
+            this.desk_set = new System.Windows.Forms.Button();
+            this.desk_get = new System.Windows.Forms.Button();
+            this.desk_back = new System.Windows.Forms.Panel();
+            this.readerUpdate = new System.Windows.Forms.Timer(this.components);
             this.keyboard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.wnd_action_pos_h_bar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.wnd_action_pos_w_bar)).BeginInit();
@@ -78,32 +90,23 @@
             this.mouse.SuspendLayout();
             this.power.SuspendLayout();
             this.wnd.SuspendLayout();
+            this.screen.SuspendLayout();
+            this.reader.SuspendLayout();
+            this.desk.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // exit
-            // 
-            this.exit.BackColor = System.Drawing.Color.Black;
-            this.exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Regular,
-                System.Drawing.GraphicsUnit.Point, ((byte) (0)));
-            this.exit.ForeColor = System.Drawing.Color.White;
-            this.exit.Location = new System.Drawing.Point(308, 135);
-            this.exit.Name = "exit";
-            this.exit.Size = new System.Drawing.Size(41, 43);
-            this.exit.TabIndex = 9;
-            this.exit.Text = "°";
-            this.exit.UseVisualStyleBackColor = false;
-            this.exit.Click += new System.EventHandler(this.Exit_Click);
-            this.exit.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Exit_MouseDown);
-            this.exit.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Exit_MouseMove);
-            this.exit.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Exit_MouseUp);
             // 
             // keyboard_log
             // 
+            this.keyboard_log.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top |
+                                                         System.Windows.Forms.AnchorStyles.Bottom) |
+                                                        System.Windows.Forms.AnchorStyles.Left) |
+                                                       System.Windows.Forms.AnchorStyles.Right)));
             this.keyboard_log.Location = new System.Drawing.Point(7, 48);
             this.keyboard_log.Multiline = true;
             this.keyboard_log.Name = "keyboard_log";
             this.keyboard_log.ReadOnly = true;
-            this.keyboard_log.Size = new System.Drawing.Size(333, 172);
+            this.keyboard_log.Size = new System.Drawing.Size(333, 133);
             this.keyboard_log.TabIndex = 2;
             this.keyboard_log.TextChanged += new System.EventHandler(this.Keyboard_log_TextChanged);
             // 
@@ -111,9 +114,9 @@
             // 
             this.keyboard.Controls.Add(this.keyboard_log);
             this.keyboard.Controls.Add(this.keyboard_enabled);
-            this.keyboard.Location = new System.Drawing.Point(308, 185);
+            this.keyboard.Location = new System.Drawing.Point(308, 224);
             this.keyboard.Name = "keyboard";
-            this.keyboard.Size = new System.Drawing.Size(348, 228);
+            this.keyboard.Size = new System.Drawing.Size(348, 189);
             this.keyboard.TabIndex = 8;
             this.keyboard.TabStop = false;
             this.keyboard.Text = "CC-Functions.W32.KeyboardHook";
@@ -131,11 +134,16 @@
             // 
             // mouse_log
             // 
+            this.mouse_log.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top |
+                                                         System.Windows.Forms.AnchorStyles.Bottom) |
+                                                        System.Windows.Forms.AnchorStyles.Left) |
+                                                       System.Windows.Forms.AnchorStyles.Right)));
             this.mouse_log.Location = new System.Drawing.Point(7, 48);
             this.mouse_log.Multiline = true;
             this.mouse_log.Name = "mouse_log";
             this.mouse_log.ReadOnly = true;
-            this.mouse_log.Size = new System.Drawing.Size(285, 109);
+            this.mouse_log.Size = new System.Drawing.Size(333, 148);
             this.mouse_log.TabIndex = 1;
             this.mouse_log.TextChanged += new System.EventHandler(this.Mouse_log_TextChanged);
             // 
@@ -153,7 +161,7 @@
             // wnd_action_pos_h_label
             // 
             this.wnd_action_pos_h_label.AutoSize = true;
-            this.wnd_action_pos_h_label.Location = new System.Drawing.Point(135, 242);
+            this.wnd_action_pos_h_label.Location = new System.Drawing.Point(135, 395);
             this.wnd_action_pos_h_label.Name = "wnd_action_pos_h_label";
             this.wnd_action_pos_h_label.Size = new System.Drawing.Size(19, 15);
             this.wnd_action_pos_h_label.TabIndex = 19;
@@ -162,7 +170,7 @@
             // wnd_action_pos_w_label
             // 
             this.wnd_action_pos_w_label.AutoSize = true;
-            this.wnd_action_pos_w_label.Location = new System.Drawing.Point(135, 215);
+            this.wnd_action_pos_w_label.Location = new System.Drawing.Point(135, 367);
             this.wnd_action_pos_w_label.Name = "wnd_action_pos_w_label";
             this.wnd_action_pos_w_label.Size = new System.Drawing.Size(21, 15);
             this.wnd_action_pos_w_label.TabIndex = 18;
@@ -170,14 +178,14 @@
             // 
             // wnd_action_pos_h_bar
             // 
-            this.wnd_action_pos_h_bar.Location = new System.Drawing.Point(159, 242);
+            this.wnd_action_pos_h_bar.Location = new System.Drawing.Point(159, 395);
             this.wnd_action_pos_h_bar.Name = "wnd_action_pos_h_bar";
             this.wnd_action_pos_h_bar.Size = new System.Drawing.Size(121, 45);
             this.wnd_action_pos_h_bar.TabIndex = 21;
             // 
             // wnd_action_pos_w_bar
             // 
-            this.wnd_action_pos_w_bar.Location = new System.Drawing.Point(159, 215);
+            this.wnd_action_pos_w_bar.Location = new System.Drawing.Point(159, 367);
             this.wnd_action_pos_w_bar.Name = "wnd_action_pos_w_bar";
             this.wnd_action_pos_w_bar.Size = new System.Drawing.Size(121, 45);
             this.wnd_action_pos_w_bar.TabIndex = 20;
@@ -185,7 +193,7 @@
             // wnd_action_pos_y_label
             // 
             this.wnd_action_pos_y_label.AutoSize = true;
-            this.wnd_action_pos_y_label.Location = new System.Drawing.Point(7, 242);
+            this.wnd_action_pos_y_label.Location = new System.Drawing.Point(7, 395);
             this.wnd_action_pos_y_label.Name = "wnd_action_pos_y_label";
             this.wnd_action_pos_y_label.Size = new System.Drawing.Size(17, 15);
             this.wnd_action_pos_y_label.TabIndex = 15;
@@ -194,7 +202,7 @@
             // wnd_action_pos_x_label
             // 
             this.wnd_action_pos_x_label.AutoSize = true;
-            this.wnd_action_pos_x_label.Location = new System.Drawing.Point(7, 215);
+            this.wnd_action_pos_x_label.Location = new System.Drawing.Point(7, 367);
             this.wnd_action_pos_x_label.Name = "wnd_action_pos_x_label";
             this.wnd_action_pos_x_label.Size = new System.Drawing.Size(17, 15);
             this.wnd_action_pos_x_label.TabIndex = 13;
@@ -202,21 +210,21 @@
             // 
             // wnd_action_pos_y_bar
             // 
-            this.wnd_action_pos_y_bar.Location = new System.Drawing.Point(20, 242);
+            this.wnd_action_pos_y_bar.Location = new System.Drawing.Point(20, 395);
             this.wnd_action_pos_y_bar.Name = "wnd_action_pos_y_bar";
             this.wnd_action_pos_y_bar.Size = new System.Drawing.Size(121, 45);
             this.wnd_action_pos_y_bar.TabIndex = 17;
             // 
             // wnd_action_pos_x_bar
             // 
-            this.wnd_action_pos_x_bar.Location = new System.Drawing.Point(20, 215);
+            this.wnd_action_pos_x_bar.Location = new System.Drawing.Point(20, 367);
             this.wnd_action_pos_x_bar.Name = "wnd_action_pos_x_bar";
             this.wnd_action_pos_x_bar.Size = new System.Drawing.Size(121, 45);
             this.wnd_action_pos_x_bar.TabIndex = 16;
             // 
             // wnd_action_pos
             // 
-            this.wnd_action_pos.Location = new System.Drawing.Point(101, 185);
+            this.wnd_action_pos.Location = new System.Drawing.Point(101, 337);
             this.wnd_action_pos.Name = "wnd_action_pos";
             this.wnd_action_pos.Size = new System.Drawing.Size(87, 27);
             this.wnd_action_pos.TabIndex = 14;
@@ -228,9 +236,9 @@
             // 
             this.mouse.Controls.Add(this.mouse_log);
             this.mouse.Controls.Add(this.mouse_enabled);
-            this.mouse.Location = new System.Drawing.Point(356, 13);
+            this.mouse.Location = new System.Drawing.Point(308, 13);
             this.mouse.Name = "mouse";
-            this.mouse.Size = new System.Drawing.Size(300, 165);
+            this.mouse.Size = new System.Drawing.Size(348, 204);
             this.mouse.TabIndex = 7;
             this.mouse.TabStop = false;
             this.mouse.Text = "CC-Functions.W32.MouseHook";
@@ -246,18 +254,22 @@
             this.power.Controls.Add(this.power_mode_box);
             this.power.Location = new System.Drawing.Point(14, 13);
             this.power.Name = "power";
-            this.power.Size = new System.Drawing.Size(335, 115);
+            this.power.Size = new System.Drawing.Size(287, 115);
             this.power.TabIndex = 5;
             this.power.TabStop = false;
             this.power.Text = "CC-Functions.W32.Power";
             // 
             // power_execute
             // 
+            this.power_execute.Anchor =
+                ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top |
+                                                        System.Windows.Forms.AnchorStyles.Bottom) |
+                                                       System.Windows.Forms.AnchorStyles.Right)));
             this.power_execute.BackColor = System.Drawing.Color.DarkRed;
             this.power_execute.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F,
                 System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
             this.power_execute.ForeColor = System.Drawing.Color.White;
-            this.power_execute.Location = new System.Drawing.Point(233, 22);
+            this.power_execute.Location = new System.Drawing.Point(185, 22);
             this.power_execute.Name = "power_execute";
             this.power_execute.Size = new System.Drawing.Size(94, 87);
             this.power_execute.TabIndex = 6;
@@ -285,18 +297,24 @@
             // 
             // power_mod_box
             // 
+            this.power_mod_box.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Left |
+                                                       System.Windows.Forms.AnchorStyles.Right)));
             this.power_mod_box.FormattingEnabled = true;
             this.power_mod_box.Location = new System.Drawing.Point(65, 84);
             this.power_mod_box.Name = "power_mod_box";
-            this.power_mod_box.Size = new System.Drawing.Size(160, 23);
+            this.power_mod_box.Size = new System.Drawing.Size(112, 23);
             this.power_mod_box.TabIndex = 2;
             // 
             // power_reason_box
             // 
+            this.power_reason_box.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Left |
+                                                       System.Windows.Forms.AnchorStyles.Right)));
             this.power_reason_box.FormattingEnabled = true;
             this.power_reason_box.Location = new System.Drawing.Point(65, 53);
             this.power_reason_box.Name = "power_reason_box";
-            this.power_reason_box.Size = new System.Drawing.Size(160, 23);
+            this.power_reason_box.Size = new System.Drawing.Size(112, 23);
             this.power_reason_box.TabIndex = 3;
             // 
             // power_mode_label
@@ -310,10 +328,13 @@
             // 
             // power_mode_box
             // 
+            this.power_mode_box.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Left |
+                                                       System.Windows.Forms.AnchorStyles.Right)));
             this.power_mode_box.FormattingEnabled = true;
             this.power_mode_box.Location = new System.Drawing.Point(65, 22);
             this.power_mode_box.Name = "power_mode_box";
-            this.power_mode_box.Size = new System.Drawing.Size(160, 23);
+            this.power_mode_box.Size = new System.Drawing.Size(112, 23);
             this.power_mode_box.TabIndex = 0;
             // 
             // wnd_select_mouse
@@ -328,7 +349,7 @@
             // 
             // wnd_action_destroy
             // 
-            this.wnd_action_destroy.Location = new System.Drawing.Point(7, 185);
+            this.wnd_action_destroy.Location = new System.Drawing.Point(7, 337);
             this.wnd_action_destroy.Name = "wnd_action_destroy";
             this.wnd_action_destroy.Size = new System.Drawing.Size(87, 27);
             this.wnd_action_destroy.TabIndex = 2;
@@ -338,7 +359,7 @@
             // 
             // wnd_action_front
             // 
-            this.wnd_action_front.Location = new System.Drawing.Point(196, 185);
+            this.wnd_action_front.Location = new System.Drawing.Point(196, 337);
             this.wnd_action_front.Name = "wnd_action_front";
             this.wnd_action_front.Size = new System.Drawing.Size(84, 27);
             this.wnd_action_front.TabIndex = 10;
@@ -349,7 +370,7 @@
             // wnd_action_enabled
             // 
             this.wnd_action_enabled.AutoSize = true;
-            this.wnd_action_enabled.Location = new System.Drawing.Point(132, 127);
+            this.wnd_action_enabled.Location = new System.Drawing.Point(7, 275);
             this.wnd_action_enabled.Name = "wnd_action_enabled";
             this.wnd_action_enabled.Size = new System.Drawing.Size(68, 19);
             this.wnd_action_enabled.TabIndex = 9;
@@ -359,7 +380,7 @@
             // 
             // wnd_action_title_get
             // 
-            this.wnd_action_title_get.Location = new System.Drawing.Point(237, 89);
+            this.wnd_action_title_get.Location = new System.Drawing.Point(237, 270);
             this.wnd_action_title_get.Name = "wnd_action_title_get";
             this.wnd_action_title_get.Size = new System.Drawing.Size(43, 27);
             this.wnd_action_title_get.TabIndex = 8;
@@ -453,7 +474,7 @@
             this.wnd.Controls.Add(this.wnd_select_self);
             this.wnd.Location = new System.Drawing.Point(14, 135);
             this.wnd.Name = "wnd";
-            this.wnd.Size = new System.Drawing.Size(287, 278);
+            this.wnd.Size = new System.Drawing.Size(287, 456);
             this.wnd.TabIndex = 6;
             this.wnd.TabStop = false;
             this.wnd.Text = "CC-Functions.W32.Wnd32";
@@ -471,7 +492,7 @@
             // wnd_action_overlay
             // 
             this.wnd_action_overlay.AutoSize = true;
-            this.wnd_action_overlay.Location = new System.Drawing.Point(159, 156);
+            this.wnd_action_overlay.Location = new System.Drawing.Point(162, 275);
             this.wnd_action_overlay.Name = "wnd_action_overlay";
             this.wnd_action_overlay.Size = new System.Drawing.Size(66, 19);
             this.wnd_action_overlay.TabIndex = 25;
@@ -483,9 +504,9 @@
             // 
             this.wnd_action_style.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.wnd_action_style.FormattingEnabled = true;
-            this.wnd_action_style.Location = new System.Drawing.Point(7, 153);
+            this.wnd_action_style.Location = new System.Drawing.Point(7, 306);
             this.wnd_action_style.Name = "wnd_action_style";
-            this.wnd_action_style.Size = new System.Drawing.Size(140, 23);
+            this.wnd_action_style.Size = new System.Drawing.Size(238, 23);
             this.wnd_action_style.TabIndex = 24;
             this.wnd_action_style.SelectedIndexChanged +=
                 new System.EventHandler(this.Wnd_action_style_SelectedIndexChanged);
@@ -493,7 +514,7 @@
             // wnd_action_visible
             // 
             this.wnd_action_visible.AutoSize = true;
-            this.wnd_action_visible.Location = new System.Drawing.Point(215, 127);
+            this.wnd_action_visible.Location = new System.Drawing.Point(90, 275);
             this.wnd_action_visible.Name = "wnd_action_visible";
             this.wnd_action_visible.Size = new System.Drawing.Size(60, 19);
             this.wnd_action_visible.TabIndex = 23;
@@ -505,7 +526,7 @@
             // 
             this.wnd_action_icon.BackColor = System.Drawing.SystemColors.ControlLight;
             this.wnd_action_icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.wnd_action_icon.Location = new System.Drawing.Point(253, 151);
+            this.wnd_action_icon.Location = new System.Drawing.Point(253, 303);
             this.wnd_action_icon.Name = "wnd_action_icon";
             this.wnd_action_icon.Size = new System.Drawing.Size(27, 27);
             this.wnd_action_icon.TabIndex = 22;
@@ -514,22 +535,166 @@
             // 
             this.wnd_select_class_box.Location = new System.Drawing.Point(108, 91);
             this.wnd_select_class_box.Name = "wnd_select_class_box";
-            this.wnd_select_class_box.Size = new System.Drawing.Size(121, 23);
+            this.wnd_select_class_box.Size = new System.Drawing.Size(171, 23);
             this.wnd_select_class_box.TabIndex = 5;
             // 
-            // Form1
+            // screen
+            // 
+            this.screen.Controls.Add(this.screen_draw);
+            this.screen.Controls.Add(this.screen_get);
+            this.screen.Controls.Add(this.screen_img);
+            this.screen.Location = new System.Drawing.Point(663, 14);
+            this.screen.Name = "screen";
+            this.screen.Size = new System.Drawing.Size(282, 202);
+            this.screen.TabIndex = 10;
+            this.screen.TabStop = false;
+            this.screen.Text = "CC-Functions.W32.ScreenMan";
+            // 
+            // screen_draw
+            // 
+            this.screen_draw.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
+                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.screen_draw.Location = new System.Drawing.Point(188, 168);
+            this.screen_draw.Name = "screen_draw";
+            this.screen_draw.Size = new System.Drawing.Size(87, 27);
+            this.screen_draw.TabIndex = 3;
+            this.screen_draw.Text = "Draw";
+            this.screen_draw.UseVisualStyleBackColor = true;
+            this.screen_draw.Click += new System.EventHandler(this.screen_draw_Click);
+            // 
+            // screen_get
+            // 
+            this.screen_get.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
+                                                       System.Windows.Forms.AnchorStyles.Left)));
+            this.screen_get.Location = new System.Drawing.Point(7, 168);
+            this.screen_get.Name = "screen_get";
+            this.screen_get.Size = new System.Drawing.Size(87, 27);
+            this.screen_get.TabIndex = 2;
+            this.screen_get.Text = "Get";
+            this.screen_get.UseVisualStyleBackColor = true;
+            this.screen_get.Click += new System.EventHandler(this.screen_get_Click);
+            // 
+            // screen_img
+            // 
+            this.screen_img.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top |
+                                                         System.Windows.Forms.AnchorStyles.Bottom) |
+                                                        System.Windows.Forms.AnchorStyles.Left) |
+                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.screen_img.BackColor = System.Drawing.Color.White;
+            this.screen_img.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.screen_img.Location = new System.Drawing.Point(7, 22);
+            this.screen_img.Name = "screen_img";
+            this.screen_img.Size = new System.Drawing.Size(268, 140);
+            this.screen_img.TabIndex = 1;
+            // 
+            // reader
+            // 
+            this.reader.Controls.Add(this.readerFlow);
+            this.reader.Location = new System.Drawing.Point(308, 420);
+            this.reader.Name = "reader";
+            this.reader.Size = new System.Drawing.Size(637, 171);
+            this.reader.TabIndex = 11;
+            this.reader.TabStop = false;
+            this.reader.Text = "CC-Functions.W32.KeyboardReader";
+            // 
+            // readerFlow
+            // 
+            this.readerFlow.AutoScroll = true;
+            this.readerFlow.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.readerFlow.Location = new System.Drawing.Point(3, 19);
+            this.readerFlow.Name = "readerFlow";
+            this.readerFlow.Size = new System.Drawing.Size(631, 149);
+            this.readerFlow.TabIndex = 0;
+            // 
+            // desk
+            // 
+            this.desk.Controls.Add(this.desk_draw);
+            this.desk.Controls.Add(this.desk_set);
+            this.desk.Controls.Add(this.desk_get);
+            this.desk.Controls.Add(this.desk_back);
+            this.desk.Location = new System.Drawing.Point(663, 224);
+            this.desk.Name = "desk";
+            this.desk.Size = new System.Drawing.Size(282, 189);
+            this.desk.TabIndex = 11;
+            this.desk.TabStop = false;
+            this.desk.Text = "CC-Functions.W32.DeskMan";
+            // 
+            // desk_draw
+            // 
+            this.desk_draw.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
+            this.desk_draw.Location = new System.Drawing.Point(188, 156);
+            this.desk_draw.Name = "desk_draw";
+            this.desk_draw.Size = new System.Drawing.Size(87, 27);
+            this.desk_draw.TabIndex = 3;
+            this.desk_draw.Text = "Draw";
+            this.desk_draw.UseVisualStyleBackColor = true;
+            this.desk_draw.Click += new System.EventHandler(this.desk_draw_Click);
+            // 
+            // desk_set
+            // 
+            this.desk_set.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
+                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.desk_set.Location = new System.Drawing.Point(101, 156);
+            this.desk_set.Name = "desk_set";
+            this.desk_set.Size = new System.Drawing.Size(79, 27);
+            this.desk_set.TabIndex = 2;
+            this.desk_set.Text = "Set";
+            this.desk_set.UseVisualStyleBackColor = true;
+            this.desk_set.Click += new System.EventHandler(this.desk_set_Click);
+            // 
+            // desk_get
+            // 
+            this.desk_get.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
+                                                       System.Windows.Forms.AnchorStyles.Left)));
+            this.desk_get.Location = new System.Drawing.Point(7, 156);
+            this.desk_get.Name = "desk_get";
+            this.desk_get.Size = new System.Drawing.Size(87, 27);
+            this.desk_get.TabIndex = 1;
+            this.desk_get.Text = "Get";
+            this.desk_get.UseVisualStyleBackColor = true;
+            this.desk_get.Click += new System.EventHandler(this.desk_get_Click);
+            // 
+            // desk_back
+            // 
+            this.desk_back.Anchor =
+                ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top |
+                                                         System.Windows.Forms.AnchorStyles.Bottom) |
+                                                        System.Windows.Forms.AnchorStyles.Left) |
+                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.desk_back.BackColor = System.Drawing.Color.White;
+            this.desk_back.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.desk_back.Location = new System.Drawing.Point(7, 22);
+            this.desk_back.Name = "desk_back";
+            this.desk_back.Size = new System.Drawing.Size(268, 127);
+            this.desk_back.TabIndex = 0;
+            // 
+            // readerUpdate
+            // 
+            this.readerUpdate.Enabled = true;
+            this.readerUpdate.Interval = 50;
+            this.readerUpdate.Tick += new System.EventHandler(this.readerUpdate_Tick);
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(670, 427);
-            this.Controls.Add(this.exit);
+            this.ClientSize = new System.Drawing.Size(959, 595);
+            this.Controls.Add(this.desk);
+            this.Controls.Add(this.reader);
+            this.Controls.Add(this.screen);
             this.Controls.Add(this.keyboard);
             this.Controls.Add(this.mouse);
             this.Controls.Add(this.power);
             this.Controls.Add(this.wnd);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "MainForm";
+            this.ShowIcon = false;
             this.Text = "CC-Functions.W32.Test";
             this.keyboard.ResumeLayout(false);
             this.keyboard.PerformLayout();
@@ -543,12 +708,13 @@
             this.power.PerformLayout();
             this.wnd.ResumeLayout(false);
             this.wnd.PerformLayout();
+            this.screen.ResumeLayout(false);
+            this.reader.ResumeLayout(false);
+            this.desk.ResumeLayout(false);
             this.ResumeLayout(false);
         }
 
         #endregion
-
-        private System.Windows.Forms.Button exit;
         private System.Windows.Forms.TextBox keyboard_log;
         private System.Windows.Forms.GroupBox keyboard;
         private System.Windows.Forms.CheckBox keyboard_enabled;
@@ -590,5 +756,17 @@
         private System.Windows.Forms.ComboBox wnd_action_style;
         private System.Windows.Forms.CheckBox wnd_action_overlay;
         private System.Windows.Forms.Button wnd_select_list;
+        private System.Windows.Forms.GroupBox screen;
+        private System.Windows.Forms.GroupBox reader;
+        private System.Windows.Forms.GroupBox desk;
+        private System.Windows.Forms.FlowLayoutPanel readerFlow;
+        private System.Windows.Forms.Timer readerUpdate;
+        private System.Windows.Forms.Panel desk_back;
+        private System.Windows.Forms.Button desk_get;
+        private System.Windows.Forms.Button desk_set;
+        private System.Windows.Forms.Button desk_draw;
+        private System.Windows.Forms.Panel screen_img;
+        private System.Windows.Forms.Button screen_get;
+        private System.Windows.Forms.Button screen_draw;
     }
 }

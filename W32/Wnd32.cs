@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using CC_Functions.W32.Native;
@@ -153,11 +152,6 @@ namespace CC_Functions.W32
             }
         }
 
-        public void MakeOverlay()
-        {
-            overlay = true;
-        }
-
         public bool overlay
         {
             set
@@ -201,11 +195,7 @@ namespace CC_Functions.W32
         private static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
         private const uint SWP_NOSIZE = 0x0001;
         private const uint SWP_NOMOVE = 0x0002;
-
-        // Define the callback delegate's type.
-
         private static List<IntPtr> WindowHandles;
-
         private static bool FilterCallback(IntPtr hWnd, int lParam)
         {
             StringBuilder sbTitle = new StringBuilder(1024);
@@ -213,7 +203,6 @@ namespace CC_Functions.W32
             WindowHandles.Add(hWnd);
             return true;
         }
-
         #endregion Internal
     }
 }

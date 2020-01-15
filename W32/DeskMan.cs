@@ -37,20 +37,20 @@ namespace CC_Functions.W32
         {
             get 
             {
-                string currentWallpaper = new string('\0', 260);
-                user32.SystemParametersInfo(0x73, currentWallpaper.Length, currentWallpaper, 0);
-                return Image.FromFile(currentWallpaper.Substring(0, currentWallpaper.IndexOf('\0')));
+                using (var bmpTemp = new Bitmap(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Microsoft\Windows\Themes\TranscodedWallpaper"))
+                {
+                    return (Image)bmpTemp.Clone();
+                }
             }
             set
             {
                 string tempPath = Path.Combine(Path.GetTempPath(), "wallpaper.bmp");
-                Wallpaper.Save(tempPath, ImageFormat.Bmp);
+                value.Save(tempPath, ImageFormat.Bmp);
                 RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop", true);
                 key.SetValue(@"WallpaperStyle", 2.ToString());
                 key.SetValue(@"TileWallpaper", 0.ToString());
                 user32.SystemParametersInfo(20, 0, tempPath, 0x01 | 0x02);
                 File.Delete(tempPath);
-                Console.WriteLine("Saved background image to " + tempPath);
             }
         }
     }
