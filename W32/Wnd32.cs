@@ -10,123 +10,199 @@ using CC_Functions.W32.Native;
 
 namespace CC_Functions.W32
 {
+    /// <summary>
+    ///     Object representing a window handle in the Windows API. Provides a simplified interface for basic interactions
+    /// </summary>
     public sealed class Wnd32 : IEquatable<Wnd32>
     {
         #region Exposed
 
         #region CreateInstance
 
-        private Wnd32(IntPtr wndref) => hWnd = wndref;
+        private Wnd32(IntPtr handle) => HWnd = handle;
 
-        public static Wnd32 fromHandle(IntPtr handle) => new Wnd32(handle);
+        /// <summary>
+        ///     Base method. Generates a window object from the specified handle
+        /// </summary>
+        /// <param name="handle">The handle</param>
+        /// <returns>The window</returns>
+        public static Wnd32 FromHandle(IntPtr handle) => new Wnd32(handle);
 
-        public static Wnd32 getProcessMain(Process process) => fromHandle(process.MainWindowHandle);
+        /// <summary>
+        ///     Gets the main window of the process
+        /// </summary>
+        /// <param name="process">The process</param>
+        /// <returns>The window. Might be IntPtr.Zero</returns>
+        public static Wnd32 GetProcessMain(Process process) => FromHandle(process.MainWindowHandle);
 
-        public static Wnd32 fromMetadata(string? lpClassName = null, string? lpWindowName = null) =>
-            fromHandle(user32.FindWindow(lpClassName, lpWindowName));
+        /// <summary>
+        ///     Generates a window from metadata. Parameters should be null if they are not used
+        /// </summary>
+        /// <param name="lpClassName">
+        ///     The class name of the window. Use the name you found before using the ClassName-parameter of
+        ///     a window
+        /// </param>
+        /// <param name="lpWindowName">The windows name (title)</param>
+        /// <returns>The window. Might be IntPtr.Zero</returns>
+        public static Wnd32 FromMetadata(string? lpClassName = null, string? lpWindowName = null) =>
+            FromHandle(user32.FindWindow(lpClassName, lpWindowName));
 
-        public static Wnd32 fromPoint(Point point) => fromHandle(user32.WindowFromPoint(point.X, point.Y));
+        /// <summary>
+        ///     Gets the window that is visible at the specified point
+        /// </summary>
+        /// <param name="point">The point to scan</param>
+        /// <returns>The window. Might be IntPtr.Zero</returns>
+        public static Wnd32 FromPoint(Point point) => FromHandle(user32.WindowFromPoint(point.X, point.Y));
 
-        public static Wnd32 fromForm(Form form) => fromHandle(form.Handle);
+        /// <summary>
+        ///     Gets the window associated with the forms handle
+        /// </summary>
+        /// <param name="form">Form to get window from</param>
+        /// <returns>The window. Might be IntPtr.Zero</returns>
+        public static Wnd32 FromForm(Form form) => FromHandle(form.Handle);
 
+        /// <summary>
+        ///     Gets ALL windows. In most cases you will want to use Wnd32.Visible
+        /// </summary>
+        /// <exception cref="Win32Exception"></exception>
         public static Wnd32[] All
         {
-            get { WindowHandles = new List<IntPtr>();
+            get
+            {
+                _windowHandles = new List<IntPtr>();
                 if (!user32.EnumDesktopWindows(IntPtr.Zero, FilterCallback, IntPtr.Zero))
                     throw new Win32Exception("There was a native error. This should never happen!");
-                return WindowHandles.Select(s => fromHandle(s)).ToArray(); }
+                return _windowHandles.Select(s => FromHandle(s)).ToArray();
+            }
         }
 
-        public static Wnd32[] Visible => All.Where(s => user32.IsWindowVisible(s.hWnd) && !string.IsNullOrEmpty(s.title)).ToArray();
-        public static Wnd32 Foreground => fromHandle(user32.GetForegroundWindow());
-        public static Wnd32 ConsoleWindow => fromHandle(kernel32.GetConsoleWindow());
+        /// <summary>
+        ///     Gets all visible windows with valid titles
+        /// </summary>
+        public static Wnd32[] Visible =>
+            All.Where(s => user32.IsWindowVisible(s.HWnd) && !string.IsNullOrEmpty(s.Title)).ToArray();
+
+        /// <summary>
+        ///     Gets the foreground window
+        /// </summary>
+        public static Wnd32 Foreground => FromHandle(user32.GetForegroundWindow());
+
+        /// <summary>
+        ///     The current programs console window. Do NOT use this if you are not targeting a console app or allocating a console
+        /// </summary>
+        public static Wnd32 ConsoleWindow => FromHandle(kernel32.GetConsoleWindow());
 
         #endregion CreateInstance
 
         #region InstanceActions
 
-        public string title
+        /// <summary>
+        ///     The windows title
+        /// </summary>
+        public string Title
         {
             get
             {
-                int length = user32.GetWindowTextLength(hWnd);
+                int length = user32.GetWindowTextLength(HWnd);
                 StringBuilder sb = new StringBuilder(length + 1);
-                user32.GetWindowText(hWnd, sb, sb.Capacity);
+                user32.GetWindowText(HWnd, sb, sb.Capacity);
                 return sb.ToString();
             }
-            set => user32.SetWindowText(hWnd, value);
+            set => user32.SetWindowText(HWnd, value);
         }
 
-        public Rectangle position
+        /// <summary>
+        ///     The windows position in screen-space
+        /// </summary>
+        public Rectangle Position
         {
             get
             {
-                RECT Rect = new RECT();
-                user32.GetWindowRect(hWnd, ref Rect);
-                return new Rectangle(new Point(Rect.Left, Rect.Top),
-                    new Size(Rect.Width, Rect.Height));
+                RECT rect = new RECT();
+                user32.GetWindowRect(HWnd, ref rect);
+                return new Rectangle(new Point(rect.Left, rect.Top),
+                    new Size(rect.Width, rect.Height));
             }
             set
             {
-                RECT Rect = new RECT();
-                user32.GetWindowRect(hWnd, ref Rect);
-                user32.MoveWindow(hWnd, value.X, value.Y, value.Width, value.Height, true);
+                RECT rect = new RECT();
+                user32.GetWindowRect(HWnd, ref rect);
+                user32.MoveWindow(HWnd, value.X, value.Y, value.Width, value.Height, true);
             }
         }
 
-        public bool isForeground
+        /// <summary>
+        ///     Gets whether the window is the foreground window or brings it to the front. "False" must not be assigned!
+        /// </summary>
+        /// <exception cref="InvalidOperationException">Thrown when the value is "False"</exception>
+        public bool IsForeground
         {
-            get => user32.GetForegroundWindow() == hWnd;
+            get => user32.GetForegroundWindow() == HWnd;
             set
             {
                 if (value)
-                    user32.SetForegroundWindow(hWnd);
+                    user32.SetForegroundWindow(HWnd);
                 else
                     throw new InvalidOperationException(
                         "You can't set a Window not to be in the foreground. Move another one over it!");
             }
         }
 
-        public bool enabled
+        /// <summary>
+        ///     Whether the window is enabled. Functionally similar to WinForms' "Control.Enabled"
+        /// </summary>
+        public bool Enabled
         {
-            get => user32.IsWindowEnabled(hWnd);
-            set => user32.EnableWindow(hWnd, value);
+            get => user32.IsWindowEnabled(HWnd);
+            set => user32.EnableWindow(HWnd, value);
         }
 
-        public Icon icon
+        /// <summary>
+        ///     Gets the windows icon
+        /// </summary>
+        public Icon Icon
         {
             get
             {
-                IntPtr hicon = user32.SendMessage(hWnd, 0x7F, 1, 0);
-                if (hicon == IntPtr.Zero)
-                    hicon = user32.SendMessage(hWnd, 0x7F, 0, 0);
-                if (hicon == IntPtr.Zero)
-                    hicon = user32.SendMessage(hWnd, 0x7F, 2, 0);
-                return Icon.FromHandle(hicon);
+                IntPtr hIcon = user32.SendMessage(HWnd, 0x7F, 1, 0);
+                if (hIcon == IntPtr.Zero)
+                    hIcon = user32.SendMessage(HWnd, 0x7F, 0, 0);
+                if (hIcon == IntPtr.Zero)
+                    hIcon = user32.SendMessage(HWnd, 0x7F, 2, 0);
+                return Icon.FromHandle(hIcon);
             }
         }
 
-        public bool shown
+        /// <summary>
+        ///     Whether the window is visible
+        /// </summary>
+        public bool Shown
         {
-            get => user32.IsWindowVisible(hWnd);
-            set => user32.ShowWindow(hWnd, value ? 9 : 0);
+            get => user32.IsWindowVisible(HWnd);
+            set => user32.ShowWindow(HWnd, value ? 9 : 0);
         }
 
-        public string className
+        /// <summary>
+        ///     Gets the windows class name, This is basically only useful for finding window class-names of specified programs
+        /// </summary>
+        public string ClassName
         {
             get
             {
-                StringBuilder ClassName = new StringBuilder(256);
-                user32.GetClassName(hWnd, ClassName, ClassName.Capacity);
-                return ClassName.ToString();
+                StringBuilder className = new StringBuilder(256);
+                user32.GetClassName(HWnd, className, className.Capacity);
+                return className.ToString();
             }
         }
 
-        public FormWindowState state
+        /// <summary>
+        ///     Sets the window state
+        /// </summary>
+        public FormWindowState State
         {
             get
             {
-                int style = user32.GetWindowLong(hWnd, -16);
+                int style = user32.GetWindowLong(HWnd, -16);
                 if ((style & 0x01000000) == 0x01000000)
                     return FormWindowState.Maximized;
                 if ((style & 0x20000000) == 0x20000000)
@@ -138,50 +214,107 @@ namespace CC_Functions.W32
                 switch (value)
                 {
                     case FormWindowState.Minimized:
-                        user32.ShowWindow(hWnd, 11);
+                        user32.ShowWindow(HWnd, 11);
                         break;
 
                     case FormWindowState.Normal:
-                        user32.ShowWindow(hWnd, 1);
+                        user32.ShowWindow(HWnd, 1);
                         break;
 
                     case FormWindowState.Maximized:
-                        user32.ShowWindow(hWnd, 3);
+                        user32.ShowWindow(HWnd, 3);
                         break;
+
+                    default:
+                        throw new ArgumentException("The provided WindowState was invalid", "value");
                 }
             }
         }
 
-        public bool overlay
+        /// <summary>
+        ///     Overlays the window over others
+        /// </summary>
+        public bool Overlay
         {
             set
             {
-                Rectangle tmp = position;
-                user32.SetWindowPos(hWnd, value ? HWND_TOPMOST : HWND_NOTOPMOST, tmp.X, tmp.Y, tmp.Width, tmp.Height,
-                    value ? SWP_NOMOVE | SWP_NOSIZE : 0);
+                Rectangle tmp = Position;
+                user32.SetWindowPos(HWnd, value ? new IntPtr(-1) : new IntPtr(-2), tmp.X, tmp.Y, tmp.Width, tmp.Height,
+                    value ? (uint) 3 : 0);
             }
         }
 
-        public bool Destroy()
+        /// <summary>
+        ///     Forces the window to close
+        /// </summary>
+        /// <exception cref="Exception">Thrown if the window could not be closed</exception>
+        public void Destroy()
         {
-            if (user32.DestroyWindow(hWnd))
-                return true;
-            throw new Exception("Failed.");
+            if (!user32.DestroyWindow(HWnd))
+                throw new Exception("Failed.");
         }
 
-        public bool stillExists => user32.IsWindow(hWnd);
+        /// <summary>
+        ///     Whether the IntPtr is a window and still exists
+        /// </summary>
+        public bool StillExists => user32.IsWindow(HWnd);
 
-        public override string ToString() => hWnd + "; " + title + "; " + position;
+        /// <summary>
+        ///     Creates a user-readable string from the windows hWnd, title and position
+        /// </summary>
+        /// <returns>The created string</returns>
+        public override string ToString() => $"{HWnd}; {Title}; {Position}";
 
+        /// <summary>
+        ///     Equality operator, uses the hWnd field
+        /// </summary>
+        /// <param name="obj">Object (Window) to compare</param>
+        /// <returns>Equality result</returns>
         public override bool Equals(object obj) => Equals(obj as Wnd32);
 
-        public bool Equals(Wnd32 other) => other != null && EqualityComparer<IntPtr>.Default.Equals(hWnd, other.hWnd);
+        /// <summary>
+        ///     Equality operator, uses the hWnd field
+        /// </summary>
+        /// <param name="other">Window to compare</param>
+        /// <returns>Equality result</returns>
+        public bool Equals(Wnd32 other) => !IsNull(other) && other != null && HWnd.Equals(other.HWnd);
 
-        public override int GetHashCode() => -75345830 + EqualityComparer<IntPtr>.Default.GetHashCode(hWnd);
+        /// <summary>
+        ///     Equality operator, uses the hWnd field
+        /// </summary>
+        /// <returns>Equality result</returns>
+        public override int GetHashCode() => HWnd.GetHashCode();
 
-        public static bool operator ==(Wnd32 left, Wnd32 right) => EqualityComparer<Wnd32>.Default.Equals(left, right);
+        /// <summary>
+        ///     Equality operator, uses the hWnd field
+        /// </summary>
+        /// <param name="left">Window to compare</param>
+        /// <param name="right">Window to compare</param>
+        /// <returns>Equality result</returns>
+        public static bool operator ==(Wnd32 left, Wnd32 right) => !AreNull(left, right) && left.HWnd == right.HWnd;
 
-        public static bool operator !=(Wnd32 left, Wnd32 right) => !(left == right);
+        /// <summary>
+        ///     Equality operator, uses the hWnd field
+        /// </summary>
+        /// <param name="left">Window to compare</param>
+        /// <param name="right">Window to compare</param>
+        /// <returns>Equality result</returns>
+        public static bool operator !=(Wnd32 left, Wnd32 right) => AreNull(left, right) || left.HWnd != right.HWnd;
+
+        private static bool AreNull(params Wnd32[] windows) => windows.Any(IsNull);
+
+        private static bool IsNull(Wnd32 window)
+        {
+            try
+            {
+                window.ToString();
+                return false;
+            }
+            catch (NullReferenceException)
+            {
+                return true;
+            }
+        }
 
         #endregion InstanceActions
 
@@ -189,20 +322,21 @@ namespace CC_Functions.W32
 
         #region Internal
 
-        public IntPtr hWnd;
+        /// <summary>
+        ///     The windows' handle
+        /// </summary>
+        public readonly IntPtr HWnd;
 
-        private static readonly IntPtr HWND_TOPMOST = new IntPtr(-1);
-        private static readonly IntPtr HWND_NOTOPMOST = new IntPtr(-2);
-        private const uint SWP_NOSIZE = 0x0001;
-        private const uint SWP_NOMOVE = 0x0002;
-        private static List<IntPtr> WindowHandles;
+        private static List<IntPtr> _windowHandles;
+
         private static bool FilterCallback(IntPtr hWnd, int lParam)
         {
             StringBuilder sbTitle = new StringBuilder(1024);
             user32.GetWindowText(hWnd, sbTitle, 1024);
-            WindowHandles.Add(hWnd);
+            _windowHandles.Add(hWnd);
             return true;
         }
+
         #endregion Internal
     }
 }

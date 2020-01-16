@@ -88,6 +88,11 @@ namespace CC_Functions.W32
             SE_UNSOLICITED_INPUT_NAME_TEXT
         }
 
+        internal const int SE_PRIVILEGE_ENABLED = 0x00000002;
+        internal const int ERROR_NOT_ALL_ASSIGNED = 1300;
+        internal const uint TOKEN_QUERY = 0x0008;
+        internal const uint TOKEN_ADJUST_PRIVILEGES = 0x0020;
+
         public static void EnablePrivilege(SecurityEntity securityEntity)
         {
             if (!Enum.IsDefined(typeof(SecurityEntity), securityEntity))
@@ -155,11 +160,6 @@ namespace CC_Functions.W32
         }
 
         public static SecurityEntity EntityToEntity(SecurityEntity2 entity) => (SecurityEntity) entity;
-        
-        internal const int SE_PRIVILEGE_ENABLED = 0x00000002;
-        internal const int ERROR_NOT_ALL_ASSIGNED = 1300;
-        internal const uint TOKEN_QUERY = 0x0008;
-        internal const uint TOKEN_ADJUST_PRIVILEGES = 0x0020;
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct LUID

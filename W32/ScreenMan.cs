@@ -8,6 +8,7 @@ namespace CC_Functions.W32
 {
     public static class ScreenMan
     {
+        private const int SRCCOPY = 13369376;
         public static Image CaptureScreen() => CaptureWindow(user32.GetDesktopWindow());
 
         public static Image CaptureWindow(IntPtr handle)
@@ -44,7 +45,5 @@ namespace CC_Functions.W32
         public static Rectangle GetBounds() => Screen.PrimaryScreen.Bounds;
 
         public static void Refresh() => shell32.SHChangeNotify(0x8000000, 0x1000, IntPtr.Zero, IntPtr.Zero);
-
-        private const int SRCCOPY = 13369376;
     }
 }

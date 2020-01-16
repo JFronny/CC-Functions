@@ -6,8 +6,8 @@ namespace CC_Functions.W32.DCDrawer
 {
     public class DCUnbuffered : IDCDrawer
     {
+        private readonly IntPtr hWnd;
         private readonly IntPtr ptr;
-        private IntPtr hWnd;
 
         public DCUnbuffered(IntPtr ptr, IntPtr hWnd)
         {

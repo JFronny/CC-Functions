@@ -6,13 +6,17 @@ namespace CC_Functions.W32.Native
 {
     internal static class user32
     {
+        public delegate bool EnumDelegate(IntPtr hWnd, int lParam);
+
+        public delegate IntPtr LowLevelProc(int nCode, IntPtr wParam, IntPtr lParam);
+
         [DllImport("user32.dll")]
         public static extern IntPtr GetWindowDC(IntPtr hWnd);
 
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool ExitWindowsEx(Power.ExitWindows uFlags, Power.ShutdownReason dwReason);
-        
+
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
         public static extern short GetKeyState(int keyCode);
 
@@ -35,11 +39,11 @@ namespace CC_Functions.W32.Native
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern IntPtr CallNextHookEx(IntPtr hhk, int nCode, IntPtr wParam, IntPtr lParam);
-        
+
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsWindowVisible(IntPtr hWnd);
-        
+
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Ansi)]
         public static extern long GetClassName(IntPtr hWnd, StringBuilder lpClassName, int nMaxCount);
 
@@ -104,10 +108,10 @@ namespace CC_Functions.W32.Native
             SetLastError = true)]
         public static extern bool EnumDesktopWindows(IntPtr hDesktop, EnumDelegate lpEnumCallbackFunction,
             IntPtr lParam);
-        
+
         [DllImport("user32.dll", CharSet = CharSet.Unicode)]
         public static extern int SystemParametersInfo(int uAction, int uParam, string lpvParam, int fuWinIni);
-        
+
         [DllImport("user32.dll")]
         public static extern IntPtr GetDCEx(IntPtr hWnd, IntPtr hrgnClip, uint flags);
 
@@ -116,12 +120,11 @@ namespace CC_Functions.W32.Native
         public static extern bool EnumWindows(EnumDelegate lpEnumFunc, IntPtr lParam);
 
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
-        public static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string className, IntPtr windowTitle);
+        public static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string className,
+            IntPtr windowTitle);
 
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-        public static extern IntPtr SendMessageTimeout(IntPtr windowHandle, uint Msg, IntPtr wParam, IntPtr lParam, uint flags, uint timeout, out IntPtr result);
-
-        public delegate IntPtr LowLevelProc(int nCode, IntPtr wParam, IntPtr lParam);
-        public delegate bool EnumDelegate(IntPtr hWnd, int lParam);
+        public static extern IntPtr SendMessageTimeout(IntPtr windowHandle, uint Msg, IntPtr wParam, IntPtr lParam,
+            uint flags, uint timeout, out IntPtr result);
     }
 }
