@@ -108,7 +108,7 @@ namespace CC_Functions.W32
                 user32.GetWindowText(HWnd, sb, sb.Capacity);
                 return sb.ToString();
             }
-            set => user32.SetWindowText(HWnd, value);
+            set => user32.SetWindowTextW(HWnd, value);
         }
 
         /// <summary>

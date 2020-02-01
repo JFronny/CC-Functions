@@ -47,6 +47,7 @@ namespace CC_Functions.W32.Test
             Wnd_action_title_get_Click(null, null);
             desk_get_Click(null, null);
             screen_get_Click(null, null);
+            time_select.Value = DateTime.Now;
         }
 
         private Wnd32 tmpWnd
@@ -281,5 +282,7 @@ namespace CC_Functions.W32.Test
             g.DrawEllipse(eye,
                 new RectangleF(PointF.Subtract(makePoint(50, 50), makeSizeY(15, 15)), makeSizeY(30, 30)));
         }
+
+        private void time_set_Click(object sender, EventArgs e) => Time.Set(time_select.Value);
     }
 }

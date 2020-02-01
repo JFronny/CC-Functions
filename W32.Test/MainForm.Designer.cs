@@ -82,6 +82,9 @@
             this.desk_get = new System.Windows.Forms.Button();
             this.desk_back = new System.Windows.Forms.Panel();
             this.readerUpdate = new System.Windows.Forms.Timer(this.components);
+            this.time = new System.Windows.Forms.GroupBox();
+            this.time_select = new System.Windows.Forms.DateTimePicker();
+            this.time_set = new System.Windows.Forms.Button();
             this.keyboard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.wnd_action_pos_h_bar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.wnd_action_pos_w_bar)).BeginInit();
@@ -93,6 +96,7 @@
             this.screen.SuspendLayout();
             this.reader.SuspendLayout();
             this.desk.SuspendLayout();
+            this.time.SuspendLayout();
             this.SuspendLayout();
             // 
             // keyboard_log
@@ -725,11 +729,40 @@
             this.readerUpdate.Interval = 50;
             this.readerUpdate.Tick += new System.EventHandler(this.readerUpdate_Tick);
             // 
+            // time
+            // 
+            this.time.Controls.Add(this.time_set);
+            this.time.Controls.Add(this.time_select);
+            this.time.Location = new System.Drawing.Point(14, 486);
+            this.time.Name = "time";
+            this.time.Size = new System.Drawing.Size(287, 102);
+            this.time.TabIndex = 12;
+            this.time.TabStop = false;
+            this.time.Text = "CC-Functions.W32.Time";
+            // 
+            // time_select
+            // 
+            this.time_select.Location = new System.Drawing.Point(6, 26);
+            this.time_select.Name = "time_select";
+            this.time_select.Size = new System.Drawing.Size(205, 23);
+            this.time_select.TabIndex = 0;
+            // 
+            // time_set
+            // 
+            this.time_set.Location = new System.Drawing.Point(217, 22);
+            this.time_set.Name = "time_set";
+            this.time_set.Size = new System.Drawing.Size(64, 27);
+            this.time_set.TabIndex = 1;
+            this.time_set.Text = "Set";
+            this.time_set.UseVisualStyleBackColor = true;
+            this.time_set.Click += new System.EventHandler(this.time_set_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(959, 595);
+            this.Controls.Add(this.time);
             this.Controls.Add(this.desk);
             this.Controls.Add(this.reader);
             this.Controls.Add(this.screen);
@@ -757,6 +790,7 @@
             this.screen.ResumeLayout(false);
             this.reader.ResumeLayout(false);
             this.desk.ResumeLayout(false);
+            this.time.ResumeLayout(false);
             this.ResumeLayout(false);
         }
 
@@ -814,5 +848,8 @@
         private System.Windows.Forms.Panel screen_img;
         private System.Windows.Forms.Button screen_get;
         private System.Windows.Forms.Button screen_draw;
+        private System.Windows.Forms.GroupBox time;
+        private System.Windows.Forms.DateTimePicker time_select;
+        private System.Windows.Forms.Button time_set;
     }
 }
