@@ -60,6 +60,7 @@
     <Compile Include="GenericExtensions.cs" />
     <Compile Include="HID.cs" />
     <Compile Include="IO.cs" />
+    <Compile Include="MathEx.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RotatingIndicator.cs">
       <SubType>Component</SubType>
