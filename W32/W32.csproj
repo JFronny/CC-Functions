@@ -60,6 +60,7 @@
     <Compile Include="Hooks\KeyboardHookEventArgs.cs" />
     <Compile Include="KeyboardReader.cs" />
     <Compile Include="Hooks\MouseHookEventArgs.cs" />
+    <Compile Include="Mouse.cs" />
     <Compile Include="Native\advapi32.cs" />
     <Compile Include="Native\gdi32.cs" />
     <Compile Include="Native\kernel32.cs" />
