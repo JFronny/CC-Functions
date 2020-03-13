@@ -69,7 +69,7 @@ namespace CC_Functions.Misc
 
         public static long GetSize(this DirectoryInfo directory) => IO.GetDirectorySize(directory.FullName);
 
-        private static ZipArchiveEntry AddDirectory(this ZipArchive archive, string folderPath, string entryName,
+        public static ZipArchiveEntry AddDirectory(this ZipArchive archive, string folderPath, string entryName,
             string[] ignoredExtensions, string[] ignoredPaths)
         {
             entryName = entryName.TrimEnd('/');
@@ -87,7 +87,7 @@ namespace CC_Functions.Misc
             return result;
         }
 
-        private static Uri Unshorten(this Uri self)
+        public static Uri Unshorten(this Uri self)
         {
             HttpWebRequest req = (HttpWebRequest) WebRequest.Create(self);
             req.AllowAutoRedirect = true;
