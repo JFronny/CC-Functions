@@ -32,67 +32,61 @@ Win32_NetworkAdapterConfiguration:MACAddress";
         {
             get
             {
-                if (_fingerPrint == null)
+                if (_fingerPrint != null) return _fingerPrint;
+                string fingerprintTmp = "";
+                if (forceWindows || Type.GetType("Mono.Runtime") == null)
                 {
-                    string fingerprintTmp = "";
-                    if (forceWindows || Type.GetType("Mono.Runtime") == null)
+                    HIDClasses.Split(new[] {"\r\n"}, StringSplitOptions.None).Select(s =>
                     {
-                        HIDClasses.Split(new[] {"\r\n"}, StringSplitOptions.None).Select(s =>
-                        {
-                            if (s.StartsWith("\n"))
-                                s = s.Remove(0, 1);
-                            return s.Split(':');
-                        }).ToList().ForEach(s =>
-                        {
-                            using (ManagementClass mc = new ManagementClass(s[0]))
-                            using (ManagementObjectCollection moc = mc.GetInstances())
+                        if (s.StartsWith("\n"))
+                            s = s.Remove(0, 1);
+                        return s.Split(':');
+                    }).ToList().ForEach(s =>
+                    {
+                        using ManagementClass mc = new ManagementClass(s[0]);
+                        using ManagementObjectCollection moc = mc.GetInstances();
+                        ManagementBaseObject[] array = moc.OfType<ManagementBaseObject>().ToArray();
+                        for (int j = 0; j < array.Length; j++)
+                            try
                             {
-                                ManagementBaseObject[] array = moc.OfType<ManagementBaseObject>().ToArray();
-                                for (int j = 0; j < array.Length; j++)
-                                    try
-                                    {
-                                        fingerprintTmp += array[j][s[1]].ToString();
-                                        break;
-                                    }
-                                    catch
-                                    {
-                                        Console.WriteLine("Failed to read property");
-                                    }
+                                fingerprintTmp += array[j][s[1]].ToString();
+                                break;
                             }
-                        });
-                    }
-                    else //Linux implementation. This will not work if you are using Mono on windows or do not have "uname", "lscpu" and "id" available
-                    {
-                        Process p = new Process
-                        {
-                            StartInfo =
+                            catch
                             {
-                                UseShellExecute = false,
-                                RedirectStandardOutput = true,
-                                FileName = "uname",
-                                Arguments = "-nmpio"
+                                Console.WriteLine("Failed to read property");
                             }
-                        };
-                        p.Start();
-                        fingerprintTmp = p.StandardOutput.ReadToEnd();
-                        p.WaitForExit();
-                        p.StartInfo.FileName = "lscpu";
-                        p.StartInfo.Arguments = "-ap";
-                        p.Start();
-                        fingerprintTmp += p.StandardOutput.ReadToEnd();
-                        p.WaitForExit();
-                        p.StartInfo.FileName = "ip";
-                        p.StartInfo.Arguments = "link";
-                        p.Start();
-                        fingerprintTmp += p.StandardOutput.ReadToEnd();
-                        p.WaitForExit();
-                    }
-                    using (MD5 sec = new MD5CryptoServiceProvider())
-                    {
-                        byte[] bt = Encoding.ASCII.GetBytes(fingerprintTmp);
-                        _fingerPrint = sec.ComputeHash(bt);
-                    }
+                    });
                 }
+                else //Linux implementation. This will not work if you are using Mono on windows or do not have "uname", "lscpu" and "id" available
+                {
+                    Process p = new Process
+                    {
+                        StartInfo =
+                        {
+                            UseShellExecute = false,
+                            RedirectStandardOutput = true,
+                            FileName = "uname",
+                            Arguments = "-nmpio"
+                        }
+                    };
+                    p.Start();
+                    fingerprintTmp = p.StandardOutput.ReadToEnd();
+                    p.WaitForExit();
+                    p.StartInfo.FileName = "lscpu";
+                    p.StartInfo.Arguments = "-ap";
+                    p.Start();
+                    fingerprintTmp += p.StandardOutput.ReadToEnd();
+                    p.WaitForExit();
+                    p.StartInfo.FileName = "ip";
+                    p.StartInfo.Arguments = "link";
+                    p.Start();
+                    fingerprintTmp += p.StandardOutput.ReadToEnd();
+                    p.WaitForExit();
+                }
+                using MD5 sec = new MD5CryptoServiceProvider();
+                byte[] bt = Encoding.ASCII.GetBytes(fingerprintTmp);
+                _fingerPrint = sec.ComputeHash(bt);
 
                 return _fingerPrint;
             }

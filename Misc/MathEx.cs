@@ -24,7 +24,9 @@ namespace CC_Functions.Misc
         public static double Floor(this double d) => Math.Floor(d);
         public static double Log(this double d) => Math.Log(d);
         public static double Log(this double d, double newBase) => Math.Log(d, newBase);
+
         public static double Log10(this double d) => Math.Log10(d);
+
         //Max
         //Min
         public static double Pow(this double x, double y) => Math.Pow(x, y);
@@ -32,11 +34,17 @@ namespace CC_Functions.Misc
         public static decimal Round(this decimal d) => Math.Round(d);
         public static decimal Round(this decimal d, MidpointRounding mode) => Math.Round(d, mode);
         public static decimal Round(this decimal d, int decimals) => Math.Round(d, decimals);
-        public static decimal Round(this decimal d, int decimals, MidpointRounding mode) => Math.Round(d, decimals, mode);
+
+        public static decimal Round(this decimal d, int decimals, MidpointRounding mode) =>
+            Math.Round(d, decimals, mode);
+
         public static double Round(this double a) => Math.Round(a);
         public static double Round(this double value, MidpointRounding mode) => Math.Round(value, mode);
         public static double Round(this double value, int digits) => Math.Round(value, digits);
-        public static double Round(this double value, int digits, MidpointRounding mode) => Math.Round(value, digits, mode);
+
+        public static double Round(this double value, int digits, MidpointRounding mode) =>
+            Math.Round(value, digits, mode);
+
         public static int Sign(this decimal value) => Math.Sign(value);
         public static int Sign(this double value) => Math.Sign(value);
         public static int Sign(this float value) => Math.Sign(value);

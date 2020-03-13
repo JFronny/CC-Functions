@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Net;
 
 namespace CC_Functions.Misc
 {
@@ -66,5 +68,32 @@ namespace CC_Functions.Misc
             dict.Remove(dict.Keys.OfType<T>().ToArray()[index]);
 
         public static long GetSize(this DirectoryInfo directory) => IO.GetDirectorySize(directory.FullName);
+
+        private static ZipArchiveEntry AddDirectory(this ZipArchive archive, string folderPath, string entryName,
+            string[] ignoredExtensions, string[] ignoredPaths)
+        {
+            entryName = entryName.TrimEnd('/');
+            ZipArchiveEntry result = archive.CreateEntry($"{entryName}/");
+            string[] files = Directory.GetFiles(folderPath);
+            for (int i = 0; i < files.Length; i++)
+                if (!ignoredExtensions.Contains(Path.GetExtension(files[i])) &&
+                    !ignoredPaths.Any(s => IO.CheckPathEqual(s, files[i])))
+                    archive.CreateEntryFromFile(files[i], $"{entryName}/{Path.GetFileName(files[i])}");
+            string[] dirs = Directory.GetDirectories(folderPath);
+            for (int i = 0; i < dirs.Length; i++)
+                if (!ignoredPaths.Any(s => IO.CheckPathEqual(s, dirs[i])))
+                    archive.AddDirectory(dirs[i], $"{entryName}/{Path.GetFileName(dirs[i])}", ignoredExtensions,
+                        ignoredPaths);
+            return result;
+        }
+
+        private static Uri Unshorten(this Uri self)
+        {
+            HttpWebRequest req = (HttpWebRequest) WebRequest.Create(self);
+            req.AllowAutoRedirect = true;
+            req.MaximumAutomaticRedirections = 100;
+            WebResponse resp = req.GetResponse();
+            return resp.ResponseUri;
+        }
     }
 }

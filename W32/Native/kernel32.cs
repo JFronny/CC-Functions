@@ -17,10 +17,10 @@ namespace CC_Functions.W32.Native
 
         [DllImport("kernel32.dll")]
         public static extern IntPtr GetConsoleWindow();
-        
+
         [DllImport("kernel32.dll", SetLastError = true)]
         public static extern bool SetSystemTime(ref SYSTEMTIME st);
-        
+
         [StructLayout(LayoutKind.Sequential)]
         public struct SYSTEMTIME
         {

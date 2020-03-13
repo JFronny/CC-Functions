@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace CC_Functions.Misc
 {
@@ -11,5 +12,9 @@ namespace CC_Functions.Misc
             for (int i = 0; i < a.Length; i++) size += new FileInfo(a[i]).Length;
             return size;
         }
+
+        public static bool CheckPathEqual(string path1, string path2) =>
+            Path.GetFullPath(path1)
+                .Equals(Path.GetFullPath(path2), StringComparison.InvariantCultureIgnoreCase);
     }
 }

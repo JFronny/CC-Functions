@@ -5,7 +5,7 @@ using CC_Functions.W32.Native;
 namespace CC_Functions.W32
 {
     /// <summary>
-    /// Functions for manipulating the mouse
+    ///     Functions for manipulating the mouse
     /// </summary>
     public static class Mouse
     {
@@ -15,13 +15,13 @@ namespace CC_Functions.W32
         private const int MouseEventFRightUp = 0x10;
 
         /// <summary>
-        /// Emulates a click at the cursors position
+        ///     Emulates a click at the cursors position
         /// </summary>
         /// <param name="right">Set to true to perform right-clicks instead of left-clicks</param>
         public static void Click(bool right = false) => Click(Cursor.Position, right);
 
         /// <summary>
-        /// Emulates a click at the specified position
+        ///     Emulates a click at the specified position
         /// </summary>
         /// <param name="location">The position to perform the click at</param>
         /// <param name="right">Set to true to perform right-clicks instead of left-clicks</param>

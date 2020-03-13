@@ -442,7 +442,7 @@ namespace CC_Functions.Misc
             DataGridViewNumericUpDownEditingControl numericUpDownEditingControl =
                 DataGridView.EditingControl as DataGridViewNumericUpDownEditingControl;
             return numericUpDownEditingControl != null && rowIndex ==
-                   ((IDataGridViewEditingControl) numericUpDownEditingControl).EditingControlRowIndex;
+                ((IDataGridViewEditingControl) numericUpDownEditingControl).EditingControlRowIndex;
         }
 
         /// <summary>
