@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -95,5 +96,7 @@ namespace CC_Functions.Misc
             WebResponse resp = req.GetResponse();
             return resp.ResponseUri;
         }
+        public static Rectangle Round(this RectangleF self) => Rectangle.Round(self);
+        public static Rectangle Ceiling(this RectangleF self) => Rectangle.Ceiling(self);
     }
 }
