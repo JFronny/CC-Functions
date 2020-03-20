@@ -8,6 +8,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
+    <Deterministic>false</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>bin\Debug\Misc.xml</DocumentationFile>
