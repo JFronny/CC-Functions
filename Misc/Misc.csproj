@@ -9,7 +9,7 @@
     <UseWindowsForms>true</UseWindowsForms>
     <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
     <Deterministic>false</Deterministic>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <!--<GeneratePackageOnBuild>true</GeneratePackageOnBuild>-->
     <PackageId>CC-Functions.Misc</PackageId>
     <Title>CC-Functions.Misc</Title>
     <Authors>CC24</Authors>
@@ -18,6 +18,10 @@
     <PackageProjectUrl>https://github.com/JFronny/CC-Functions</PackageProjectUrl>
     <RepositoryUrl>https://github.com/JFronny/CC-Functions.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <AssemblyVersion>1.1.*</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <VersionSuffix>0.0</VersionSuffix>
+    <PackageVersion>1.1.$(VersionSuffix)</PackageVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>bin\Debug\Misc.xml</DocumentationFile>

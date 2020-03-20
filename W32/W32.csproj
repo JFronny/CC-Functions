@@ -5,17 +5,21 @@
     <AssemblyName>CC-Functions.W32</AssemblyName>
     <LangVersion>8</LangVersion>
     <Nullable>enable</Nullable>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <UseWindowsForms>true</UseWindowsForms>
     <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
     <Deterministic>false</Deterministic>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <!--<GeneratePackageOnBuild>true</GeneratePackageOnBuild>-->
     <Authors>CC24</Authors>
     <Description>W32 Additions for CC-Functions</Description>
     <Copyright>Copyright 2020</Copyright>
     <PackageProjectUrl>https://github.com/JFronny/CC-Functions</PackageProjectUrl>
     <RepositoryUrl>https://github.com/JFronny/CC-Functions.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <AssemblyVersion>1.1.*</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <VersionSuffix>0.0</VersionSuffix>
+    <PackageVersion>1.1.$(VersionSuffix)</PackageVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
