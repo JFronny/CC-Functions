@@ -9,6 +9,15 @@
     <UseWindowsForms>true</UseWindowsForms>
     <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
     <Deterministic>false</Deterministic>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>CC-Functions.Misc</PackageId>
+    <Title>CC-Functions.Misc</Title>
+    <Authors>CC24</Authors>
+    <Description>Random pieces of code used across my projects. I do NOT recommend using this in your own project!</Description>
+    <Copyright>Copyright 2020</Copyright>
+    <PackageProjectUrl>https://github.com/JFronny/CC-Functions</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JFronny/CC-Functions.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>bin\Debug\Misc.xml</DocumentationFile>

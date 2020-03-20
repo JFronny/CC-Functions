@@ -9,6 +9,13 @@
     <UseWindowsForms>true</UseWindowsForms>
     <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
     <Deterministic>false</Deterministic>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Authors>CC24</Authors>
+    <Description>W32 Additions for CC-Functions</Description>
+    <Copyright>Copyright 2020</Copyright>
+    <PackageProjectUrl>https://github.com/JFronny/CC-Functions</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JFronny/CC-Functions.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
