@@ -75,10 +75,9 @@ jobs:
         $tmp2 = $tmp.split('.')[3]
         $suffix = "$tmp1.$tmp2"
         cd Misc
-        dotnet pack --version-suffix "$suffix" -c Release -o build.nupkg
-        dotnet nuget push build.nupkg ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
-        cd ..
-        cd W32
-        dotnet pack --version-suffix "$suffix" -c Release -o build.nupkg
-        dotnet nuget push build.nupkg ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
+        dotnet pack --version-suffix "$suffix" -c Release -o .
+        dotnet nuget push $(Get-Item $(Resolve-Path *.nupkg).Path).Name -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
+        cd ..\W32
+        dotnet pack --version-suffix "$suffix" -c Release -o .
+        dotnet nuget push $(Get-Item $(Resolve-Path *.nupkg).Path).Name -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
         cd ..
