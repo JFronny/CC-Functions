@@ -96,6 +96,23 @@ namespace CC_Functions.Misc
             WebResponse resp = req.GetResponse();
             return resp.ResponseUri;
         }
+
+        public static bool Ping(this Uri self)
+        {
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(self);
+                request.Timeout = 3000;
+                request.AllowAutoRedirect = true;
+                using WebResponse response = request.GetResponse();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public static Rectangle Round(this RectangleF self) => Rectangle.Round(self);
         public static Rectangle Ceiling(this RectangleF self) => Rectangle.Ceiling(self);
     }
