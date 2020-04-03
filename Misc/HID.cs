@@ -34,7 +34,7 @@ Win32_NetworkAdapterConfiguration:MACAddress";
             {
                 if (_fingerPrint != null) return _fingerPrint;
                 string fingerprintTmp = "";
-                if (forceWindows || Type.GetType("Mono.Runtime") == null)
+                if (forceWindows || new [] {PlatformID.Xbox, PlatformID.Win32S, PlatformID.Win32Windows, PlatformID.Win32NT, PlatformID.WinCE}.Contains(Environment.OSVersion.Platform))
                 {
                     HIDClasses.Split(new[] {"\r\n"}, StringSplitOptions.None).Select(s =>
                     {
