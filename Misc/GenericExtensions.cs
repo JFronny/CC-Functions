@@ -115,5 +115,7 @@ namespace CC_Functions.Misc
 
         public static Rectangle Round(this RectangleF self) => Rectangle.Round(self);
         public static Rectangle Ceiling(this RectangleF self) => Rectangle.Ceiling(self);
+        public static byte[] Encrypt(this byte[] self, byte[] key) => Crypto.Encrypt(self, key);
+        public static byte[] Decrypt(this byte[] self, byte[] key) => Crypto.Decrypt(self, key);
     }
 }

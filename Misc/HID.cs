@@ -93,9 +93,9 @@ Win32_NetworkAdapterConfiguration:MACAddress";
         }
 
         public static byte[] EncryptLocal(byte[] unencrypted) =>
-            ProtectedData.Protect(unencrypted, Value, DataProtectionScope.CurrentUser);
+            Crypto.Encrypt(unencrypted, Value);
 
         public static byte[] DecryptLocal(byte[] encrypted) =>
-            ProtectedData.Unprotect(encrypted, Value, DataProtectionScope.CurrentUser);
+            Crypto.Decrypt(encrypted, Value);
     }
 }
