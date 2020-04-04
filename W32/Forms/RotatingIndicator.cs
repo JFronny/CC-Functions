@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using Timer = System.Timers.Timer;
+using System.Windows.Forms;
 
 namespace CC_Functions.W32.Forms
 {

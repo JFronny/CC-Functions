@@ -1,4 +1,6 @@
-﻿namespace CC_Functions.W32.Forms
+﻿using System.Windows.Forms;
+
+namespace CC_Functions.W32.Forms
 {
     partial class SelectBox<T>
     {

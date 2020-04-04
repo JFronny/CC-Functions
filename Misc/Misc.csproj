@@ -4,7 +4,6 @@
     <RootNamespace>CC_Functions.Misc</RootNamespace>
     <AssemblyName>CC_Functions.Misc</AssemblyName>
     <LangVersion>8</LangVersion>
-    <UseWindowsForms>true</UseWindowsForms>
     <Deterministic>false</Deterministic>
     <PackageId>CC-Functions.Misc</PackageId>
     <Title>CC-Functions.Misc</Title>
