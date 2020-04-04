@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using CC_Functions.Misc;
+using CC_Functions.W32.Forms;
 using CC_Functions.W32.DCDrawer;
 using CC_Functions.W32.Hooks;
 using static CC_Functions.W32.Power;
