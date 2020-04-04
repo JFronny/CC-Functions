@@ -1,6 +1,6 @@
 ﻿using System.Security.Principal;
 
-namespace CC_Functions.Misc
+namespace CC_Functions.W32
 {
     public static class MiscFunctions
     {

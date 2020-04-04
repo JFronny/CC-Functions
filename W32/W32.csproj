@@ -18,6 +18,14 @@
     <VersionSuffix>0.0</VersionSuffix>
     <PackageVersion>1.1.$(VersionSuffix)</PackageVersion>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="Forms\DataGridViewNumericUpDownEditingControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Forms\RotatingIndicator.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>bin\Debug\W32.xml</DocumentationFile>

@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Windows.Forms;
 
-namespace CC_Functions.Misc
+namespace CC_Functions.W32.Forms
 {
     public delegate void SetPropertyDelegate<TCtl, TProp>(TCtl control, Expression<Func<TCtl, TProp>> propexpr,
         TProp value) where TCtl : Control;
@@ -17,7 +16,7 @@ namespace CC_Functions.Misc
     public delegate TResult InvokeFuncDelegate<TCtl, TResult>(TCtl control, Delegate dlg, params object[] args)
         where TCtl : Control;
 
-    public static class Forms
+    public static class Extensions
     {
         public static void SetProperty<TCtl, TProp>(this TCtl control, Expression<Func<TCtl, TProp>> propexpr,
             TProp value) where TCtl : Control

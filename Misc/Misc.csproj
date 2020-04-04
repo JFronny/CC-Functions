@@ -1,11 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <RootNamespace>CC_Functions.Misc</RootNamespace>
     <AssemblyName>CC_Functions.Misc</AssemblyName>
     <LangVersion>8</LangVersion>
     <UseWindowsForms>true</UseWindowsForms>
-    <TargetFrameworks>net461;netcoreapp3.1</TargetFrameworks>
     <Deterministic>false</Deterministic>
     <PackageId>CC-Functions.Misc</PackageId>
     <Title>CC-Functions.Misc</Title>
@@ -19,6 +18,7 @@
     <FileVersion>1.0.0.0</FileVersion>
     <VersionSuffix>0.0</VersionSuffix>
     <PackageVersion>1.1.$(VersionSuffix)</PackageVersion>
+    <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DocumentationFile>bin\Debug\Misc.xml</DocumentationFile>
@@ -26,14 +26,6 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DocumentationFile>bin\Release\Misc.xml</DocumentationFile>
   </PropertyGroup>
-  <ItemGroup>
-    <Compile Update="DataGridViewNumericUpDownEditingControl.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Update="RotatingIndicator.cs">
-      <SubType>Component</SubType>
-    </Compile>
-  </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="HIDClasses.txt" />
   </ItemGroup>

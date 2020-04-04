@@ -2,10 +2,9 @@
 using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms;
 using Timer = System.Timers.Timer;
 
-namespace CC_Functions.Misc
+namespace CC_Functions.W32.Forms
 {
     /// <summary>
     ///     Animated control similar to update screens in Windows 8 and 10

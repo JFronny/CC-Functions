@@ -1,4 +1,4 @@
-﻿namespace CC_Functions.Misc
+﻿namespace CC_Functions.W32.Forms
 {
     partial class SelectBox<T>
     {

@@ -2,9 +2,8 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Text;
-using System.Windows.Forms;
 
-namespace CC_Functions.Misc
+namespace CC_Functions.W32.Forms
 {
     /// <summary>
     ///     Custom column type dedicated to the DataGridViewNumericUpDownCell cell type.
