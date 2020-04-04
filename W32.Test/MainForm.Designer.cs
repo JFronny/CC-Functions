@@ -64,6 +64,7 @@
             this.wnd_select_selected = new System.Windows.Forms.Label();
             this.wnd_select_self = new System.Windows.Forms.Button();
             this.wnd = new System.Windows.Forms.GroupBox();
+            this.wnd_select_child = new System.Windows.Forms.Button();
             this.wnd_select_list = new System.Windows.Forms.Button();
             this.wnd_action_overlay = new System.Windows.Forms.CheckBox();
             this.wnd_action_style = new System.Windows.Forms.ComboBox();
@@ -83,8 +84,8 @@
             this.desk_back = new System.Windows.Forms.Panel();
             this.readerUpdate = new System.Windows.Forms.Timer(this.components);
             this.time = new System.Windows.Forms.GroupBox();
-            this.time_select = new System.Windows.Forms.DateTimePicker();
             this.time_set = new System.Windows.Forms.Button();
+            this.time_select = new System.Windows.Forms.DateTimePicker();
             this.keyboard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize) (this.wnd_action_pos_h_bar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize) (this.wnd_action_pos_w_bar)).BeginInit();
@@ -442,7 +443,7 @@
             this.wnd_select_title_box.Size = new System.Drawing.Size(121, 23);
             this.wnd_select_title_box.TabIndex = 6;
             // 
-            // wnd_selet_class_button
+            // wnd_select_class_button
             // 
             this.wnd_select_class_button.Location = new System.Drawing.Point(7, 89);
             this.wnd_select_class_button.Name = "wnd_select_class_button";
@@ -483,6 +484,7 @@
             // 
             // wnd
             // 
+            this.wnd.Controls.Add(this.wnd_select_child);
             this.wnd.Controls.Add(this.wnd_select_list);
             this.wnd.Controls.Add(this.wnd_action_overlay);
             this.wnd.Controls.Add(this.wnd_action_style);
@@ -515,6 +517,16 @@
             this.wnd.TabIndex = 6;
             this.wnd.TabStop = false;
             this.wnd.Text = "CC-Functions.W32.Wnd32";
+            // 
+            // wnd_select_child
+            // 
+            this.wnd_select_child.Location = new System.Drawing.Point(107, 122);
+            this.wnd_select_child.Name = "wnd_select_child";
+            this.wnd_select_child.Size = new System.Drawing.Size(94, 27);
+            this.wnd_select_child.TabIndex = 27;
+            this.wnd_select_child.Text = "Select (childs)";
+            this.wnd_select_child.UseVisualStyleBackColor = true;
+            this.wnd_select_child.Click += new System.EventHandler(this.wnd_select_child_Click);
             // 
             // wnd_select_list
             // 
@@ -740,13 +752,6 @@
             this.time.TabStop = false;
             this.time.Text = "CC-Functions.W32.Time";
             // 
-            // time_select
-            // 
-            this.time_select.Location = new System.Drawing.Point(6, 26);
-            this.time_select.Name = "time_select";
-            this.time_select.Size = new System.Drawing.Size(205, 23);
-            this.time_select.TabIndex = 0;
-            // 
             // time_set
             // 
             this.time_set.Location = new System.Drawing.Point(217, 22);
@@ -756,6 +761,13 @@
             this.time_set.Text = "Set";
             this.time_set.UseVisualStyleBackColor = true;
             this.time_set.Click += new System.EventHandler(this.time_set_Click);
+            // 
+            // time_select
+            // 
+            this.time_select.Location = new System.Drawing.Point(6, 27);
+            this.time_select.Name = "time_select";
+            this.time_select.Size = new System.Drawing.Size(205, 23);
+            this.time_select.TabIndex = 0;
             // 
             // MainForm
             // 
@@ -851,5 +863,6 @@
         private System.Windows.Forms.GroupBox time;
         private System.Windows.Forms.DateTimePicker time_select;
         private System.Windows.Forms.Button time_set;
+        private System.Windows.Forms.Button wnd_select_child;
     }
 }

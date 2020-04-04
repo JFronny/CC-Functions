@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using CC_Functions.W32.Native;
@@ -103,6 +104,28 @@ namespace CC_Functions.W32
         #endregion CreateInstance
 
         #region InstanceActions
+
+        public Wnd32[] Children
+        {
+            get
+            {
+                List<IntPtr> childHandles = new List<IntPtr>();
+
+                GCHandle gcChildHandlesList = GCHandle.Alloc(childHandles);
+                IntPtr pointerChildHandlesList = GCHandle.ToIntPtr(gcChildHandlesList);
+
+                try
+                {
+                    user32.EnumChildWindows(HWnd, EnumWindow, pointerChildHandlesList);
+                }
+                finally
+                {
+                    gcChildHandlesList.Free();
+                }
+
+                return childHandles.Select(FromHandle).ToArray();
+            }
+        }
 
         /// <summary>
         ///     The windows title
@@ -342,6 +365,18 @@ namespace CC_Functions.W32
             StringBuilder sbTitle = new StringBuilder(1024);
             user32.GetWindowText(hWnd, sbTitle, 1024);
             _windowHandles.Add(hWnd);
+            return true;
+        }
+        
+        private bool EnumWindow(IntPtr hWnd, IntPtr lParam)
+        {
+            GCHandle gcChildhandlesList = GCHandle.FromIntPtr(lParam);
+
+            if (gcChildhandlesList.Target == null) return false;
+
+            List<IntPtr> childHandles = gcChildhandlesList.Target as List<IntPtr>;
+            childHandles?.Add(hWnd);
+
             return true;
         }
 

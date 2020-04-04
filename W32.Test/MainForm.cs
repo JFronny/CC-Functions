@@ -83,6 +83,8 @@ namespace CC_Functions.W32.Test
         private void wnd_select_list_Click(object sender, EventArgs e) =>
             TmpWnd = SelectBox.Show(Wnd32.Visible, "Please select a window") ?? TmpWnd;
 
+        private void wnd_select_child_Click(object sender, EventArgs e) => TmpWnd = SelectBox.Show(TmpWnd.Children, "Please select a window") ?? TmpWnd;
+
         private void Wnd_select_title_button_Click(object sender, EventArgs e) =>
             TmpWnd = Wnd32.FromMetadata(null, wnd_select_title_box.Text);
 

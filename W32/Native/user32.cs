@@ -6,6 +6,7 @@ namespace CC_Functions.W32.Native
 {
     internal static class user32
     {
+        public delegate bool EnumWindowProc(IntPtr hWnd, IntPtr lParam);
         public delegate bool EnumDelegate(IntPtr hWnd, int lParam);
 
         public delegate IntPtr LowLevelProc(int nCode, IntPtr wParam, IntPtr lParam);
@@ -129,5 +130,9 @@ namespace CC_Functions.W32.Native
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, CallingConvention = CallingConvention.StdCall)]
         public static extern void mouse_event(uint dwFlags, uint dx, uint dy, uint cButtons, uint dwExtraInfo);
+        
+        [DllImport("user32")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool EnumChildWindows(IntPtr window, EnumWindowProc callback, IntPtr lParam);
     }
 }
