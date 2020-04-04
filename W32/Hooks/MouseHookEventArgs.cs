@@ -14,6 +14,6 @@ namespace CC_Functions.W32.Hooks
         public Point Point { get; }
         public MouseHook.MouseMessages Message { get; }
 
-        public override string ToString() => Message + "; " + Point;
+        public override string ToString() => $"{Message}; {Point}";
     }
 }

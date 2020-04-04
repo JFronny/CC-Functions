@@ -55,6 +55,14 @@ namespace CC_Functions.W32
         public static Wnd32 FromPoint(Point point) => FromHandle(user32.WindowFromPoint(point.X, point.Y));
 
         /// <summary>
+        ///     Gets all windows at the specific point
+        /// </summary>
+        /// <param name="point">The point to scan</param>
+        /// <param name="visible">Whether windows need to be visible</param>
+        /// <returns>The windows</returns>
+        public static Wnd32[] AllFromPoint(Point point, bool visible = false) => All.Where(s => s.Position.Contains(point) && s.Shown || !visible).ToArray();
+
+        /// <summary>
         ///     Gets the window associated with the forms handle
         /// </summary>
         /// <param name="form">Form to get window from</param>
@@ -72,15 +80,15 @@ namespace CC_Functions.W32
                 _windowHandles = new List<IntPtr>();
                 if (!user32.EnumDesktopWindows(IntPtr.Zero, FilterCallback, IntPtr.Zero))
                     throw new Win32Exception("There was a native error. This should never happen!");
-                return _windowHandles.Select(s => FromHandle(s)).ToArray();
+                return _windowHandles.Select(FromHandle).ToArray();
             }
         }
 
         /// <summary>
-        ///     Gets all visible windows with valid titles
+        ///     Gets all visible windows
         /// </summary>
         public static Wnd32[] Visible =>
-            All.Where(s => user32.IsWindowVisible(s.HWnd) && !string.IsNullOrEmpty(s.Title)).ToArray();
+            All.Where(s => s.Shown).ToArray();
 
         /// <summary>
         ///     Gets the foreground window

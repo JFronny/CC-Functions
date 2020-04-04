@@ -15,8 +15,8 @@ namespace CC_Functions.W32
             get
             {
                 using (Bitmap bmpTemp =
-                    new Bitmap(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) +
-                               @"\Microsoft\Windows\Themes\TranscodedWallpaper"))
+                    new Bitmap(
+                        $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\Microsoft\Windows\Themes\TranscodedWallpaper"))
                 {
                     return (Image) bmpTemp.Clone();
                 }

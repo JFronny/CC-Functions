@@ -662,8 +662,7 @@ namespace CC_Functions.Misc
         ///     Returns a standard textual representation of the cell.
         /// </summary>
         public override string ToString() =>
-            "DataGridViewNumericUpDownCell { ColumnIndex=" + ColumnIndex.ToString(CultureInfo.CurrentCulture) +
-            ", RowIndex=" + RowIndex.ToString(CultureInfo.CurrentCulture) + " }";
+            $"DataGridViewNumericUpDownCell {{ ColumnIndex={ColumnIndex.ToString(CultureInfo.CurrentCulture)}, RowIndex={RowIndex.ToString(CultureInfo.CurrentCulture)} }}";
 
         /// <summary>
         ///     Little utility function used by both the cell and column types to translate a DataGridViewContentAlignment value

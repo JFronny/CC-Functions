@@ -59,7 +59,7 @@
             this.wnd_action_title_get = new System.Windows.Forms.Button();
             this.wnd_action_title_set = new System.Windows.Forms.Button();
             this.wnd_select_title_box = new System.Windows.Forms.TextBox();
-            this.wnd_selet_class_button = new System.Windows.Forms.Button();
+            this.wnd_select_class_button = new System.Windows.Forms.Button();
             this.wnd_select_title_button = new System.Windows.Forms.Button();
             this.wnd_select_selected = new System.Windows.Forms.Label();
             this.wnd_select_self = new System.Windows.Forms.Button();
@@ -444,13 +444,13 @@
             // 
             // wnd_selet_class_button
             // 
-            this.wnd_selet_class_button.Location = new System.Drawing.Point(7, 89);
-            this.wnd_selet_class_button.Name = "wnd_selet_class_button";
-            this.wnd_selet_class_button.Size = new System.Drawing.Size(94, 27);
-            this.wnd_selet_class_button.TabIndex = 4;
-            this.wnd_selet_class_button.Text = "Select (class):";
-            this.wnd_selet_class_button.UseVisualStyleBackColor = true;
-            this.wnd_selet_class_button.Click += new System.EventHandler(this.Wnd_selet_class_button_Click);
+            this.wnd_select_class_button.Location = new System.Drawing.Point(7, 89);
+            this.wnd_select_class_button.Name = "wnd_select_class_button";
+            this.wnd_select_class_button.Size = new System.Drawing.Size(94, 27);
+            this.wnd_select_class_button.TabIndex = 4;
+            this.wnd_select_class_button.Text = "Select (class):";
+            this.wnd_select_class_button.UseVisualStyleBackColor = true;
+            this.wnd_select_class_button.Click += new System.EventHandler(this.Wnd_select_class_button_Click);
             // 
             // wnd_select_title_button
             // 
@@ -505,7 +505,7 @@
             this.wnd.Controls.Add(this.wnd_action_title_set);
             this.wnd.Controls.Add(this.wnd_select_title_box);
             this.wnd.Controls.Add(this.wnd_select_class_box);
-            this.wnd.Controls.Add(this.wnd_selet_class_button);
+            this.wnd.Controls.Add(this.wnd_select_class_button);
             this.wnd.Controls.Add(this.wnd_select_title_button);
             this.wnd.Controls.Add(this.wnd_select_selected);
             this.wnd.Controls.Add(this.wnd_select_self);
@@ -825,7 +825,7 @@
         private System.Windows.Forms.Button wnd_action_title_get;
         private System.Windows.Forms.Button wnd_action_title_set;
         private System.Windows.Forms.TextBox wnd_select_title_box;
-        private System.Windows.Forms.Button wnd_selet_class_button;
+        private System.Windows.Forms.Button wnd_select_class_button;
         private System.Windows.Forms.Button wnd_select_title_button;
         private System.Windows.Forms.Label wnd_select_selected;
         private System.Windows.Forms.Button wnd_select_self;
