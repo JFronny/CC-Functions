@@ -84,7 +84,100 @@ namespace CC_Functions.W32.Test
         private void wnd_select_list_Click(object sender, EventArgs e) =>
             TmpWnd = SelectBox.Show(Wnd32.Visible, "Please select a window") ?? TmpWnd;
 
-        private void wnd_select_child_Click(object sender, EventArgs e) => TmpWnd = SelectBox.Show(TmpWnd.Children, "Please select a window") ?? TmpWnd;
+        private void wnd_select_parent_Click(object sender, EventArgs e) => TmpWnd = TmpWnd.Parent;
+
+        private void wnd_select_child_Click(object sender, EventArgs e)
+        {
+            if (TmpWnd.HWnd != Handle && !this.GetWnd32().Children.Contains(TmpWnd))
+            {
+                WindowState = FormWindowState.Minimized;
+                TmpWnd.Enabled = false;
+            }
+            Wnd32.FromForm(this).IsForeground = true;
+            Form frm = new Form
+            {
+                BackColor = Color.White,
+                Opacity = 0.4f,
+                FormBorderStyle = FormBorderStyle.None,
+                WindowState = FormWindowState.Maximized
+            };
+            Label lab = new Label { AutoSize = true };
+            frm.Controls.Add(lab);
+            Panel pan = new Panel { BackColor = Color.Red };
+            frm.Controls.Add(pan);
+            Wnd32[] children = TmpWnd.Children;
+
+            void UpdateGUI(Point labelPosition)
+            {
+                lab.Text = $"{_wndSelectMouseCurrent.Title} ({_wndSelectMouseCurrent.HWnd})";
+                lab.Location = new Point(labelPosition.X + 5, labelPosition.Y + 5);
+                pan.Bounds = _wndSelectMouseCurrent.Position;
+            }
+
+            void MouseEventHandler(object sender1, MouseEventArgs e1)
+            {
+                Func<Wnd32, bool> checkWnd = (s) => s.Position.Contains(e1.Location);
+                if (children.Any(checkWnd))
+                {
+                    _wndSelectMouseCurrent = children.First(checkWnd);
+                    UpdateGUI(Cursor.Position);
+                }
+            }
+
+            void EventHandler(object sender1, EventArgs e1)
+            {
+                frm.Hide();
+                frm.WindowState = FormWindowState.Minimized;
+                Wnd32 tmp = _wndSelectMouseCurrent;
+                TmpWnd.Enabled = true;
+                TmpWnd.IsForeground = true;
+                TmpWnd = tmp;
+                _mainF.WindowState = FormWindowState.Normal;
+                frm.Close();
+            }
+
+            void KeyEventHandler(object sender1, KeyEventArgs e1)
+            {
+                int tmp;
+                switch (e1.KeyCode)
+                {
+                    case Keys.Escape:
+                        frm.Close();
+                        break;
+                    case Keys.Up:
+                    case Keys.Left:
+                        tmp = Array.IndexOf(children, _wndSelectMouseCurrent);
+                        if (tmp == 0)
+                            tmp = children.Length;
+                        tmp--;
+                        _wndSelectMouseCurrent = children[tmp];
+                        UpdateGUI(_wndSelectMouseCurrent.Position.Location);
+                        break;
+                    case Keys.Down:
+                    case Keys.Right:
+                        tmp = Array.IndexOf(children, _wndSelectMouseCurrent);
+                        tmp++;
+                        if (tmp == children.Length)
+                            tmp = 0;
+                        _wndSelectMouseCurrent = children[tmp];
+                        UpdateGUI(_wndSelectMouseCurrent.Position.Location);
+                        break;
+                }
+            }
+
+            frm.Click += EventHandler;
+            pan.Click += EventHandler;
+            lab.Click += EventHandler;
+            frm.MouseMove += MouseEventHandler;
+            pan.MouseMove += MouseEventHandler;
+            lab.MouseMove += MouseEventHandler;
+            frm.KeyDown += KeyEventHandler;
+            UpdateGUI(Cursor.Position);
+            frm.Show();
+            _wndSelectMouseCurrent = frm.GetWnd32();
+            Cursor.Position = Cursor.Position;
+            frm.GetWnd32().Overlay = true;
+        }
 
         private void Wnd_select_title_button_Click(object sender, EventArgs e) =>
             TmpWnd = Wnd32.FromMetadata(null, wnd_select_title_box.Text);
@@ -148,6 +241,16 @@ namespace CC_Functions.W32.Test
             {
                 // ignored
             }
+
+            try
+            {
+                wnd_select_parent.Tag = TmpWnd.Parent;
+                wnd_select_parent.Enabled = true;
+            }
+            catch
+            {
+                wnd_select_parent.Enabled = false;
+            }
         }
 
         private void Wnd_action_enabled_CheckedChanged(object sender, EventArgs e) =>
@@ -178,12 +281,17 @@ namespace CC_Functions.W32.Test
             Panel pan = new Panel {BackColor = Color.Red};
             frm.Controls.Add(pan);
 
+            void UpdateGUI(Point labelPosition)
+            {
+                lab.Text = $"{_wndSelectMouseCurrent.Title} ({_wndSelectMouseCurrent.HWnd})";
+                lab.Location = new Point(labelPosition.X + 5, labelPosition.Y + 5);
+                pan.Bounds = _wndSelectMouseCurrent.Position;
+            }
+
             void MouseEventHandler(object sender1, MouseEventArgs e1)
             {
                 _wndSelectMouseCurrent = Wnd32.AllFromPoint(MousePosition, true).First(s => s != frm.GetWnd32());
-                lab.Text = $"{_wndSelectMouseCurrent.Title} ({_wndSelectMouseCurrent.HWnd})";
-                lab.Location = new Point(Cursor.Position.X + 5, Cursor.Position.Y + 5);
-                pan.Bounds = _wndSelectMouseCurrent.Position;
+                UpdateGUI(Cursor.Position);
             }
 
             void EventHandler(object sender1, EventArgs e1)
@@ -198,13 +306,20 @@ namespace CC_Functions.W32.Test
                 frm.Close();
             }
 
+            void KeyEventHandler(object sender1, KeyEventArgs e1)
+            {
+                if (e1.KeyCode == Keys.Escape)
+                    frm.Close();
+            }
+
             frm.Click += EventHandler;
             pan.Click += EventHandler;
             lab.Click += EventHandler;
             frm.MouseMove += MouseEventHandler;
             pan.MouseMove += MouseEventHandler;
             lab.MouseMove += MouseEventHandler;
-            
+            frm.KeyDown += KeyEventHandler;
+
             frm.Show();
             _wndSelectMouseCurrent = frm.GetWnd32();
             Cursor.Position = Cursor.Position;

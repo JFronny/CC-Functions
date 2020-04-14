@@ -64,6 +64,7 @@
             this.wnd_select_selected = new System.Windows.Forms.Label();
             this.wnd_select_self = new System.Windows.Forms.Button();
             this.wnd = new System.Windows.Forms.GroupBox();
+            this.wnd_select_parent = new System.Windows.Forms.Button();
             this.wnd_select_child = new System.Windows.Forms.Button();
             this.wnd_select_list = new System.Windows.Forms.Button();
             this.wnd_action_overlay = new System.Windows.Forms.CheckBox();
@@ -87,10 +88,10 @@
             this.time_set = new System.Windows.Forms.Button();
             this.time_select = new System.Windows.Forms.DateTimePicker();
             this.keyboard.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.wnd_action_pos_h_bar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.wnd_action_pos_w_bar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.wnd_action_pos_y_bar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize) (this.wnd_action_pos_x_bar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wnd_action_pos_h_bar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wnd_action_pos_w_bar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wnd_action_pos_y_bar)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wnd_action_pos_x_bar)).BeginInit();
             this.mouse.SuspendLayout();
             this.power.SuspendLayout();
             this.wnd.SuspendLayout();
@@ -102,11 +103,9 @@
             // 
             // keyboard_log
             // 
-            this.keyboard_log.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top |
-                                                         System.Windows.Forms.AnchorStyles.Bottom) |
-                                                        System.Windows.Forms.AnchorStyles.Left) |
-                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.keyboard_log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.keyboard_log.Location = new System.Drawing.Point(7, 48);
             this.keyboard_log.Multiline = true;
             this.keyboard_log.Name = "keyboard_log";
@@ -139,11 +138,9 @@
             // 
             // mouse_log
             // 
-            this.mouse_log.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top |
-                                                         System.Windows.Forms.AnchorStyles.Bottom) |
-                                                        System.Windows.Forms.AnchorStyles.Left) |
-                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.mouse_log.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.mouse_log.Location = new System.Drawing.Point(7, 48);
             this.mouse_log.Multiline = true;
             this.mouse_log.Name = "mouse_log";
@@ -165,9 +162,7 @@
             // 
             // wnd_action_pos_h_label
             // 
-            this.wnd_action_pos_h_label.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
-                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.wnd_action_pos_h_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.wnd_action_pos_h_label.AutoSize = true;
             this.wnd_action_pos_h_label.Location = new System.Drawing.Point(135, 284);
             this.wnd_action_pos_h_label.Name = "wnd_action_pos_h_label";
@@ -177,9 +172,7 @@
             // 
             // wnd_action_pos_w_label
             // 
-            this.wnd_action_pos_w_label.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
-                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.wnd_action_pos_w_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.wnd_action_pos_w_label.AutoSize = true;
             this.wnd_action_pos_w_label.Location = new System.Drawing.Point(135, 256);
             this.wnd_action_pos_w_label.Name = "wnd_action_pos_w_label";
@@ -189,9 +182,7 @@
             // 
             // wnd_action_pos_h_bar
             // 
-            this.wnd_action_pos_h_bar.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
-                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.wnd_action_pos_h_bar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.wnd_action_pos_h_bar.Location = new System.Drawing.Point(159, 284);
             this.wnd_action_pos_h_bar.Name = "wnd_action_pos_h_bar";
             this.wnd_action_pos_h_bar.Size = new System.Drawing.Size(121, 45);
@@ -199,9 +190,7 @@
             // 
             // wnd_action_pos_w_bar
             // 
-            this.wnd_action_pos_w_bar.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
-                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.wnd_action_pos_w_bar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.wnd_action_pos_w_bar.Location = new System.Drawing.Point(159, 256);
             this.wnd_action_pos_w_bar.Name = "wnd_action_pos_w_bar";
             this.wnd_action_pos_w_bar.Size = new System.Drawing.Size(121, 45);
@@ -209,9 +198,7 @@
             // 
             // wnd_action_pos_y_label
             // 
-            this.wnd_action_pos_y_label.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
-                                                       System.Windows.Forms.AnchorStyles.Left)));
+            this.wnd_action_pos_y_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.wnd_action_pos_y_label.AutoSize = true;
             this.wnd_action_pos_y_label.Location = new System.Drawing.Point(7, 284);
             this.wnd_action_pos_y_label.Name = "wnd_action_pos_y_label";
@@ -221,9 +208,7 @@
             // 
             // wnd_action_pos_x_label
             // 
-            this.wnd_action_pos_x_label.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
-                                                       System.Windows.Forms.AnchorStyles.Left)));
+            this.wnd_action_pos_x_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.wnd_action_pos_x_label.AutoSize = true;
             this.wnd_action_pos_x_label.Location = new System.Drawing.Point(7, 256);
             this.wnd_action_pos_x_label.Name = "wnd_action_pos_x_label";
@@ -233,9 +218,7 @@
             // 
             // wnd_action_pos_y_bar
             // 
-            this.wnd_action_pos_y_bar.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
-                                                       System.Windows.Forms.AnchorStyles.Left)));
+            this.wnd_action_pos_y_bar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.wnd_action_pos_y_bar.Location = new System.Drawing.Point(20, 284);
             this.wnd_action_pos_y_bar.Name = "wnd_action_pos_y_bar";
             this.wnd_action_pos_y_bar.Size = new System.Drawing.Size(121, 45);
@@ -243,9 +226,7 @@
             // 
             // wnd_action_pos_x_bar
             // 
-            this.wnd_action_pos_x_bar.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
-                                                       System.Windows.Forms.AnchorStyles.Left)));
+            this.wnd_action_pos_x_bar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.wnd_action_pos_x_bar.Location = new System.Drawing.Point(20, 256);
             this.wnd_action_pos_x_bar.Name = "wnd_action_pos_x_bar";
             this.wnd_action_pos_x_bar.Size = new System.Drawing.Size(121, 45);
@@ -291,13 +272,10 @@
             // 
             // power_execute
             // 
-            this.power_execute.Anchor =
-                ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Top |
-                                                        System.Windows.Forms.AnchorStyles.Bottom) |
-                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.power_execute.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.power_execute.BackColor = System.Drawing.Color.DarkRed;
-            this.power_execute.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F,
-                System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.power_execute.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.power_execute.ForeColor = System.Drawing.Color.White;
             this.power_execute.Location = new System.Drawing.Point(185, 22);
             this.power_execute.Name = "power_execute";
@@ -327,9 +305,7 @@
             // 
             // power_mod_box
             // 
-            this.power_mod_box.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Left |
-                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.power_mod_box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.power_mod_box.FormattingEnabled = true;
             this.power_mod_box.Location = new System.Drawing.Point(65, 84);
             this.power_mod_box.Name = "power_mod_box";
@@ -338,9 +314,7 @@
             // 
             // power_reason_box
             // 
-            this.power_reason_box.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Left |
-                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.power_reason_box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.power_reason_box.FormattingEnabled = true;
             this.power_reason_box.Location = new System.Drawing.Point(65, 53);
             this.power_reason_box.Name = "power_reason_box";
@@ -358,9 +332,7 @@
             // 
             // power_mode_box
             // 
-            this.power_mode_box.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Left |
-                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.power_mode_box.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.power_mode_box.FormattingEnabled = true;
             this.power_mode_box.Location = new System.Drawing.Point(65, 22);
             this.power_mode_box.Name = "power_mode_box";
@@ -401,9 +373,7 @@
             // 
             // wnd_action_enabled
             // 
-            this.wnd_action_enabled.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
-                                                       System.Windows.Forms.AnchorStyles.Left)));
+            this.wnd_action_enabled.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.wnd_action_enabled.AutoSize = true;
             this.wnd_action_enabled.Location = new System.Drawing.Point(7, 167);
             this.wnd_action_enabled.Name = "wnd_action_enabled";
@@ -415,9 +385,7 @@
             // 
             // wnd_action_title_get
             // 
-            this.wnd_action_title_get.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
-                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.wnd_action_title_get.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.wnd_action_title_get.Location = new System.Drawing.Point(237, 159);
             this.wnd_action_title_get.Name = "wnd_action_title_get";
             this.wnd_action_title_get.Size = new System.Drawing.Size(43, 27);
@@ -484,6 +452,7 @@
             // 
             // wnd
             // 
+            this.wnd.Controls.Add(this.wnd_select_parent);
             this.wnd.Controls.Add(this.wnd_select_child);
             this.wnd.Controls.Add(this.wnd_select_list);
             this.wnd.Controls.Add(this.wnd_action_overlay);
@@ -518,6 +487,16 @@
             this.wnd.TabStop = false;
             this.wnd.Text = "CC-Functions.W32.Wnd32";
             // 
+            // wnd_select_parent
+            // 
+            this.wnd_select_parent.Location = new System.Drawing.Point(207, 122);
+            this.wnd_select_parent.Name = "wnd_select_parent";
+            this.wnd_select_parent.Size = new System.Drawing.Size(74, 27);
+            this.wnd_select_parent.TabIndex = 27;
+            this.wnd_select_parent.Text = "Parent";
+            this.wnd_select_parent.UseVisualStyleBackColor = true;
+            this.wnd_select_parent.Click += new System.EventHandler(this.wnd_select_parent_Click);
+            // 
             // wnd_select_child
             // 
             this.wnd_select_child.Location = new System.Drawing.Point(107, 122);
@@ -540,9 +519,7 @@
             // 
             // wnd_action_overlay
             // 
-            this.wnd_action_overlay.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
-                                                       System.Windows.Forms.AnchorStyles.Left)));
+            this.wnd_action_overlay.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.wnd_action_overlay.AutoSize = true;
             this.wnd_action_overlay.Location = new System.Drawing.Point(162, 167);
             this.wnd_action_overlay.Name = "wnd_action_overlay";
@@ -554,24 +531,19 @@
             // 
             // wnd_action_style
             // 
-            this.wnd_action_style.Anchor =
-                ((System.Windows.Forms.AnchorStyles) (((System.Windows.Forms.AnchorStyles.Bottom |
-                                                        System.Windows.Forms.AnchorStyles.Left) |
-                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.wnd_action_style.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.wnd_action_style.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.wnd_action_style.FormattingEnabled = true;
             this.wnd_action_style.Location = new System.Drawing.Point(7, 195);
             this.wnd_action_style.Name = "wnd_action_style";
             this.wnd_action_style.Size = new System.Drawing.Size(238, 23);
             this.wnd_action_style.TabIndex = 24;
-            this.wnd_action_style.SelectedIndexChanged +=
-                new System.EventHandler(this.Wnd_action_style_SelectedIndexChanged);
+            this.wnd_action_style.SelectedIndexChanged += new System.EventHandler(this.Wnd_action_style_SelectedIndexChanged);
             // 
             // wnd_action_visible
             // 
-            this.wnd_action_visible.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
-                                                       System.Windows.Forms.AnchorStyles.Left)));
+            this.wnd_action_visible.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.wnd_action_visible.AutoSize = true;
             this.wnd_action_visible.Location = new System.Drawing.Point(90, 167);
             this.wnd_action_visible.Name = "wnd_action_visible";
@@ -583,9 +555,7 @@
             // 
             // wnd_action_icon
             // 
-            this.wnd_action_icon.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
-                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.wnd_action_icon.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.wnd_action_icon.BackColor = System.Drawing.SystemColors.ControlLight;
             this.wnd_action_icon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.wnd_action_icon.Location = new System.Drawing.Point(253, 193);
@@ -614,9 +584,7 @@
             // 
             // screen_draw
             // 
-            this.screen_draw.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
-                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.screen_draw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.screen_draw.Location = new System.Drawing.Point(188, 168);
             this.screen_draw.Name = "screen_draw";
             this.screen_draw.Size = new System.Drawing.Size(87, 27);
@@ -627,9 +595,7 @@
             // 
             // screen_get
             // 
-            this.screen_get.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
-                                                       System.Windows.Forms.AnchorStyles.Left)));
+            this.screen_get.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.screen_get.Location = new System.Drawing.Point(7, 168);
             this.screen_get.Name = "screen_get";
             this.screen_get.Size = new System.Drawing.Size(87, 27);
@@ -640,11 +606,9 @@
             // 
             // screen_img
             // 
-            this.screen_img.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top |
-                                                         System.Windows.Forms.AnchorStyles.Bottom) |
-                                                        System.Windows.Forms.AnchorStyles.Left) |
-                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.screen_img.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.screen_img.BackColor = System.Drawing.Color.White;
             this.screen_img.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.screen_img.Location = new System.Drawing.Point(7, 22);
@@ -697,9 +661,7 @@
             // 
             // desk_set
             // 
-            this.desk_set.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
-                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.desk_set.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.desk_set.Location = new System.Drawing.Point(101, 156);
             this.desk_set.Name = "desk_set";
             this.desk_set.Size = new System.Drawing.Size(79, 27);
@@ -710,9 +672,7 @@
             // 
             // desk_get
             // 
-            this.desk_get.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((System.Windows.Forms.AnchorStyles.Bottom |
-                                                       System.Windows.Forms.AnchorStyles.Left)));
+            this.desk_get.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.desk_get.Location = new System.Drawing.Point(7, 156);
             this.desk_get.Name = "desk_get";
             this.desk_get.Size = new System.Drawing.Size(87, 27);
@@ -723,11 +683,9 @@
             // 
             // desk_back
             // 
-            this.desk_back.Anchor =
-                ((System.Windows.Forms.AnchorStyles) ((((System.Windows.Forms.AnchorStyles.Top |
-                                                         System.Windows.Forms.AnchorStyles.Bottom) |
-                                                        System.Windows.Forms.AnchorStyles.Left) |
-                                                       System.Windows.Forms.AnchorStyles.Right)));
+            this.desk_back.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.desk_back.BackColor = System.Drawing.Color.White;
             this.desk_back.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.desk_back.Location = new System.Drawing.Point(7, 22);
@@ -789,10 +747,10 @@
             this.Text = "CC-Functions.W32.Test";
             this.keyboard.ResumeLayout(false);
             this.keyboard.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize) (this.wnd_action_pos_h_bar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.wnd_action_pos_w_bar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.wnd_action_pos_y_bar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize) (this.wnd_action_pos_x_bar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wnd_action_pos_h_bar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wnd_action_pos_w_bar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wnd_action_pos_y_bar)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.wnd_action_pos_x_bar)).EndInit();
             this.mouse.ResumeLayout(false);
             this.mouse.PerformLayout();
             this.power.ResumeLayout(false);
@@ -804,6 +762,7 @@
             this.desk.ResumeLayout(false);
             this.time.ResumeLayout(false);
             this.ResumeLayout(false);
+
         }
 
         #endregion
@@ -864,5 +823,6 @@
         private System.Windows.Forms.DateTimePicker time_select;
         private System.Windows.Forms.Button time_set;
         private System.Windows.Forms.Button wnd_select_child;
+        private System.Windows.Forms.Button wnd_select_parent;
     }
 }

@@ -127,6 +127,17 @@ namespace CC_Functions.W32
             }
         }
 
+        public Wnd32 Parent
+        {
+            get
+            {
+                IntPtr result = user32.GetParent(HWnd);
+                if (result == IntPtr.Zero)
+                    throw new Win32Exception(Marshal.GetLastWin32Error());
+                return FromHandle(result);
+            }
+        }
+
         /// <summary>
         ///     The windows title
         /// </summary>

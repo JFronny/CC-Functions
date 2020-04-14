@@ -134,5 +134,8 @@ namespace CC_Functions.W32.Native
         [DllImport("user32")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool EnumChildWindows(IntPtr window, EnumWindowProc callback, IntPtr lParam);
+
+        [DllImport("user32.dll", ExactSpelling = true, CharSet = CharSet.Auto)]
+        public static extern IntPtr GetParent(IntPtr hWnd);
     }
 }
