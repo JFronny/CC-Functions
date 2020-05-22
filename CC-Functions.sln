@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Misc", "Misc\Misc.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "W32.Test", "W32.Test\W32.Test.csproj", "{6121A6D3-7C73-4EDE-A5A9-09DC52150824}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Commandline", "Commandline\Commandline.csproj", "{08C16A0B-A69D-4229-BC6D-F6949CA7BE76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CLITest", "CLITest\CLITest.csproj", "{3FAB0713-3021-4C6A-BF4A-ABBD542634A6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{6121A6D3-7C73-4EDE-A5A9-09DC52150824}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6121A6D3-7C73-4EDE-A5A9-09DC52150824}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6121A6D3-7C73-4EDE-A5A9-09DC52150824}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08C16A0B-A69D-4229-BC6D-F6949CA7BE76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08C16A0B-A69D-4229-BC6D-F6949CA7BE76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08C16A0B-A69D-4229-BC6D-F6949CA7BE76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08C16A0B-A69D-4229-BC6D-F6949CA7BE76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FAB0713-3021-4C6A-BF4A-ABBD542634A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FAB0713-3021-4C6A-BF4A-ABBD542634A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FAB0713-3021-4C6A-BF4A-ABBD542634A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FAB0713-3021-4C6A-BF4A-ABBD542634A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

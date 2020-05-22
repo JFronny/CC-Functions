@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <OutputType>Library</OutputType>
+        <RootNamespace>CC_Functions.Commandline</RootNamespace>
+        <AssemblyName>CC_Functions.Commandline</AssemblyName>
+        <LangVersion>8</LangVersion>
+        <Deterministic>false</Deterministic>
+        <PackageId>CC-Functions.Commandline</PackageId>
+        <Title>CC-Functions.Commandline</Title>
+        <Authors>CC24</Authors>
+        <Description>Random pieces of code used across my projects. CLI/TUI extensions</Description>
+        <Copyright>Copyright 2020</Copyright>
+        <PackageProjectUrl>https://github.com/JFronny/CC-Functions</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/JFronny/CC-Functions.git</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <AssemblyVersion>1.1.*</AssemblyVersion>
+        <FileVersion>1.0.0.0</FileVersion>
+        <VersionSuffix>0.0</VersionSuffix>
+        <PackageVersion>1.1.$(VersionSuffix)</PackageVersion>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\Commandline.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\Commandline.xml</DocumentationFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Misc\Misc.csproj" />
+    </ItemGroup>
+
+</Project>
