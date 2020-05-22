@@ -46,7 +46,7 @@ jobs:
         asset_content_type: application/zip
     - name: Generate XML
       run: |
-        $file = Get-Item $(Resolve-Path *\bin\Release\netcoreapp3.1\*.exe).Path
+        $file = Get-Item $(Resolve-Path W32.Test\bin\Release\netcoreapp3.1\*.exe).Path
         $asm = [Reflection.Assembly]::LoadFile($file.DirectoryName + "\" + $file.BaseName + ".dll")
         [System.XML.XMLDocument]$xml=New-Object System.XML.XMLDocument
         [System.XML.XMLElement]$app=$xml.CreateElement("app")
