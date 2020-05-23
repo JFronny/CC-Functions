@@ -3,14 +3,24 @@ using CC_Functions.Misc;
 
 namespace CC_Functions.Commandline.TUI
 {
+    /// <summary>
+    /// A basic text control
+    /// </summary>
     public class Label : Control
     {
+        /// <summary>
+        /// The text inside this label
+        /// </summary>
         public string Content;
+        /// <summary>
+        /// Creates a new label
+        /// </summary>
+        /// <param name="content">The text inside this label</param>
         public Label(string content) => Content = content;
-
+        /// <inheritdoc />
         public override Pixel[,] Render()
         {
-            char[,] inp = Content.ToNDArray2D();
+            char[,] inp = Content.ToNdArray2D();
             int w = inp.GetLength(0);
             int h = inp.GetLength(1);
             Pixel[,] output = new Pixel[w, h];
@@ -20,12 +30,7 @@ namespace CC_Functions.Commandline.TUI
             Size = new Size(w, h);
             return output;
         }
-
-        protected override void Resize(int width, int height)
-        {
-            //ignored for [Render]s sake, do not use
-        }
-
+        /// <inheritdoc />
         public override bool Selectable { get; } = false;
     }
 }

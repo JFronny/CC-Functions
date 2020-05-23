@@ -4,14 +4,24 @@ using CC_Functions.Misc;
 
 namespace CC_Functions.Commandline.TUI
 {
+    /// <summary>
+    /// A panel containing other components. MUST be inherited for all other controls that contain others
+    /// </summary>
     public class Panel : Control
     {
+        /// <summary>
+        /// The controls inside this panel
+        /// </summary>
         public List<Control> Controls = new List<Control>();
-        
+
+        /// <summary>
+        /// Renders the control and all contained controls
+        /// </summary>
+        /// <returns>The rendered pixels</returns>
         public override Pixel[,] Render()
         {
             Pixel[,] tmp = new Pixel[Size.Height, Size.Width];
-            tmp.Populate(new Pixel(BackColor, ForeColor, SpecialChars.empty));
+            tmp.Populate(new Pixel(BackColor, ForeColor, SpecialChars.Empty));
             foreach (Control control in Controls)
             {
                 if (control.Visible)
@@ -22,13 +32,12 @@ namespace CC_Functions.Commandline.TUI
             }
             return tmp;
         }
-
-        protected override void Resize(int width, int height)
-        {
-        }
-
+        /// <inheritdoc />
         public override bool Selectable { get; } = false;
-
+        /// <summary>
+        /// Recursively enumerates all controls
+        /// </summary>
+        /// <returns>A list of all controls</returns>
         public Control[] EnumerateRecursive()
         {
             List<Control> output = Controls.ToList();

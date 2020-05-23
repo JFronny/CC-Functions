@@ -4,8 +4,18 @@ using System.Security.Cryptography;
 
 namespace CC_Functions.Misc
 {
+    /// <summary>
+    /// Contains cryptographic functions
+    /// </summary>
     public static class Crypto
     {
+        /// <summary>
+        /// Encrypts an array of bytes using SHA512. Use with <see cref="Decrypt">Decrypt</see>
+        /// </summary>
+        /// <param name="data">The array of bytes to encrypt</param>
+        /// <param name="key">The key for encryption, later required to decrypt</param>
+        /// <returns>The encrypted data</returns>
+        /// <exception cref="ArgumentException">Thrown if provided data is invalid</exception>
         public static byte[] Encrypt(byte[] data, byte[] key)
         {
             if (key is null)
@@ -39,7 +49,13 @@ namespace CC_Functions.Misc
 
             return combined;
         }
-
+        /// <summary>
+        /// Decrypts an SHA512-encrypted byte array. Use with <see cref="Encrypt">Encrypt</see>
+        /// </summary>
+        /// <param name="encrypted">The array of bytes to decrypt</param>
+        /// <param name="key">The key the data was encrypted with</param>
+        /// <returns>The decrypted data</returns>
+        /// <exception cref="ArgumentException">Thrown if provided data is invalid</exception>
         public static byte[] Decrypt(byte[] encrypted, byte[] key)
         {
             if (key is null)

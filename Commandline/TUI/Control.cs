@@ -3,32 +3,62 @@ using System.Drawing;
 
 namespace CC_Functions.Commandline.TUI
 {
+    /// <summary>
+    /// Abstract class inherited by all controls
+    /// </summary>
     public abstract class Control
     {
+        /// <summary>
+        /// Called when the controls Size property is changed
+        /// </summary>
+        /// <param name="caller">The calling control</param>
+        /// <param name="e">Args</param>
+        public delegate void OnResize(Control caller, EventArgs e);
+        /// <summary>
+        /// Called when the controls Size property is changed
+        /// </summary>
+        public event OnResize Resize;
         private Point _point;
         private Size _size;
+        /// <summary>
+        /// Renders the control
+        /// </summary>
+        /// <returns>The rendered pixels</returns>
         public abstract Pixel[,] Render();
-        protected abstract void Resize(int width, int height);
-        private void Resize(Size size) => Resize(size.Width, size.Height);
-
+        /// <summary>
+        /// The size of the control
+        /// </summary>
         public Size Size
         {
             set
             {
-                _size = value;
-                Resize(value);
+                if (_size != value)
+                {
+                    _size = value;
+                    Resize?.Invoke(this, new EventArgs());
+                }
             }
             get => _size;
         }
-
+        /// <summary>
+        /// The position of this control
+        /// </summary>
         public Point Point
         {
             get => _point;
             set => _point = value;
         }
-
+        /// <summary>
+        /// The foreground color for this control
+        /// </summary>
         public ConsoleColor ForeColor { get; set; } = Console.ForegroundColor;
+        /// <summary>
+        /// The background color for this control
+        /// </summary>
         public ConsoleColor BackColor { get; set; } = Console.BackgroundColor;
+        /// <summary>
+        /// Whether the control can be selected
+        /// </summary>
         public abstract bool Selectable { get; }
 
         /// <summary>
@@ -72,10 +102,13 @@ namespace CC_Functions.Commandline.TUI
         {
             Input?.Invoke(screen, new InputEventArgs(info));
         }
-
         /// <summary>
         /// Whether the control should be rendered
         /// </summary>
         public bool Visible = true;
+        /// <summary>
+        /// Whether the control can be interacted with
+        /// </summary>
+        public bool Enabled = true;
     }
 }

@@ -6,16 +6,28 @@ using CC_Functions.Misc;
 
 namespace CC_Functions.Commandline.TUI
 {
+    /// <summary>
+    /// A basic non-scrolling text-editor control
+    /// </summary>
     public class TextBox : Control
     {
+        /// <summary>
+        /// The text inside this textbox
+        /// </summary>
         public string Content;
         private string[] Lines
         {
             get => Content.Split('\n');
             set => Content = string.Join('\n', value);
         }
-
+        /// <summary>
+        /// The "Cursors" position in this text box
+        /// </summary>
         public Point Cursor = new Point(0, 0);
+        /// <summary>
+        /// Creates a new text box
+        /// </summary>
+        /// <param name="content">The text inside this text box</param>
         public TextBox(string content)
         {
             Content = content;
@@ -25,7 +37,11 @@ namespace CC_Functions.Commandline.TUI
             };
             Click += (screen, args) => ProcessInput(ConsoleKey.Enter, new ConsoleKeyInfo());
         }
-
+        /// <summary>
+        /// Function to process input
+        /// </summary>
+        /// <param name="key">The pressed key</param>
+        /// <param name="info">Input metadata</param>
         private void ProcessInput(ConsoleKey key, ConsoleKeyInfo info)
         {
             string[] lines = Lines;
@@ -113,25 +129,32 @@ namespace CC_Functions.Commandline.TUI
                     Lines = lines;
                     break;
                 case ConsoleKey.Enter:
-                    tmp = lines.ToList();
-                    lines[Cursor.Y] = lines[Cursor.Y].Insert(Cursor.X, "\n");
-                    Cursor.Y++;
-                    Cursor.X = 0;
-                    Lines = lines;
+                    if (lines.Length < Size.Height)
+                    {
+                        tmp = lines.ToList();
+                        lines[Cursor.Y] = lines[Cursor.Y].Insert(Cursor.X, "\n");
+                        Cursor.Y++;
+                        Cursor.X = 0;
+                        Lines = lines;
+                    }
                     break;
                 default:
-                    lines[Cursor.Y] = lines[Cursor.Y].Insert(Cursor.X, info.KeyChar.ToString());
-                    Lines = lines;
+                    if (lines[Cursor.Y].Length < Size.Width)
+                    {
+                        lines[Cursor.Y] = lines[Cursor.Y].Insert(Cursor.X, info.KeyChar.ToString());
+                        Lines = lines;
+                    }
                     break;
             }
         }
 
+        /// <inheritdoc />
         public override Pixel[,] Render()
         {
-            char[,] inp1 = Content.ToNDArray2D();
+            char[,] inp1 = Content.ToNdArray2D();
             inp1 = inp1.Resize(Size.Height, Size.Width - 2);
             char[,] inp = new char[Size.Width, Size.Height];
-            inp.Populate(SpecialChars.empty);
+            inp.Populate(SpecialChars.Empty);
             for (int i = 0; i < Size.Height; i++)
             {
                 inp[0, i] = '[';
@@ -148,11 +171,7 @@ namespace CC_Functions.Commandline.TUI
             return output;
         }
 
-        protected override void Resize(int width, int height)
-        {
-            //ignored for [Render]s sake, do not use
-        }
-
+        /// <inheritdoc />
         public override bool Selectable { get; } = true;
     }
 }

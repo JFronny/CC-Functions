@@ -3,8 +3,14 @@ using CC_Functions.Misc;
 
 namespace CC_Functions.Commandline.TUI
 {
+    /// <summary>
+    /// Provides a control to select a number from a range of numbers
+    /// </summary>
     public class Slider : Control
     {
+        /// <summary>
+        /// Generates a new slider
+        /// </summary>
         public Slider()
         {
             Input += (screen, args) =>
@@ -26,7 +32,10 @@ namespace CC_Functions.Commandline.TUI
                 }
             };
         }
-        
+        /// <summary>
+        /// The maximum value for this slider
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if too low/high</exception>
         public int MaxValue
         {
             get => _maxValue;
@@ -38,7 +47,10 @@ namespace CC_Functions.Commandline.TUI
                     throw new ArgumentOutOfRangeException("MaxValue must be larger than MinValue and equal to or larger than Value");
             }
         }
-
+        /// <summary>
+        /// The minimal value for this slider
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if too low/high</exception>
         public int MinValue
         {
             get => _minValue;
@@ -50,7 +62,10 @@ namespace CC_Functions.Commandline.TUI
                     throw new ArgumentOutOfRangeException("MaxValue must be larger than MinValue and equal to or smaller than Value");
             }
         }
-
+        /// <summary>
+        /// The current value of this slider
+        /// </summary>
+        /// <exception cref="ArgumentOutOfRangeException">Thrown if too low/high</exception>
         public int Value
         {
             get => _value;
@@ -62,19 +77,21 @@ namespace CC_Functions.Commandline.TUI
                     throw new ArgumentOutOfRangeException("Value must be between MinValue and MaxValue");
             }
         }
-
+        /// <summary>
+        /// The size of steps in this slider
+        /// </summary>
         public int StepSize = 1;
         private int _value = 5;
         private int _maxValue = 10;
         private int _minValue = 0;
-
+        /// <inheritdoc />
         public override Pixel[,] Render()
         {
             int delta = MaxValue - MinValue;
             int litValLen = Math.Max(MaxValue.ToString().Length, MinValue.ToString().Length);
             int prevpts = Math.Max((Value - MinValue) * Size.Width / delta - litValLen - 2, 0);
             int postpts = Math.Max(Size.Width - prevpts - litValLen - 2, 0);
-            char[,] rend = $"{new string('=', prevpts)}[{Value.ToString($"D{litValLen}")}]{new string('=', postpts)}".ToNDArray2D();
+            char[,] rend = $"{new string('=', prevpts)}[{Value.ToString($"D{litValLen}")}]{new string('=', postpts)}".ToNdArray2D();
             int f1 = rend.GetLength(0);
             int f2 = rend.GetLength(1);
             Pixel[,] output = new Pixel[f1, f2];
@@ -83,12 +100,7 @@ namespace CC_Functions.Commandline.TUI
             for (int j = 0; j < f2; j++) output[i, j] = new Pixel(Selected ? ForeColor : BackColor, Selected ? BackColor : ForeColor, rend[i, j]);
             return output;
         }
-
-        protected override void Resize(int width, int height)
-        {
-            
-        }
-
+        /// <inheritdoc />
         public override bool Selectable { get; } = true;
     }
 }

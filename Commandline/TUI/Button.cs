@@ -3,19 +3,30 @@ using CC_Functions.Misc;
 
 namespace CC_Functions.Commandline.TUI
 {
+    /// <summary>
+    /// A basic button type
+    /// </summary>
     public class Button : Control
     {
+        /// <summary>
+        /// The text inside this button
+        /// </summary>
         public string Content;
+        /// <summary>
+        /// Creates a new button
+        /// </summary>
+        /// <param name="content">The text inside this button</param>
         public Button(string content)
         {
             Content = content;
-            char[,] tmp = Content.ToNDArray2D();
+            char[,] tmp = Content.ToNdArray2D();
             Size = new Size(tmp.GetLength(0), tmp.GetLength(1));
         }
 
+        /// <inheritdoc />
         public override Pixel[,] Render()
         {
-            char[,] inp = Content.ToNDArray2D();
+            char[,] inp = Content.ToNdArray2D();
             inp = inp.Resize(Size.Width, Size.Height);
             Pixel[,] output = new Pixel[Size.Width, Size.Height];
             for (int x = 0; x < Size.Width; x++)
@@ -24,11 +35,7 @@ namespace CC_Functions.Commandline.TUI
             return output;
         }
 
-        protected override void Resize(int width, int height)
-        {
-            //ignored for [Render]s sake, do not use
-        }
-
+        /// <inheritdoc />
         public override bool Selectable { get; } = true;
     }
 }

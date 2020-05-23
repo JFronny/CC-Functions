@@ -13,9 +13,24 @@ namespace CC_Functions.Commandline
     /// </summary>
     public static class TableParser
     {
+        /// <summary>
+        /// Parses the enumerable to a table using with the specified headers and transformed to strings with the specified selector
+        /// </summary>
+        /// <param name="values">The values to display</param>
+        /// <param name="columnHeaders">The headers for columns</param>
+        /// <param name="valueSelectors">Functions to get data for the cells</param>
+        /// <typeparam name="T">The type of the elements in the enumerable</typeparam>
+        /// <returns>The generated table</returns>
         public static string ToStringTable<T>(this IEnumerable<T> values, string[] columnHeaders,
             params Func<T, object>[] valueSelectors) => ToStringTable(values.ToArray(), columnHeaders, valueSelectors);
-
+        /// <summary>
+        /// Parses the array to a table using with the specified headers and transformed to strings with the specified selector
+        /// </summary>
+        /// <param name="values">The values to display</param>
+        /// <param name="columnHeaders">The headers for columns</param>
+        /// <param name="valueSelectors">Functions to get data for the cells</param>
+        /// <typeparam name="T">The type of the elements in the array</typeparam>
+        /// <returns>The generated table</returns>
         public static string ToStringTable<T>(this T[] values, string[] columnHeaders,
             params Func<T, object>[] valueSelectors)
         {
@@ -38,7 +53,11 @@ namespace CC_Functions.Commandline
 
             return ToStringTable(arrValues);
         }
-
+        /// <summary>
+        /// Parses the array to a table
+        /// </summary>
+        /// <param name="arrValues">The cells of the table</param>
+        /// <returns>The generated table</returns>
         public static string ToStringTable(this string[,] arrValues)
         {
             int[] maxColumnsWidth = GetMaxColumnsWidth(arrValues);
@@ -85,7 +104,13 @@ namespace CC_Functions.Commandline
 
             return maxColumnsWidth;
         }
-
+        /// <summary>
+        /// Parses the enumerable to a table, transformed to strings with the specified selector
+        /// </summary>
+        /// <param name="values">The values to display</param>
+        /// <param name="valueSelectors">Functions to get data for the cells</param>
+        /// <typeparam name="T">The type of the elements in the enumerable</typeparam>
+        /// <returns>The generated table</returns>
         public static string ToStringTable<T>(this IEnumerable<T> values,
             params Expression<Func<T, object>>[] valueSelectors)
         {
