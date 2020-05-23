@@ -1,9 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using Timer = System.Timers.Timer;
-using System.Windows.Forms;
+﻿using Timer = System.Timers.Timer;
 
 namespace CC_Functions.W32.Forms
 {
@@ -15,7 +10,7 @@ namespace CC_Functions.W32.Forms
         private const double IndicatorOffset = Math.PI / 16;
         private const int MaximumIndicators = 6;
         private const int SizeFactor = 20;
-        private const double StartAt = (2 * Math.PI) / 3;
+        private const double StartAt = 2 * Math.PI / 3;
         private const double TimerInterval = 100.0;
         private readonly Indicator[] indicators = new Indicator[MaximumIndicators];
         private readonly Timer timer;
@@ -28,7 +23,7 @@ namespace CC_Functions.W32.Forms
         public RotatingIndicator()
         {
             for (int i = 0; i < 6; i++)
-                indicators[i] = new Indicator(StartAt + (i * IndicatorOffset));
+                indicators[i] = new Indicator(StartAt + i * IndicatorOffset);
             SetStyle(
                 ControlStyles.DoubleBuffer | ControlStyles.UserPaint | ControlStyles.AllPaintingInWmPaint |
                 ControlStyles.SupportsTransparentBackColor, true);

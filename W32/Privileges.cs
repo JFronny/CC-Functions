@@ -1,8 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using CC_Functions.W32.Native;
+﻿using CC_Functions.W32.Native;
 
 namespace CC_Functions.W32
 {
@@ -124,18 +120,14 @@ namespace CC_Functions.W32
                                         new Win32Exception());
                             }
                             else
-                            {
                                 throw new InvalidOperationException("AdjustTokenPrivileges failed.",
                                     new Win32Exception());
-                            }
                         }
                         else
-                        {
                             throw new InvalidOperationException(
                                 string.Format(CultureInfo.InvariantCulture,
                                     "OpenProcessToken failed. CurrentProcess: {0}", currentProcess.ToInt32()),
                                 new Win32Exception());
-                        }
                     }
                     finally
                     {
@@ -144,12 +136,10 @@ namespace CC_Functions.W32
                     }
                 }
                 else
-                {
                     throw new InvalidOperationException(
                         string.Format(CultureInfo.InvariantCulture,
                             "LookupPrivilegeValue failed. SecurityEntityValue: {0}", securityEntityValue),
                         new Win32Exception());
-                }
             }
             catch (Exception e)
             {

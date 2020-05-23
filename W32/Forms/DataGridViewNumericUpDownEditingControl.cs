@@ -1,9 +1,3 @@
-using System;
-using System.Drawing;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-
 namespace CC_Functions.W32.Forms
 {
     /// <summary>
@@ -86,9 +80,7 @@ namespace CC_Functions.W32.Forms
                 dataGridView.EditingPanel.BackColor = opaqueBackColor;
             }
             else
-            {
                 BackColor = dataGridViewCellStyle.BackColor;
-            }
 
             ForeColor = dataGridViewCellStyle.ForeColor;
             TextAlign = DataGridViewNumericUpDownCell.TranslateAlignment(dataGridViewCellStyle.Alignment);
@@ -108,10 +100,10 @@ namespace CC_Functions.W32.Forms
                     if (textBox != null)
                         // If the end of the selection is at the end of the string,
                         // let the DataGridView treat the key message
-                        if ((RightToLeft == RightToLeft.No &&
-                             !(textBox.SelectionLength == 0 && textBox.SelectionStart == textBox.Text.Length)) ||
-                            (RightToLeft == RightToLeft.Yes &&
-                             !(textBox.SelectionLength == 0 && textBox.SelectionStart == 0)))
+                        if (RightToLeft == RightToLeft.No &&
+                            !(textBox.SelectionLength == 0 && textBox.SelectionStart == textBox.Text.Length) ||
+                            RightToLeft == RightToLeft.Yes &&
+                            !(textBox.SelectionLength == 0 && textBox.SelectionStart == 0))
                             return true;
                     break;
                 }
@@ -123,10 +115,10 @@ namespace CC_Functions.W32.Forms
                         // If the end of the selection is at the begining of the string
                         // or if the entire text is selected and we did not start editing,
                         // send this character to the dataGridView, else process the key message
-                        if ((RightToLeft == RightToLeft.No &&
-                             !(textBox.SelectionLength == 0 && textBox.SelectionStart == 0)) ||
-                            (RightToLeft == RightToLeft.Yes &&
-                             !(textBox.SelectionLength == 0 && textBox.SelectionStart == textBox.Text.Length)))
+                        if (RightToLeft == RightToLeft.No &&
+                            !(textBox.SelectionLength == 0 && textBox.SelectionStart == 0) ||
+                            RightToLeft == RightToLeft.Yes &&
+                            !(textBox.SelectionLength == 0 && textBox.SelectionStart == textBox.Text.Length))
                             return true;
                     break;
                 }
@@ -236,9 +228,7 @@ namespace CC_Functions.W32.Forms
             // the negative sign is pressed.
             bool notifyValueChange = false;
             if (char.IsDigit(e.KeyChar))
-            {
                 notifyValueChange = true;
-            }
             else
             {
                 NumberFormatInfo numberFormatInfo = CultureInfo.CurrentCulture.NumberFormat;

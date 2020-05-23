@@ -1,7 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
-
-namespace CC_Functions.W32.Native
+﻿namespace CC_Functions.W32.Native
 {
     internal static class advapi32
     {

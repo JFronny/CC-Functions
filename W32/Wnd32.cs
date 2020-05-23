@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Windows.Forms;
-using CC_Functions.W32.Native;
+﻿using CC_Functions.W32.Native;
 
 namespace CC_Functions.W32
 {
@@ -16,10 +7,8 @@ namespace CC_Functions.W32
     /// </summary>
     public sealed class Wnd32 : IEquatable<Wnd32>
     {
-        #region Exposed
-
-        #region CreateInstance
-
+#region Exposed
+#region CreateInstance
         private Wnd32(IntPtr handle) => HWnd = handle;
 
         /// <summary>
@@ -61,7 +50,8 @@ namespace CC_Functions.W32
         /// <param name="point">The point to scan</param>
         /// <param name="visible">Whether windows need to be visible</param>
         /// <returns>The windows</returns>
-        public static Wnd32[] AllFromPoint(Point point, bool visible = false) => All.Where(s => s.Position.Contains(point) && s.Shown || !visible).ToArray();
+        public static Wnd32[] AllFromPoint(Point point, bool visible = false) =>
+            All.Where(s => s.Position.Contains(point) && s.Shown || !visible).ToArray();
 
         /// <summary>
         ///     Gets the window associated with the forms handle
@@ -100,11 +90,9 @@ namespace CC_Functions.W32
         ///     The current programs console window. Do NOT use this if you are not targeting a console app or allocating a console
         /// </summary>
         public static Wnd32 ConsoleWindow => FromHandle(kernel32.GetConsoleWindow());
+#endregion CreateInstance
 
-        #endregion CreateInstance
-
-        #region InstanceActions
-
+#region InstanceActions
         public Wnd32[] Children
         {
             get
@@ -357,13 +345,10 @@ namespace CC_Functions.W32
                 return true;
             }
         }
+#endregion InstanceActions
+#endregion Exposed
 
-        #endregion InstanceActions
-
-        #endregion Exposed
-
-        #region Internal
-
+#region Internal
         /// <summary>
         ///     The windows' handle
         /// </summary>
@@ -378,7 +363,7 @@ namespace CC_Functions.W32
             _windowHandles.Add(hWnd);
             return true;
         }
-        
+
         private bool EnumWindow(IntPtr hWnd, IntPtr lParam)
         {
             GCHandle gcChildhandlesList = GCHandle.FromIntPtr(lParam);
@@ -390,7 +375,6 @@ namespace CC_Functions.W32
 
             return true;
         }
-
-        #endregion Internal
+#endregion Internal
     }
 }

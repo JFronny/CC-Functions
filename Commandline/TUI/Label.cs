@@ -4,19 +4,24 @@ using CC_Functions.Misc;
 namespace CC_Functions.Commandline.TUI
 {
     /// <summary>
-    /// A basic text control
+    ///     A basic text control
     /// </summary>
     public class Label : Control
     {
         /// <summary>
-        /// The text inside this label
+        ///     The text inside this label
         /// </summary>
         public string Content;
+
         /// <summary>
-        /// Creates a new label
+        ///     Creates a new label
         /// </summary>
         /// <param name="content">The text inside this label</param>
         public Label(string content) => Content = content;
+
+        /// <inheritdoc />
+        public override bool Selectable { get; } = false;
+
         /// <inheritdoc />
         public override Pixel[,] Render()
         {
@@ -30,7 +35,5 @@ namespace CC_Functions.Commandline.TUI
             Size = new Size(w, h);
             return output;
         }
-        /// <inheritdoc />
-        public override bool Selectable { get; } = false;
     }
 }

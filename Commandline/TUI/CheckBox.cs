@@ -5,20 +5,29 @@ using CC_Functions.Misc;
 namespace CC_Functions.Commandline.TUI
 {
     /// <summary>
-    /// Provides a control for users to select a boolean
+    ///     Provides a control for users to select a boolean
     /// </summary>
     public class CheckBox : Control
     {
         /// <summary>
-        /// The text inside this checkbox
+        ///     Called when the state of this checkbox is changed
+        /// </summary>
+        /// <param name="screen">The current screen instance</param>
+        /// <param name="e">Args</param>
+        public delegate void OnCheckedChanged(Screen screen, EventArgs e);
+
+        /// <summary>
+        ///     Whether the box is checked
+        /// </summary>
+        public bool Checked;
+
+        /// <summary>
+        ///     The text inside this checkbox
         /// </summary>
         public string Content;
+
         /// <summary>
-        /// Whether the box is checked
-        /// </summary>
-        public bool Checked = false;
-        /// <summary>
-        /// Creates a new checkbox
+        ///     Creates a new checkbox
         /// </summary>
         /// <param name="content">The text inside this CheckBox</param>
         public CheckBox(string content)
@@ -44,6 +53,9 @@ namespace CC_Functions.Commandline.TUI
         }
 
         /// <inheritdoc />
+        public override bool Selectable { get; } = true;
+
+        /// <inheritdoc />
         public override Pixel[,] Render()
         {
             char[,] inp1 = Content.ToNdArray2D();
@@ -63,17 +75,8 @@ namespace CC_Functions.Commandline.TUI
             return output;
         }
 
-        /// <inheritdoc />
-        public override bool Selectable { get; } = true;
-
         /// <summary>
-        /// Called when the state of this checkbox is changed
-        /// </summary>
-        /// <param name="screen">The current screen instance</param>
-        /// <param name="e">Args</param>
-        public delegate void OnCheckedChanged(Screen screen, EventArgs e);
-        /// <summary>
-        /// Called when the state of this checkbox is changed
+        ///     Called when the state of this checkbox is changed
         /// </summary>
         public event OnClick CheckedChanged;
     }

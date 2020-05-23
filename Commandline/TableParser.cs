@@ -9,12 +9,13 @@ using System.Text;
 namespace CC_Functions.Commandline
 {
     /// <summary>
-    /// Provides functions for parsing enumerables to powershell-like tables
+    ///     Provides functions for parsing enumerables to powershell-like tables
     /// </summary>
     public static class TableParser
     {
         /// <summary>
-        /// Parses the enumerable to a table using with the specified headers and transformed to strings with the specified selector
+        ///     Parses the enumerable to a table using with the specified headers and transformed to strings with the specified
+        ///     selector
         /// </summary>
         /// <param name="values">The values to display</param>
         /// <param name="columnHeaders">The headers for columns</param>
@@ -23,8 +24,9 @@ namespace CC_Functions.Commandline
         /// <returns>The generated table</returns>
         public static string ToStringTable<T>(this IEnumerable<T> values, string[] columnHeaders,
             params Func<T, object>[] valueSelectors) => ToStringTable(values.ToArray(), columnHeaders, valueSelectors);
+
         /// <summary>
-        /// Parses the array to a table using with the specified headers and transformed to strings with the specified selector
+        ///     Parses the array to a table using with the specified headers and transformed to strings with the specified selector
         /// </summary>
         /// <param name="values">The values to display</param>
         /// <param name="columnHeaders">The headers for columns</param>
@@ -53,8 +55,9 @@ namespace CC_Functions.Commandline
 
             return ToStringTable(arrValues);
         }
+
         /// <summary>
-        /// Parses the array to a table
+        ///     Parses the array to a table
         /// </summary>
         /// <param name="arrValues">The cells of the table</param>
         /// <returns>The generated table</returns>
@@ -104,8 +107,9 @@ namespace CC_Functions.Commandline
 
             return maxColumnsWidth;
         }
+
         /// <summary>
-        /// Parses the enumerable to a table, transformed to strings with the specified selector
+        ///     Parses the enumerable to a table, transformed to strings with the specified selector
         /// </summary>
         /// <param name="values">The values to display</param>
         /// <param name="valueSelectors">Functions to get data for the cells</param>

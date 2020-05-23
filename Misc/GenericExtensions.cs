@@ -9,12 +9,12 @@ using System.Net;
 namespace CC_Functions.Misc
 {
     /// <summary>
-    /// Extension methods for various types
+    ///     Extension methods for various types
     /// </summary>
     public static class GenericExtensions
     {
         /// <summary>
-        /// Gets an element from the dictionary or adds the default
+        ///     Gets an element from the dictionary or adds the default
         /// </summary>
         /// <param name="dict">The dictionary to get from</param>
         /// <param name="key">The key to check</param>
@@ -28,8 +28,9 @@ namespace CC_Functions.Misc
                 dict[key] = def;
             return dict[key];
         }
+
         /// <summary>
-        /// Sets an element and returns it
+        ///     Sets an element and returns it
         /// </summary>
         /// <param name="dict">The dictionary to set in</param>
         /// <param name="key">The key to set at</param>
@@ -42,8 +43,9 @@ namespace CC_Functions.Misc
             dict[key] = val;
             return dict[key];
         }
+
         /// <summary>
-        /// Tries to cast an object
+        ///     Tries to cast an object
         /// </summary>
         /// <param name="o">The object to try to parse</param>
         /// <param name="parsed">The parsed object (if successful) or the default (usually null)</param>
@@ -62,8 +64,9 @@ namespace CC_Functions.Misc
                 return false;
             }
         }
+
         /// <summary>
-        /// Runs a function that transforms an object in-line
+        ///     Runs a function that transforms an object in-line
         /// </summary>
         /// <param name="self">The object to run on</param>
         /// <param name="func">The function to run</param>
@@ -71,8 +74,9 @@ namespace CC_Functions.Misc
         /// <typeparam name="TOut">The output type</typeparam>
         /// <returns></returns>
         public static TOut SelectO<TIn, TOut>(this TIn self, Func<TIn, TOut> func) => func.Invoke(self);
+
         /// <summary>
-        /// Runs a function under a condition in-line (equal to if)
+        ///     Runs a function under a condition in-line (equal to if)
         /// </summary>
         /// <param name="condition">The condition to check</param>
         /// <param name="func">The function to run</param>
@@ -81,8 +85,9 @@ namespace CC_Functions.Misc
             if (condition)
                 func();
         }
+
         /// <summary>
-        /// Parses a string to a value of an enum
+        ///     Parses a string to a value of an enum
         /// </summary>
         /// <param name="value">The string to parse</param>
         /// <typeparam name="TEnum">The enum type (MUST be an enum)</typeparam>
@@ -91,53 +96,60 @@ namespace CC_Functions.Misc
             Enum.GetNames(typeof(TEnum)).First(s => s.ToLower() == value.ToLower()));
 
         /// <summary>
-        /// Parses a string to a nullable bool (defaults to null if parse fails)
+        ///     Parses a string to a nullable bool (defaults to null if parse fails)
         /// </summary>
         /// <param name="value">The st string to parse</param>
         /// <returns>The output nullable bool</returns>
         public static bool? ParseBool(string value) =>
-            bool.TryParse(value, out bool tmp) ? (bool?)tmp : null;
+            bool.TryParse(value, out bool tmp) ? (bool?) tmp : null;
+
         /// <summary>
-        /// AND operation for nullable bools (uses <see cref="True">True</see>)
+        ///     AND operation for nullable bools (uses <see cref="True">True</see>)
         /// </summary>
         /// <param name="left">First bool to check</param>
         /// <param name="right">Second bool to check</param>
         /// <returns>The operation result</returns>
         public static bool And(this bool? left, bool? right) => left.True() && right.True();
+
         /// <summary>
-        /// OR operation for nullable bools (uses <see cref="True">True</see>)
+        ///     OR operation for nullable bools (uses <see cref="True">True</see>)
         /// </summary>
         /// <param name="left">First bool to check</param>
         /// <param name="right">Second bool to check</param>
         /// <returns>The operation result</returns>
         public static bool Or(this bool? left, bool? right) => left.True() || right.True();
+
         /// <summary>
-        /// XOR operation for nullable bools (uses <see cref="True">True</see>)
+        ///     XOR operation for nullable bools (uses <see cref="True">True</see>)
         /// </summary>
         /// <param name="left">First bool to check</param>
         /// <param name="right">Second bool to check</param>
         /// <returns>The operation result</returns>
         public static bool Xor(this bool? left, bool? right) => left.Or(right) && !left.And(right);
+
         /// <summary>
-        /// Whether the nullable bool is true (null->false)
+        ///     Whether the nullable bool is true (null->false)
         /// </summary>
         /// <param name="self">Value to check</param>
         /// <returns>Whether it is true</returns>
         public static bool True(this bool? self) => self == true;
+
         /// <summary>
-        /// Whether the nullable bool is false (null->false)
+        ///     Whether the nullable bool is false (null->false)
         /// </summary>
         /// <param name="self">Value to check</param>
         /// <returns>Whether it is false</returns>
         public static bool False(this bool? self) => self == false;
+
         /// <summary>
-        /// Whether the nullable bool is null
+        ///     Whether the nullable bool is null
         /// </summary>
         /// <param name="self">Value to check</param>
         /// <returns>Whether it is null</returns>
         public static bool Null(this bool? self) => self == null;
+
         /// <summary>
-        /// Removes an element from a dictionary by its index (not key)
+        ///     Removes an element from a dictionary by its index (not key)
         /// </summary>
         /// <param name="dict">The dictionary to remove from</param>
         /// <param name="index">The index of the value</param>
@@ -145,14 +157,16 @@ namespace CC_Functions.Misc
         /// <typeparam name="TValue">The value type</typeparam>
         public static void RemoveAt<TKey, TValue>(this Dictionary<TKey, TValue> dict, int index) =>
             dict.Remove(dict.Keys.ToArray()[index]);
+
         /// <summary>
-        /// Gets the size of a dictionary
+        ///     Gets the size of a dictionary
         /// </summary>
         /// <param name="directory">The dictionary to check</param>
         /// <returns>The size of the dictionary</returns>
         public static long GetSize(this DirectoryInfo directory) => IO.GetDirectorySize(directory.FullName);
+
         /// <summary>
-        /// Adds a directory to an archive recursively
+        ///     Adds a directory to an archive recursively
         /// </summary>
         /// <param name="archive">The archive to add to</param>
         /// <param name="folderPath">The directory to add</param>
@@ -177,8 +191,9 @@ namespace CC_Functions.Misc
                         ignoredPaths);
             return result;
         }
+
         /// <summary>
-        /// "Unshorten" (follow) an URL
+        ///     "Unshorten" (follow) an URL
         /// </summary>
         /// <param name="self">The URL to unshorten</param>
         /// <returns>The unshortened URL</returns>
@@ -190,8 +205,9 @@ namespace CC_Functions.Misc
             WebResponse resp = req.GetResponse();
             return resp.ResponseUri;
         }
+
         /// <summary>
-        /// Pings an URL to check for availability
+        ///     Pings an URL to check for availability
         /// </summary>
         /// <param name="self">The URL to check</param>
         /// <returns>Whether the service is online</returns>
@@ -199,7 +215,7 @@ namespace CC_Functions.Misc
         {
             try
             {
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(self);
+                HttpWebRequest request = (HttpWebRequest) WebRequest.Create(self);
                 request.Timeout = 3000;
                 request.AllowAutoRedirect = true;
                 using WebResponse response = request.GetResponse();
@@ -210,27 +226,31 @@ namespace CC_Functions.Misc
                 return false;
             }
         }
+
         /// <summary>
-        /// Rounds a RectangleF to a Rectangle instead of flooring
+        ///     Rounds a RectangleF to a Rectangle instead of flooring
         /// </summary>
         /// <param name="self">The RectangleF to round</param>
         /// <returns>The rounded Rectangle</returns>
         public static Rectangle Round(this RectangleF self) => Rectangle.Round(self);
+
         /// <summary>
-        /// Ceilings a RectangleF to a Rectangle instead of flooring
+        ///     Ceilings a RectangleF to a Rectangle instead of flooring
         /// </summary>
         /// <param name="self">The RectangleF to ceil (?)</param>
         /// <returns>The ceiled (?) Rectangle</returns>
         public static Rectangle Ceiling(this RectangleF self) => Rectangle.Ceiling(self);
+
         /// <summary>
-        /// Extension method for <see cref="Crypto">Crypto's</see> Encrypt
+        ///     Extension method for <see cref="Crypto">Crypto's</see> Encrypt
         /// </summary>
         /// <param name="self">The data to encrypt</param>
         /// <param name="key">The key to encrypt with</param>
         /// <returns>The encrypted data</returns>
         public static byte[] Encrypt(this byte[] self, byte[] key) => Crypto.Encrypt(self, key);
+
         /// <summary>
-        /// Extension method for <see cref="Crypto">Crypto's</see> Decrypt
+        ///     Extension method for <see cref="Crypto">Crypto's</see> Decrypt
         /// </summary>
         /// <param name="self">The data to decrypt</param>
         /// <param name="key">The key to decrypt with</param>

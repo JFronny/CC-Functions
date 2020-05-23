@@ -5,12 +5,12 @@ using System.Linq;
 namespace CC_Functions.Misc
 {
     /// <summary>
-    /// Contains extension functions to work with 1D and 2D arrays
+    ///     Contains extension functions to work with 1D and 2D arrays
     /// </summary>
     public static class ArrayFormatter
     {
         /// <summary>
-        /// Copies and resizes the array
+        ///     Copies and resizes the array
         /// </summary>
         /// <param name="original">The original array. This is not modified</param>
         /// <param name="elements">The new amount of elements</param>
@@ -23,8 +23,9 @@ namespace CC_Functions.Misc
             Array.Resize(ref output, elements);
             return output;
         }
+
         /// <summary>
-        /// Copies and resizes the array
+        ///     Copies and resizes the array
         /// </summary>
         /// <param name="original">The original array. This is not modified</param>
         /// <param name="rows">The new amount of elements in dimension 0</param>
@@ -43,8 +44,9 @@ namespace CC_Functions.Misc
                 newArray[i, j] = original[i, j];
             return newArray;
         }
+
         /// <summary>
-        /// Converts a string to a 2d char array using newlines
+        ///     Converts a string to a 2d char array using newlines
         /// </summary>
         /// <param name="source">The source string</param>
         /// <param name="defaultEl">The element to place in empty fields of the new array</param>
@@ -64,17 +66,20 @@ namespace CC_Functions.Misc
             }
             return output;
         }
+
         /// <summary>
-        /// Clears and fills the array with the specified value
+        ///     Clears and fills the array with the specified value
         /// </summary>
         /// <param name="arr">The array to populate</param>
         /// <param name="value">The value to copy to the array, defaults to the default value (usually null)</param>
         /// <typeparam name="T">The type of elements in the array</typeparam>
-        public static void Populate<T>(this T[] arr, T value = default) {
+        public static void Populate<T>(this T[] arr, T value = default)
+        {
             for (int i = 0; i < arr.Length; i++) arr[i] = value;
         }
+
         /// <summary>
-        /// Clears and fills the array with the specified value
+        ///     Clears and fills the array with the specified value
         /// </summary>
         /// <param name="arr">The array to populate</param>
         /// <param name="value">The value to copy to the array, defaults to the default value (usually null)</param>
@@ -84,10 +89,12 @@ namespace CC_Functions.Misc
             int w = arr.GetLength(0);
             int h = arr.GetLength(1);
             for (int i = 0; i < w; i++)
-            for (int j = 0; j < h; j++) arr[i, j] = value;
+            for (int j = 0; j < h; j++)
+                arr[i, j] = value;
         }
+
         /// <summary>
-        /// Copies the content of a 2D array to another with offset
+        ///     Copies the content of a 2D array to another with offset
         /// </summary>
         /// <param name="arr">The array to copy from</param>
         /// <param name="target">The array to copy to</param>
@@ -101,12 +108,14 @@ namespace CC_Functions.Misc
             int mh = target.GetLength(0);
             int ow = offset.X;
             int oh = offset.Y;
-            for (int x = ow; x < Math.Min(mw, w + ow); x++)
-            for (int y = oh; y < Math.Min(mh, h + oh); y++)
-                target[y, x] = arr[y - oh, x - ow];
+            if (oh >= 0 && ow >= 0 && mw >= 0 && mh >= 0 && w >= 0 && h >= 0)
+                for (int x = ow; x < Math.Min(mw, w + ow); x++)
+                for (int y = oh; y < Math.Min(mh, h + oh); y++)
+                    target[y, x] = arr[y - oh, x - ow];
         }
+
         /// <summary>
-        /// Copies and rotates the 2d array (row->column, column->row)
+        ///     Copies and rotates the 2d array (row->column, column->row)
         /// </summary>
         /// <param name="arr">The array to copy from</param>
         /// <typeparam name="T">The type of elements in the array</typeparam>
@@ -117,7 +126,8 @@ namespace CC_Functions.Misc
             int h = arr.GetLength(1);
             T[,] target = new T[h, w];
             for (int x = 0; x < w; x++)
-            for (int y = 0; y < h; y++) target[y, x] = arr[x, y];
+            for (int y = 0; y < h; y++)
+                target[y, x] = arr[x, y];
             return target;
         }
     }

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-
-namespace CC_Functions.W32.Hooks
+﻿namespace CC_Functions.W32.Hooks
 {
     public class MouseHookEventArgs : EventArgs
     {

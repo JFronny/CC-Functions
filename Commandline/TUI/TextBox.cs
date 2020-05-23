@@ -7,38 +7,42 @@ using CC_Functions.Misc;
 namespace CC_Functions.Commandline.TUI
 {
     /// <summary>
-    /// A basic non-scrolling text-editor control
+    ///     A basic non-scrolling text-editor control
     /// </summary>
     public class TextBox : Control
     {
         /// <summary>
-        /// The text inside this textbox
+        ///     The text inside this textbox
         /// </summary>
         public string Content;
-        private string[] Lines
-        {
-            get => Content.Split('\n');
-            set => Content = string.Join('\n', value);
-        }
+
         /// <summary>
-        /// The "Cursors" position in this text box
+        ///     The "Cursors" position in this text box
         /// </summary>
         public Point Cursor = new Point(0, 0);
+
         /// <summary>
-        /// Creates a new text box
+        ///     Creates a new text box
         /// </summary>
         /// <param name="content">The text inside this text box</param>
         public TextBox(string content)
         {
             Content = content;
-            Input += (screen, args) =>
-            {
-                ProcessInput(args.Info.Key, args.Info);
-            };
+            Input += (screen, args) => { ProcessInput(args.Info.Key, args.Info); };
             Click += (screen, args) => ProcessInput(ConsoleKey.Enter, new ConsoleKeyInfo());
         }
+
+        private string[] Lines
+        {
+            get => Content.Split('\n');
+            set => Content = string.Join('\n', value);
+        }
+
+        /// <inheritdoc />
+        public override bool Selectable { get; } = true;
+
         /// <summary>
-        /// Function to process input
+        ///     Function to process input
         /// </summary>
         /// <param name="key">The pressed key</param>
         /// <param name="info">Input metadata</param>
@@ -123,7 +127,7 @@ namespace CC_Functions.Commandline.TUI
                             tmp.RemoveAt(Cursor.Y);
                             lines = tmp.ToArray();
                             Cursor.Y--;
-                            Cursor.X = tmplen - 1;
+                            Cursor.X = tmplen;
                         }
                     }
                     Lines = lines;
@@ -132,7 +136,7 @@ namespace CC_Functions.Commandline.TUI
                     if (lines.Length < Size.Height)
                     {
                         tmp = lines.ToList();
-                        lines[Cursor.Y] = lines[Cursor.Y].Insert(Cursor.X, "\n");
+                        lines[Cursor.Y] = lines[Cursor.Y].Insert(Math.Max(Cursor.X, 0), "\n");
                         Cursor.Y++;
                         Cursor.X = 0;
                         Lines = lines;
@@ -142,6 +146,7 @@ namespace CC_Functions.Commandline.TUI
                     if (lines[Cursor.Y].Length < Size.Width)
                     {
                         lines[Cursor.Y] = lines[Cursor.Y].Insert(Cursor.X, info.KeyChar.ToString());
+                        Cursor.X++;
                         Lines = lines;
                     }
                     break;
@@ -152,7 +157,7 @@ namespace CC_Functions.Commandline.TUI
         public override Pixel[,] Render()
         {
             char[,] inp1 = Content.ToNdArray2D();
-            inp1 = inp1.Resize(Size.Height, Size.Width - 2);
+            inp1 = inp1.Resize(Size.Height, Size.Width - 2, SpecialChars.Empty);
             char[,] inp = new char[Size.Width, Size.Height];
             inp.Populate(SpecialChars.Empty);
             for (int i = 0; i < Size.Height; i++)
@@ -160,18 +165,17 @@ namespace CC_Functions.Commandline.TUI
                 inp[0, i] = '[';
                 inp[Size.Width - 1, i] = ']';
             }
-            for (int i = 0; i < Size.Width; i++) inp[i, Size.Height - 1] = '.';
+            if (Lines.Length < Size.Width)
+                for (int i = 0; i < Size.Width; i++) inp[i, Size.Height - 1] = '.';
             inp1.Rotate().CopyTo(inp, new Point(0, 1));
             if (Selected)
-                inp[Cursor.X + 1, Cursor.Y] = '▒';
+                inp[Math.Max(Cursor.X + 1, 1), Cursor.Y] = '▒';
             Pixel[,] output = new Pixel[Size.Height, Size.Width];
+            output.Populate(new Pixel(Selected ? ForeColor : BackColor, Selected ? BackColor : ForeColor, SpecialChars.Empty));
             for (int x = 0; x < Size.Width; x++)
             for (int y = 0; y < Size.Height; y++)
                 output[y, x] = new Pixel(Selected ? ForeColor : BackColor, Selected ? BackColor : ForeColor, inp[x, y]);
             return output;
         }
-
-        /// <inheritdoc />
-        public override bool Selectable { get; } = true;
     }
 }

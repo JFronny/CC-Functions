@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace CC_Functions.W32.Test
+﻿namespace CC_Functions.W32.Test
 {
     internal static class Program
     {

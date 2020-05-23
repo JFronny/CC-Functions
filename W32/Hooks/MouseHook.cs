@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Runtime.InteropServices;
-using CC_Functions.W32.Native;
+﻿using CC_Functions.W32.Native;
 
 namespace CC_Functions.W32.Hooks
 {
@@ -47,9 +42,7 @@ namespace CC_Functions.W32.Hooks
         {
             using (Process curProcess = Process.GetCurrentProcess())
             using (ProcessModule curModule = curProcess.MainModule)
-            {
                 return user32.SetWindowsHookEx(WH_MOUSE_LL, proc, kernel32.GetModuleHandle(curModule.ModuleName), 0);
-            }
         }
 
         private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)

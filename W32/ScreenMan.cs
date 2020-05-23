@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using CC_Functions.W32.DCDrawer;
+﻿using CC_Functions.W32.DCDrawer;
 using CC_Functions.W32.Native;
 
 namespace CC_Functions.W32
@@ -30,10 +27,7 @@ namespace CC_Functions.W32
 
         public static void Draw(Image img)
         {
-            using (IDCDrawer drawerBuffered = GetDrawer())
-            {
-                drawerBuffered.Graphics.DrawImage(img, GetBounds());
-            }
+            using (IDCDrawer drawerBuffered = GetDrawer()) drawerBuffered.Graphics.DrawImage(img, GetBounds());
         }
 
         public static IDCDrawer GetDrawer(bool buffer = true)

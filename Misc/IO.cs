@@ -4,12 +4,12 @@ using System.IO;
 namespace CC_Functions.Misc
 {
     /// <summary>
-    /// IO functions
+    ///     IO functions
     /// </summary>
     public static class IO
     {
         /// <summary>
-        /// Recursively gets the size of an directory
+        ///     Recursively gets the size of an directory
         /// </summary>
         /// <param name="path">The path of the directory</param>
         /// <returns>The size of the directory</returns>
@@ -21,8 +21,9 @@ namespace CC_Functions.Misc
                 size += new FileInfo(t).Length;
             return size;
         }
+
         /// <summary>
-        /// Check whether the paths are equivalent (ignores case)
+        ///     Check whether the paths are equivalent (ignores case)
         /// </summary>
         /// <param name="path1">The first path to check</param>
         /// <param name="path2">The second path to check</param>

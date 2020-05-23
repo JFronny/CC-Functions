@@ -1,10 +1,5 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.IO;
-using CC_Functions.W32.DCDrawer;
+﻿using CC_Functions.W32.DCDrawer;
 using CC_Functions.W32.Native;
-using Microsoft.Win32;
 
 namespace CC_Functions.W32
 {
@@ -16,10 +11,9 @@ namespace CC_Functions.W32
             {
                 using (Bitmap bmpTemp =
                     new Bitmap(
-                        $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\Microsoft\Windows\Themes\TranscodedWallpaper"))
-                {
+                        $@"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}\Microsoft\Windows\Themes\TranscodedWallpaper")
+                )
                     return (Image) bmpTemp.Clone();
-                }
             }
             set
             {

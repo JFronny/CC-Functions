@@ -1,8 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.Windows.Forms;
-
-namespace CC_Functions.W32
+﻿namespace CC_Functions.W32
 {
     public static class GenericExtensions
     {

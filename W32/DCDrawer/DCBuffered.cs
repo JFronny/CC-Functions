@@ -1,8 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-
-namespace CC_Functions.W32.DCDrawer
+﻿namespace CC_Functions.W32.DCDrawer
 {
     public class DCBuffered : IDCDrawer
     {
@@ -20,6 +16,8 @@ namespace CC_Functions.W32.DCDrawer
             Graphics = buffer.Graphics;
         }
 
+        public Graphics Graphics { get; }
+
         public void Dispose()
         {
             buffer.Render(drawer.Graphics);
@@ -27,7 +25,5 @@ namespace CC_Functions.W32.DCDrawer
             buffer.Dispose();
             drawer.Dispose();
         }
-
-        public Graphics Graphics { get; }
     }
 }

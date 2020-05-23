@@ -1,10 +1,5 @@
-﻿using System;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-using CC_Functions.Misc;
+﻿using CC_Functions.W32.DCDrawer;
 using CC_Functions.W32.Forms;
-using CC_Functions.W32.DCDrawer;
 using CC_Functions.W32.Hooks;
 using static CC_Functions.W32.Power;
 
@@ -14,6 +9,8 @@ namespace CC_Functions.W32.Test
     {
         private static Wnd32 _tmpWnd32Obj;
         private static MainForm _mainF;
+
+        private static Wnd32 _wndSelectMouseCurrent;
         private readonly KeyboardHook _kHook;
         private readonly MouseHook _mHook;
         private readonly Label[] _readerLabels;
@@ -101,13 +98,13 @@ namespace CC_Functions.W32.Test
                 FormBorderStyle = FormBorderStyle.None,
                 WindowState = FormWindowState.Maximized
             };
-            Label lab = new Label { AutoSize = true };
+            Label lab = new Label {AutoSize = true};
             frm.Controls.Add(lab);
-            Panel pan = new Panel { BackColor = Color.Red };
+            Panel pan = new Panel {BackColor = Color.Red};
             frm.Controls.Add(pan);
             Wnd32[] children = TmpWnd.Children;
 
-            void UpdateGUI(Point labelPosition)
+            void UpdateGui(Point labelPosition)
             {
                 lab.Text = $"{_wndSelectMouseCurrent.Title} ({_wndSelectMouseCurrent.HWnd})";
                 lab.Location = new Point(labelPosition.X + 5, labelPosition.Y + 5);
@@ -116,11 +113,11 @@ namespace CC_Functions.W32.Test
 
             void MouseEventHandler(object sender1, MouseEventArgs e1)
             {
-                Func<Wnd32, bool> checkWnd = (s) => s.Position.Contains(e1.Location);
+                Func<Wnd32, bool> checkWnd = s => s.Position.Contains(e1.Location);
                 if (children.Any(checkWnd))
                 {
                     _wndSelectMouseCurrent = children.First(checkWnd);
-                    UpdateGUI(Cursor.Position);
+                    UpdateGui(Cursor.Position);
                 }
             }
 
@@ -151,7 +148,7 @@ namespace CC_Functions.W32.Test
                             tmp = children.Length;
                         tmp--;
                         _wndSelectMouseCurrent = children[tmp];
-                        UpdateGUI(_wndSelectMouseCurrent.Position.Location);
+                        UpdateGui(_wndSelectMouseCurrent.Position.Location);
                         break;
                     case Keys.Down:
                     case Keys.Right:
@@ -160,7 +157,7 @@ namespace CC_Functions.W32.Test
                         if (tmp == children.Length)
                             tmp = 0;
                         _wndSelectMouseCurrent = children[tmp];
-                        UpdateGUI(_wndSelectMouseCurrent.Position.Location);
+                        UpdateGui(_wndSelectMouseCurrent.Position.Location);
                         break;
                 }
             }
@@ -172,7 +169,7 @@ namespace CC_Functions.W32.Test
             pan.MouseMove += MouseEventHandler;
             lab.MouseMove += MouseEventHandler;
             frm.KeyDown += KeyEventHandler;
-            UpdateGUI(Cursor.Position);
+            UpdateGui(Cursor.Position);
             frm.Show();
             _wndSelectMouseCurrent = frm.GetWnd32();
             Cursor.Position = Cursor.Position;
@@ -263,7 +260,6 @@ namespace CC_Functions.W32.Test
 
         private void Wnd_action_destroy_Click(object sender, EventArgs e) => TmpWnd.Destroy();
 
-        private static Wnd32 _wndSelectMouseCurrent;
         private void Wnd_select_mouse_Click(object sender, EventArgs e)
         {
             WindowState = FormWindowState.Minimized;
@@ -281,7 +277,7 @@ namespace CC_Functions.W32.Test
             Panel pan = new Panel {BackColor = Color.Red};
             frm.Controls.Add(pan);
 
-            void UpdateGUI(Point labelPosition)
+            void UpdateGui(Point labelPosition)
             {
                 lab.Text = $"{_wndSelectMouseCurrent.Title} ({_wndSelectMouseCurrent.HWnd})";
                 lab.Location = new Point(labelPosition.X + 5, labelPosition.Y + 5);
@@ -291,7 +287,7 @@ namespace CC_Functions.W32.Test
             void MouseEventHandler(object sender1, MouseEventArgs e1)
             {
                 _wndSelectMouseCurrent = Wnd32.AllFromPoint(MousePosition, true).First(s => s != frm.GetWnd32());
-                UpdateGUI(Cursor.Position);
+                UpdateGui(Cursor.Position);
             }
 
             void EventHandler(object sender1, EventArgs e1)
@@ -390,12 +386,12 @@ namespace CC_Functions.W32.Test
         }
 
         private static PointF MakePoint(float xPercent, float yPercent) => new PointF(
-            (Screen.PrimaryScreen.Bounds.Width * xPercent) / 100,
-            (Screen.PrimaryScreen.Bounds.Height * yPercent) / 100);
+            Screen.PrimaryScreen.Bounds.Width * xPercent / 100,
+            Screen.PrimaryScreen.Bounds.Height * yPercent / 100);
 
         private static SizeF MakeSizeY(float xPercent, float yPercent) => new SizeF(
-            (Screen.PrimaryScreen.Bounds.Height * xPercent) / 100,
-            (Screen.PrimaryScreen.Bounds.Height * yPercent) / 100);
+            Screen.PrimaryScreen.Bounds.Height * xPercent / 100,
+            Screen.PrimaryScreen.Bounds.Height * yPercent / 100);
 
         private void desk_set_Click(object sender, EventArgs e)
         {

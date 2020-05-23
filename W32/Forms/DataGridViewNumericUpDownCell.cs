@@ -1,11 +1,3 @@
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
-
 namespace CC_Functions.W32.Forms
 {
     public class DataGridViewNumericUpDownCell : DataGridViewTextBoxCell
@@ -399,7 +391,7 @@ namespace CC_Functions.W32.Forms
                 negativeSignKey = (Keys) VkKeyScan(negativeSignStr[0]);
 
             if ((char.IsDigit((char) e.KeyCode) ||
-                 (e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9) ||
+                 e.KeyCode >= Keys.NumPad0 && e.KeyCode <= Keys.NumPad9 ||
                  negativeSignKey == e.KeyCode ||
                  Keys.Subtract == e.KeyCode) &&
                 !e.Shift && !e.Alt && !e.Control)
