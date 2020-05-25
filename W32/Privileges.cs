@@ -1,4 +1,8 @@
-﻿using CC_Functions.W32.Native;
+﻿using System;
+using System.ComponentModel;
+using System.Globalization;
+using System.Runtime.InteropServices;
+using CC_Functions.W32.Native;
 
 namespace CC_Functions.W32
 {

@@ -1,4 +1,9 @@
-﻿using CC_Functions.W32.Native;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
+using System.Runtime.InteropServices;
+using CC_Functions.W32.Native;
 
 namespace CC_Functions.W32.Hooks
 {

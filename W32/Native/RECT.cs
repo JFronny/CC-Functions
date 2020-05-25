@@ -1,4 +1,6 @@
-﻿namespace CC_Functions.W32.Native
+﻿using System.Runtime.InteropServices;
+
+namespace CC_Functions.W32.Native
 {
     [StructLayout(LayoutKind.Sequential)]
     public struct RECT

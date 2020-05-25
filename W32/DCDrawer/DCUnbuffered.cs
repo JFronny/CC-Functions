@@ -1,4 +1,6 @@
-﻿using CC_Functions.W32.Native;
+﻿using System;
+using System.Drawing;
+using CC_Functions.W32.Native;
 
 namespace CC_Functions.W32.DCDrawer
 {

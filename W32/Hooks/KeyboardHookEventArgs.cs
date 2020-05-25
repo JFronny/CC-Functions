@@ -1,4 +1,7 @@
-﻿namespace CC_Functions.W32.Hooks
+﻿using System;
+using System.Windows.Forms;
+
+namespace CC_Functions.W32.Hooks
 {
     public sealed class KeyboardHookEventArgs : EventArgs
     {

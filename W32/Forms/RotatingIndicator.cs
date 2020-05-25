@@ -1,4 +1,9 @@
-﻿using Timer = System.Timers.Timer;
+﻿using System;
+using System.ComponentModel;
+using System.Drawing;
+using System.Drawing.Drawing2D;
+using System.Windows.Forms;
+using Timer = System.Timers.Timer;
 
 namespace CC_Functions.W32.Forms
 {

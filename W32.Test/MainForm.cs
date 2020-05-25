@@ -1,4 +1,8 @@
-﻿using CC_Functions.W32.DCDrawer;
+﻿using System;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
+using CC_Functions.W32.DCDrawer;
 using CC_Functions.W32.Forms;
 using CC_Functions.W32.Hooks;
 using static CC_Functions.W32.Power;
@@ -22,7 +26,7 @@ namespace CC_Functions.W32.Test
             _mainF = this;
             _tmpWnd32Obj = Wnd32.FromForm(this);
 #if DEBUG
-            tmpWnd32_obj.MakeOverlay();
+            _tmpWnd32Obj.Overlay = true;
 #endif
             set_up_box(power_mode_box, typeof(ShutdownMode));
             set_up_box(power_reason_box, typeof(ShutdownReason));

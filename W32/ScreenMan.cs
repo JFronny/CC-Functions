@@ -1,4 +1,7 @@
-﻿using CC_Functions.W32.DCDrawer;
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+using CC_Functions.W32.DCDrawer;
 using CC_Functions.W32.Native;
 
 namespace CC_Functions.W32

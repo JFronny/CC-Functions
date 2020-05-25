@@ -1,3 +1,9 @@
+using System;
+using System.Drawing;
+using System.Globalization;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
+
 namespace CC_Functions.W32.Forms
 {
     /// <summary>

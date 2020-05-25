@@ -1,4 +1,5 @@
-﻿using CC_Functions.W32.Native;
+﻿using System.Windows.Forms;
+using CC_Functions.W32.Native;
 
 namespace CC_Functions.W32
 {

@@ -1,4 +1,8 @@
-﻿namespace CC_Functions.W32.DCDrawer
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+
+namespace CC_Functions.W32.DCDrawer
 {
     public class DCBuffered : IDCDrawer
     {

@@ -1,4 +1,9 @@
-﻿namespace CC_Functions.W32.Forms
+﻿using System;
+using System.Linq.Expressions;
+using System.Reflection;
+using System.Windows.Forms;
+
+namespace CC_Functions.W32.Forms
 {
     public delegate void SetPropertyDelegate<TCtl, TProp>(TCtl control, Expression<Func<TCtl, TProp>> propexpr,
         TProp value) where TCtl : Control;

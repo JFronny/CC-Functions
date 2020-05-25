@@ -1,4 +1,5 @@
-﻿using CC_Functions.W32.Native;
+﻿using System;
+using CC_Functions.W32.Native;
 using static CC_Functions.W32.Privileges;
 
 namespace CC_Functions.W32

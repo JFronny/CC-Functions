@@ -1,4 +1,8 @@
-﻿namespace CC_Functions.W32.Native
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Text;
+
+namespace CC_Functions.W32.Native
 {
     internal static class user32
     {
