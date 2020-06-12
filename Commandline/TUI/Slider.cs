@@ -31,12 +31,14 @@ namespace CC_Functions.Commandline.TUI
                         if (_value < MinValue)
                             _value = MinValue;
                         Value = _value;
+                        ValueChanged?.Invoke(screen, new EventArgs());
                         break;
                     case ConsoleKey.RightArrow:
                         _value += StepSize;
                         if (_value > MaxValue)
                             _value = MaxValue;
                         Value = _value;
+                        ValueChanged?.Invoke(screen, new EventArgs());
                         break;
                 }
             };
@@ -114,5 +116,10 @@ namespace CC_Functions.Commandline.TUI
                     rend[i, j]);
             return output;
         }
+        
+        /// <summary>
+        /// Called if the selected value of the slider changes
+        /// </summary>
+        public event OnClick ValueChanged;
     }
 }
