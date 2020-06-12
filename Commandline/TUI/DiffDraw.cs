@@ -42,11 +42,11 @@ namespace CC_Functions.Commandline.TUI
                 {
                     Pixel tmp1 = Screen[y, x];
                     if (!full && tmp1 == _last[y, x]) continue;
-                    if (ReferenceEquals(tmp1, null) && color)
+                    if (!ReferenceEquals(tmp1, null) && color)
                     {
-                        if (Console.ForegroundColor != tmp1?.ForeColor && tmp1?.ForeColor != null)
+                        if (Console.ForegroundColor != tmp1?.ForeColor)
                             Console.ForegroundColor = tmp1.ForeColor;
-                        if (Console.BackgroundColor != tmp1?.BackColor && tmp1?.ForeColor != null)
+                        if (Console.BackgroundColor != tmp1?.BackColor)
                             Console.BackgroundColor = tmp1.BackColor;
                     }
                     Console.CursorLeft = x;
