@@ -10,11 +10,7 @@ namespace CC_Functions.Commandline.TUI
     public class CenteredScreen : Screen
     {
         private bool _resizing;
-
-        /// <summary>
-        ///     The actual size of this control. The "Size" property is assigned automatically
-        /// </summary>
-        public Size ActualSize;
+        private Size _actualSize;
 
         /// <summary>
         ///     The panel used for storing and rendering the actual controls
@@ -54,6 +50,22 @@ namespace CC_Functions.Commandline.TUI
                 if (_title != value && !string.IsNullOrWhiteSpace(value))
                 {
                     _title = value;
+                    CalculatePosition(true);
+                }
+            }
+        }
+
+        /// <summary>
+        ///     The actual size of this control. The "Size" property is assigned automatically
+        /// </summary>
+        public Size ActualSize
+        {
+            get => _actualSize;
+            set
+            {
+                if (_actualSize != value)
+                {
+                    _actualSize = value;
                     CalculatePosition(true);
                 }
             }
