@@ -102,7 +102,7 @@ namespace CC_Functions.Commandline.TUI
         {
             int delta = MaxValue - MinValue;
             int litValLen = Math.Max(MaxValue.ToString().Length, MinValue.ToString().Length);
-            int prevpts = Math.Max((Value - MinValue) * Size.Width / delta - litValLen - 2, 0);
+            int prevpts = Math.Max((Value - MinValue) * Size.Width / Math.Max(delta, 1) - litValLen - 2, 0);
             int postpts = Math.Max(Size.Width - prevpts - litValLen - 2, 0);
             char[,] rend = $"{new string('=', prevpts)}[{Value.ToString($"D{(Value < 0 ? litValLen - 1 : litValLen)}")}]{new string('=', postpts)}"
                 .ToNdArray2D();
