@@ -21,11 +21,7 @@ namespace CC_Functions.Commandline.TUI
         /// </summary>
         public Panel ContentPanel;
 
-        /// <summary>
-        ///     The title to display at the top of the console
-        /// </summary>
-        public string Title = "CC-Functions.CommandLine app";
-
+        private string _title = "CC-Functions.CommandLine app";
         private readonly Label _titleLabel;
 
         /// <summary>
@@ -45,6 +41,22 @@ namespace CC_Functions.Commandline.TUI
             WindowResize += (screen, args) => CalculatePosition();
             ((Control) this).Resize += (caller, args) => CalculatePosition();
             CalculatePosition(true);
+        }
+
+        /// <summary>
+        ///     The title to display at the top of the console
+        /// </summary>
+        public string Title
+        {
+            get => _title;
+            set
+            {
+                if (_title != value && !string.IsNullOrWhiteSpace(value))
+                {
+                    _title = value;
+                    CalculatePosition();
+                }
+            }
         }
 
         /// <summary>
