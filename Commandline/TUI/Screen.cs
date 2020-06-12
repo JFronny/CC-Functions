@@ -98,7 +98,7 @@ namespace CC_Functions.Commandline.TUI
                 switch (input.Key)
                 {
                     case ConsoleKey.Tab:
-                        Tab(selectable, (input.Modifiers & ConsoleModifiers.Shift) != 0);
+                        Tab(selectable, (input.Modifiers & ConsoleModifiers.Shift) == 0);
                         break;
                     case ConsoleKey.Enter:
                         if (selectable.Any() && selectable.Length >= TabPoint && selectable[TabPoint].Enabled)
@@ -113,6 +113,7 @@ namespace CC_Functions.Commandline.TUI
                     default:
                         if (selectable.Any() && selectable.Length >= TabPoint && selectable[TabPoint].Enabled)
                         {
+                            InvokeInput(this, input);
                             selectable[TabPoint].InvokeInput(this, input);
                             render = true;
                         }

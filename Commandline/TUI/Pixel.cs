@@ -80,7 +80,7 @@ namespace CC_Functions.Commandline.TUI
         ///     Generates an integer for comparing this object
         /// </summary>
         /// <returns>The generated hash</returns>
-        public override int GetHashCode() => HashCode.Combine((int) BackColor, (int) ForeColor, Content);
+        public override int GetHashCode() => HashCode.Combine(BackColor, ForeColor, Content);
 
         /// <summary>
         ///     Whether two pixels are equal
