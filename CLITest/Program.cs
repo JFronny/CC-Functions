@@ -79,6 +79,11 @@ namespace CLITest
             }
             Console.ResetColor();
             Console.Clear();
+            Console.WriteLine("Test2");
+            Thread.Sleep(100);
+            DiffDraw.Clear(10, 10);
+            DiffDraw.Draw(true, false);
+            Console.Clear();
             Console.WriteLine("Bye");
         }
     }
