@@ -54,7 +54,7 @@ namespace CC_Functions.Commandline.TUI
                 if (_title != value && !string.IsNullOrWhiteSpace(value))
                 {
                     _title = value;
-                    CalculatePosition();
+                    CalculatePosition(true);
                 }
             }
         }
