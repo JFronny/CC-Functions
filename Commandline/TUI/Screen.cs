@@ -30,10 +30,23 @@ namespace CC_Functions.Commandline.TUI
         /// <param name="e">Args</param>
         public delegate void OnWindowResize(Screen screen, EventArgs e);
 
+        private bool _color;
+
         /// <summary>
         ///     Whether to output in color. Recommended for most terminals, might cause slowdowns in others
         /// </summary>
-        public readonly bool Color;
+        public bool Color
+        {
+            get => _color;
+            set
+            {
+                if (_color != value)
+                {
+                    _color = value;
+                    DiffDraw.Draw(_color);
+                }
+            }
+        }
 
         private int _wndHeight = Console.WindowHeight;
         private int _wndWidth = Console.WindowWidth;
