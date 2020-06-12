@@ -88,7 +88,7 @@ namespace CC_Functions.Commandline.TUI
         /// <param name="a">First pixel to compare</param>
         /// <param name="b">Second pixel to compare</param>
         /// <returns>Whether they are equal</returns>
-        public static bool operator ==(Pixel a, Pixel b) => a != null && a.Equals(b);
+        public static bool operator ==(Pixel a, Pixel b) => !ReferenceEquals(a, null) && a.Equals(b);
 
         /// <summary>
         ///     Whether to pixels are not equal
@@ -96,7 +96,7 @@ namespace CC_Functions.Commandline.TUI
         /// <param name="a">First pixel to compare</param>
         /// <param name="b">Second pixel to compare</param>
         /// <returns>Whether they are not equal</returns>
-        public static bool operator !=(Pixel a, Pixel b) => a != null && !a.Equals(b);
+        public static bool operator !=(Pixel a, Pixel b) => !(a == b);
 
         /// <summary>
         ///     Returns the content of this pixel
