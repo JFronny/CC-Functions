@@ -53,7 +53,7 @@ namespace CC_Functions.Commandline.TUI
             get => _maxValue;
             set
             {
-                if (value > MinValue && value >= Value)
+                if (value >= MinValue && value >= Value)
                     _maxValue = value;
                 else
                     throw new ArgumentOutOfRangeException(
@@ -70,7 +70,7 @@ namespace CC_Functions.Commandline.TUI
             get => _minValue;
             set
             {
-                if (value < MaxValue && value <= Value)
+                if (value <= MaxValue && value <= Value)
                     _minValue = value;
                 else
                     throw new ArgumentOutOfRangeException(
