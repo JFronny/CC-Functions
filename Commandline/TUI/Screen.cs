@@ -123,15 +123,11 @@ namespace CC_Functions.Commandline.TUI
                     case ConsoleKey.Escape:
                         Close?.Invoke(this, new EventArgs());
                         break;
-                    default:
-                        if (selectable.Any() && selectable.Length >= TabPoint && selectable[TabPoint].Enabled)
-                        {
-                            InvokeInput(this, input);
-                            selectable[TabPoint].InvokeInput(this, input);
-                            render = true;
-                        }
-                        break;
                 }
+                if (selectable.Any() && selectable.Length >= TabPoint && selectable[TabPoint].Enabled)
+                    selectable[TabPoint].InvokeInput(this, input);
+                InvokeInput(this, input);
+                render = true;
             }
             if (_wndWidth != Console.WindowWidth || _wndHeight != Console.WindowHeight)
             {
