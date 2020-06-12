@@ -29,9 +29,9 @@ namespace CC_Functions.Commandline.TUI
         /// <param name="color">Whether to use color when drawing</param>
         public CenteredScreen(int width, int height, ConsoleColor contentBack, bool color = true) : base(width, height, color)
         {
+            _titleLabel = new Label(Title);
             ContentPanel = new Panel {BackColor = contentBack};
             ActualSize = new Size(width, height);
-            _titleLabel = new Label(Title);
             Controls.Add(ContentPanel);
             Controls.Add(_titleLabel);
             WindowResize += (screen, args) => CalculatePosition();
