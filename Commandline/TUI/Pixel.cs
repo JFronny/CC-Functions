@@ -8,6 +8,8 @@ namespace CC_Functions.Commandline.TUI
     /// </summary>
     public class Pixel
     {
+        public static readonly Pixel Empty = new Pixel();
+        
         /// <summary>
         ///     This pixels background color
         /// </summary>

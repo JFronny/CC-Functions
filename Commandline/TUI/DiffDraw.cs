@@ -30,8 +30,8 @@ namespace CC_Functions.Commandline.TUI
         {
             Console.CursorTop = 0;
             Console.CursorLeft = 0;
-            ConsoleColor fcol = Console.ForegroundColor;
-            ConsoleColor bcol = Console.BackgroundColor;
+            ConsoleColor fCol = Console.ForegroundColor;
+            ConsoleColor bCol = Console.BackgroundColor;
             int width = Width;
             int height = Height;
             for (int y = 0; y < height; y++)
@@ -53,8 +53,8 @@ namespace CC_Functions.Commandline.TUI
                 Console.WriteLine();
                 Console.CursorLeft = 0;
             }
-            Console.ForegroundColor = fcol;
-            Console.BackgroundColor = bcol;
+            Console.ForegroundColor = fCol;
+            Console.BackgroundColor = bCol;
             _last = Screen;
         }
 
@@ -75,8 +75,8 @@ namespace CC_Functions.Commandline.TUI
             {
                 for (int x = 0; x < width; x++)
                 {
-                    Pixel tmp1 = Screen[y, x];
-                    if (color)
+                    Pixel? tmp1 = Screen[y, x];
+                    if (tmp1 != null && color)
                     {
                         if (Console.ForegroundColor != tmp1.ForeColor)
                             Console.ForegroundColor = tmp1.ForeColor;
@@ -84,7 +84,7 @@ namespace CC_Functions.Commandline.TUI
                             Console.BackgroundColor = tmp1.BackColor;
                     }
                     Console.CursorLeft = x;
-                    Console.Write(tmp1);
+                    Console.Write(tmp1 ?? Pixel.Empty);
                 }
                 Console.WriteLine();
                 Console.CursorLeft = 0;

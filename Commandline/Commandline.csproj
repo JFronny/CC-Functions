@@ -19,6 +19,7 @@
         <FileVersion>1.0.0.0</FileVersion>
         <VersionSuffix>0.0</VersionSuffix>
         <PackageVersion>1.1.$(VersionSuffix)</PackageVersion>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
