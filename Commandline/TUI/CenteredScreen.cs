@@ -76,7 +76,7 @@ namespace CC_Functions.Commandline.TUI
                 if (!initial)
                 {
                     Console.Clear();
-                    DiffDraw.FullDraw(Color);
+                    DiffDraw.Draw(Color, true);
                 }
                 _resizing = false;
             }

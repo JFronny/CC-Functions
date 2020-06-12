@@ -20,7 +20,7 @@ namespace CLITest
                 BackColor = ConsoleColor.DarkGreen
             };
             screen.Controls.Add(btn1);
-            btn1.Click += (screen1, eventArgs) => { DiffDraw.FullDraw(true); };
+            btn1.Click += (screen1, eventArgs) => { DiffDraw.Draw(true, true); };
             Label lab1 = new Label("Meem")
             {
                 Point = new Point(2, 1),

@@ -26,49 +26,14 @@ namespace CC_Functions.Commandline.TUI
         ///     Draws to the console
         /// </summary>
         /// <param name="color">Whether to use color</param>
-        public static void Draw(bool color)
+        /// <param name="full">Whether to redraw the entire screen (should be done from time to time to prevent corruption)</param>
+        public static void Draw(bool color, bool full = false)
         {
             Console.CursorTop = 0;
             Console.CursorLeft = 0;
             ConsoleColor fCol = Console.ForegroundColor;
             ConsoleColor bCol = Console.BackgroundColor;
-            int width = Width;
-            int height = Height;
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    Pixel tmp1 = Screen[y, x];
-                    if (tmp1 == _last[y, x]) continue;
-                    if (color)
-                    {
-                        if (Console.ForegroundColor != tmp1.ForeColor)
-                            Console.ForegroundColor = tmp1.ForeColor;
-                        if (Console.BackgroundColor != tmp1.BackColor)
-                            Console.BackgroundColor = tmp1.BackColor;
-                    }
-                    Console.CursorLeft = x;
-                    Console.Write(tmp1);
-                }
-                Console.WriteLine();
-                Console.CursorLeft = 0;
-            }
-            Console.ForegroundColor = fCol;
-            Console.BackgroundColor = bCol;
-            _last = Screen;
-        }
-
-        /// <summary>
-        ///     Redraws the entire screen (should be done from time to time to prevent corruption)
-        /// </summary>
-        /// <param name="color">Whether to use color</param>
-        public static void FullDraw(bool color)
-        {
-            Console.CursorTop = 0;
-            Console.CursorLeft = 0;
-            ConsoleColor fcol = Console.ForegroundColor;
-            ConsoleColor bcol = Console.BackgroundColor;
-            Console.Clear();
+            if (full) Console.Clear();
             int width = Width;
             int height = Height;
             for (int y = 0; y < height; y++)
@@ -76,6 +41,7 @@ namespace CC_Functions.Commandline.TUI
                 for (int x = 0; x < width; x++)
                 {
                     Pixel? tmp1 = Screen[y, x];
+                    if (full && tmp1 == _last[y, x]) continue;
                     if (tmp1 != null && color)
                     {
                         if (Console.ForegroundColor != tmp1.ForeColor)
@@ -89,8 +55,8 @@ namespace CC_Functions.Commandline.TUI
                 Console.WriteLine();
                 Console.CursorLeft = 0;
             }
-            Console.ForegroundColor = fcol;
-            Console.BackgroundColor = bcol;
+            Console.ForegroundColor = fCol;
+            Console.BackgroundColor = bCol;
             _last = Screen;
         }
 
