@@ -48,13 +48,26 @@ namespace CC_Functions.Commandline.TUI
             }
         }
 
-        private int _wndHeight = Console.WindowHeight;
-        private int _wndWidth = Console.WindowWidth;
-
         /// <summary>
         ///     The current index of the tab-selected control in an array of selectable controls
         /// </summary>
-        public int TabPoint;
+        public int TabPoint
+        {
+            get => _tabPoint;
+            set
+            {
+                if (_tabPoint != value)
+                {
+                    _tabPoint = value;
+                    
+                }
+            }
+        }
+
+        private int _wndHeight = Console.WindowHeight;
+        private int _wndWidth = Console.WindowWidth;
+
+        private int _tabPoint;
 
         /// <summary>
         ///     Creates a screen object. Multiple can be instantiated but drawing one overrides others. Use panels for that
@@ -87,6 +100,7 @@ namespace CC_Functions.Commandline.TUI
         /// <returns>The new state of the screen</returns>
         public new Pixel[,] Render()
         {
+            FixSelection();
             Pixel[,] tmp = base.Render();
             DiffDraw.Clear(tmp);
             DiffDraw.Draw(Color);
@@ -138,6 +152,8 @@ namespace CC_Functions.Commandline.TUI
             }
             if (canRedraw && render)
                 Render();
+            else
+                FixSelection();
         }
 
         /// <summary>
@@ -170,10 +186,21 @@ namespace CC_Functions.Commandline.TUI
                     TabPoint--;
                     if (TabPoint < 0) TabPoint = selectable.Length - 1;
                 }
+                FixSelection(true);
+            }
+        }
+
+        private void FixSelection(bool draw = false)
+        {
+            Control[] controls = EnumerateRecursive();
+            Control[] selectable = controls.Where(s => s.Selectable).ToArray();
+            if (selectable.Any())
+            {
                 foreach (Control control in selectable) control.Selected = false;
                 selectable[TabPoint].Selected = true;
                 TabChanged?.Invoke(this, new EventArgs());
-                Render();
+                if (draw)
+                    Render();
             }
         }
 

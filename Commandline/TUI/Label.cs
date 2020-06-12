@@ -8,19 +8,39 @@ namespace CC_Functions.Commandline.TUI
     /// </summary>
     public class Label : Control
     {
-        /// <summary>
-        ///     The text inside this label
-        /// </summary>
-        public string Content;
+        private string _content;
 
         /// <summary>
         ///     Creates a new label
         /// </summary>
         /// <param name="content">The text inside this label</param>
-        public Label(string content) => Content = content;
+        public Label(string content)
+        {
+            _content = "";
+            Content = content;
+        }
 
         /// <inheritdoc />
         public override bool Selectable { get; } = false;
+
+        /// <summary>
+        ///     The text inside this label
+        /// </summary>
+        public string Content
+        {
+            get => _content;
+            set
+            {
+                if (_content != value)
+                {
+                    _content = value;
+                    char[,] inp = Content.ToNdArray2D();
+                    int w = inp.GetLength(1);
+                    int h = inp.GetLength(0);
+                    Size = new Size(w, h);
+                }
+            }
+        }
 
         /// <inheritdoc />
         public override Pixel[,] Render()
@@ -32,7 +52,6 @@ namespace CC_Functions.Commandline.TUI
             for (int x = 0; x < w; x++)
             for (int y = 0; y < h; y++)
                 output[x, y] = new Pixel(BackColor, ForeColor, inp[x, y]);
-            Size = new Size(w, h);
             return output;
         }
     }

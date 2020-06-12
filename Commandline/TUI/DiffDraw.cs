@@ -44,9 +44,9 @@ namespace CC_Functions.Commandline.TUI
                     if (!full && tmp1 == _last[y, x]) continue;
                     if (!ReferenceEquals(tmp1, null) && color)
                     {
-                        if (Console.ForegroundColor != tmp1?.ForeColor)
+                        if (Console.ForegroundColor != tmp1.ForeColor)
                             Console.ForegroundColor = tmp1.ForeColor;
-                        if (Console.BackgroundColor != tmp1?.BackColor)
+                        if (Console.BackgroundColor != tmp1.BackColor)
                             Console.BackgroundColor = tmp1.BackColor;
                     }
                     Console.CursorLeft = x;
